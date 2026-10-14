@@ -1,0 +1,27 @@
+# ------------------------------------------------------------------
+# Zugangsdaten – NIE hochladen
+# Alle .txt in config/ sind gesperrt, ausser Info-Texten und Datenluecken.
+# Neue Zugangsdateien (z. B. config/k2bl.txt) sind damit automatisch geschuetzt.
+# ------------------------------------------------------------------
+config/*.txt
+!config/*_info.txt
+!config/*_luecken.txt
+
+# API-Rohdaten (koennen Tokens enthalten, ausserdem gross)
+api_dump/
+
+# Wird online aus den Daten gebaut (Workflow "Webseite"), lokal mit update.py --nur-webseite
+docs/
+
+# Tabellenbilder: online als Download am jeweiligen Lauf, lokal wie bisher im Ordner
+league_systems/*/tables/
+
+# Sicherungen, Archive, Python
+*_backup_*
+*.zip
+__pycache__/
+*.pyc
+
+# Altdaten: nur die Abschlusstabellen-Quelle mitnehmen, der Rest bleibt lokal
+altdaten/*
+!altdaten/abschlusstabellen.csv

@@ -1,0 +1,377 @@
+{
+    "league_system_name": "KickBase BundesLiga",
+    "league_system_shortcut": "KBL",
+    "levels_in_database": 6,
+    "admin_id": 1441550,
+    "automatik": {"wettbewerb": 1, "wartezeit_stunden": 12},
+    "cup_scores": [
+        50,
+        30,
+        20,
+        10,
+        5,
+        0
+    ],
+    "leagues": [
+        {
+            "names": [
+                "KBL - Liga 1"
+            ],
+            "level": "1",
+            "distribution": [
+                1,
+                1,
+                1,
+                10,
+                3,
+                1
+            ],
+            "kbl_score": [
+                100,
+                95,
+                90,
+                85,
+                82,
+                79,
+                76,
+                73,
+                70,
+                67,
+                64,
+                61,
+                58,
+                55,
+                52,
+                49,
+                46
+            ],
+            "cup_factor": 1
+        },
+        {
+            "names": [
+                "KBL - Liga 2"
+            ],
+            "level": "2",
+            "distribution": [
+                0,
+                3,
+                0,
+                10,
+                3,
+                1
+            ],
+            "kbl_score": [
+                60,
+                55,
+                50,
+                46,
+                44,
+                42,
+                40,
+                38,
+                36,
+                34,
+                32,
+                30,
+                28,
+                26,
+                24,
+                22,
+                20
+            ],
+            "cup_factor": 0.95
+        },
+        {
+            "names": [
+                "KBL - Liga 3"
+            ],
+            "level": "3",
+            "distribution": [
+                1,
+                3,
+                0,
+                8,
+                5,
+                0
+            ],
+            "kbl_score": [
+                30,
+                25,
+                21,
+                18,
+                17,
+                16,
+                15,
+                14,
+                13,
+                12,
+                11,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5
+            ],
+            "cup_factor": 0.9
+        },
+        {
+            "names": [
+                "KBL - Liga 4A",
+                "KBL - Liga 4B",
+                "KBL - Liga 4C"
+            ],
+            "level": "4",
+            "distribution": [
+                1,
+                1,
+                0,
+                11,
+                4,
+                0
+            ],
+            "kbl_score": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "cup_factor": 0.8
+        },
+        {
+            "names": [
+                "KBL - Liga 5A",
+                "KBL - Liga 5B",
+                "KBL - Liga 5C",
+                "KBL - Liga 5D",
+                "KBL - Liga 5E",
+                "KBL - Liga 5F"
+            ],
+            "level": "5",
+            "distribution": [
+                0,
+                2,
+                0,
+                11,
+                4,
+                0
+            ],
+            "kbl_score": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "cup_factor": 0.7
+        },
+        {
+            "names": [
+                "KBL - Liga 6A",
+                "KBL - Liga 6B",
+                "KBL - Liga 6C",
+                "KBL - Liga 6D",
+                "KBL - Liga 6E",
+                "KBL - Liga 6F",
+                "KBL - Liga 6G",
+                "KBL - Liga 6H",
+                "KBL - Liga 6I",
+                "KBL - Liga 6J",
+                "KBL - Liga 6K",
+                "KBL - Liga 6L"
+            ],
+            "level": "6",
+            "distribution": [
+                0,
+                2,
+                0,
+                15,
+                0,
+                0
+            ],
+            "kbl_score": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "cup_factor": 0
+        }
+    ],
+    "seasons": [
+        {
+            "name": "2026B",
+            "matchday_number": "14",
+            "first_matchday": "1",
+            "last_matchday": "14",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2026A",
+            "matchday_number": "19",
+            "first_matchday": "16",
+            "last_matchday": "34",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2025B",
+            "matchday_number": "15",
+            "first_matchday": "1",
+            "last_matchday": "15",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2025A",
+            "matchday_number": "19",
+            "first_matchday": "16",
+            "last_matchday": "34",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2024B",
+            "matchday_number": "15",
+            "first_matchday": "1",
+            "last_matchday": "15",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2024A",
+            "matchday_number": "18",
+            "first_matchday": "17",
+            "last_matchday": "34",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2023B",
+            "matchday_number": "16",
+            "first_matchday": "1",
+            "last_matchday": "16",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2023A",
+            "matchday_number": "19",
+            "first_matchday": "16",
+            "last_matchday": "34",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2022B",
+            "matchday_number": "15",
+            "first_matchday": "1",
+            "last_matchday": "15",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2022A",
+            "matchday_number": "17",
+            "first_matchday": "18",
+            "last_matchday": "34",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2021B",
+            "matchday_number": "17",
+            "first_matchday": "1",
+            "last_matchday": "17",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2021A",
+            "matchday_number": "17",
+            "first_matchday": "18",
+            "last_matchday": "34",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2020B",
+            "matchday_number": "17",
+            "first_matchday": "1",
+            "last_matchday": "17",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2020A",
+            "matchday_number": "17",
+            "first_matchday": "1",
+            "last_matchday": "17",
+            "leagues": [
+                {}
+            ]
+        },
+        {
+            "name": "2019B",
+            "matchday_number": "17",
+            "first_matchday": "1",
+            "last_matchday": "17",
+            "leagues": [
+                {}
+            ],
+            "quali": true
+        }
+    ]
+}

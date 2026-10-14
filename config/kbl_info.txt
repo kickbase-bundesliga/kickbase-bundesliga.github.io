@@ -1,0 +1,68 @@
+// Texte fuer den Reiter "Info" auf der Webseite. Einfach im Editor aendern und danach
+//   python update.py --nur-webseite
+// laufen lassen.
+//
+// So funktioniert das Format:
+//   # Ueberschrift            beginnt einen neuen Abschnitt (eigener Kasten)
+//   ## Zwischenueberschrift   kleinere Ueberschrift innerhalb eines Abschnitts
+//   - Text                    Aufzaehlungspunkt
+//   leere Zeile               neuer Absatz
+//   **Text**                  fett
+//   [Linktext](https://...)   Link, z. B. zum Discord-Server
+//   {{auf-abstieg}}           hier wird das Auf-/Abstiegs-Schaubild eingefuegt (kommt aus config/kbl.json)
+//   // Text                   Kommentar, erscheint NICHT auf der Seite
+// Abschnitte ohne Text (nur Kommentare) werden auf der Seite automatisch weggelassen.
+
+# Das Wichtigste in Kürze
+Die KickBase BundesLiga ist ein Ligasystem aus Kickbase-Ligen auf sechs Ebenen mit Auf- und Abstieg. Gewertet werden die Punkte aus Kickbase, die Tabellen werden nach jedem Spieltag aktualisiert.
+
+- Eine KBL-Saison ist eine **Halbserie**: vom Bundesligastart bis zur Winterpause (B) oder von der Winterpause bis zum Saisonende (A).
+- In jeder Liga spielen **17 Manager**. Der Admin-Account ist in jeder Liga dabei, zählt aber nicht mit.
+- Gespielt wird mit **200 Mio. Startbudget**, ohne Teams.
+- **Kaderbegrenzung 18**, kein Spielerlimit, Erfolge sind ausgeschaltet.
+- **Underpay ist deaktiviert** (seit Sommer 2026): Spieler können nicht unter Marktwert gekauft werden.
+- Neben der Liga gibt es den **KBL-Cup** für die Manager aus Liga 1 bis 5.
+
+# Regeln
+- Ein **freundlicher Umgangston** ist selbstverständlich. Dazu gehört natürlich auch: kein Rassismus, kein Sexismus.
+- **Transfergespräche** laufen immer nur im Ligachat oder auf dem [Discord-Server](https://discord.gg/JderBpWf33), nie extern. Bei zwielichtigen Transfers muss nachvollziehbar sein, wie sie zustande kamen, sonst droht der Rauswurf.
+- **Multiaccounting** und **unfaire Transfers unter Freunden** werden mit dem Rauswurf bestraft. Das ist schon in der ersten Saison sogar in Liga 1 passiert. Auch sonstige Deals wie Kredite sind nicht erlaubt.
+- Die Ligen werden **nicht überwacht**. Verstöße müssen von den Managern an die Admins gemeldet werden, bitte nur bei wichtigen Sachen und nicht bei jeder Kleinigkeit.
+- **Aussteiger** werden mit der Punktzahl gewertet, die sie beim Ausstieg erreicht hatten. Frei werdende Plätze werden immer mit Nachrückern besetzt, Absteiger bleiben nicht drin.
+
+## Rückerstattung bei Nullstellen-Fehlern
+Wer sich beim Gebot um eine Null vertippt hat, kann das zu viel gezahlte Geld zurückbekommen, abzüglich eines **Strafzinses von 20 % des Kaufpreises (höchstens 3 Mio.)**. Das gilt nur für Nullstellen-Fehler.
+
+Der Admin schreibt den Betrag über die Admin-Einstellungen in der App gut, sobald der Spieler an den Markt verkauft wurde oder sich ein Mitmanager mit dem eigentlich höchsten Gebot meldet. Einen Anspruch auf eine sofortige Erstattung gibt es nicht, etwa wenn es an einem Freitagabend passiert.
+
+# Auf- und Abstieg
+Die Farben zeigen, was am Saisonende mit den Plätzen passiert.
+
+{{auf-abstieg}}
+
+- In **Liga 4** steigen der Erste und der Zweite jeder Staffel auf. Der **punktbeste Staffelsieger** aller drei Staffeln steigt direkt in Liga 2 auf.
+- In **Liga 5 und 6** gibt es keinen Doppelauf- oder -abstieg.
+- Aus den zwölf Staffeln der **Liga 6** steigen die ersten zwei sicher auf. Werden durch Aussteiger Plätze frei, rücken weitere Manager nach. Bisher war das oft auch der Dritte, garantiert ist es aber nicht.
+
+# Neu einsteigen
+Alle Ankündigungen, die Ligenlinks und die vollständigen Regeln gibt es auf unserem **[Discord-Server](https://discord.gg/JderBpWf33)**.
+
+## Wann kann ich einsteigen?
+In der **Sommer- und in der Winterpause**, nachdem die Ligen 1 bis 5 mit den Auf- und Absteigern neu gefüllt wurden. In der Winterpause geht das meist sehr schnell, weil wir unter Zeitdruck stehen. In der Sommerpause seht es uns nach, dass auch wir Admins etwas Urlaub brauchen und das Ganze nach und nach erledigen.
+
+## Wie läuft der Einstieg?
+Sobald Liga 1 bis 5 gefüllt sind, kündigen wir per Infonachricht mit Markierung an, **wann die Ligenlinks veröffentlicht werden**. Wenn es so weit ist, markieren wir euch noch einmal. Dann gilt: **First come, first served**.
+
+## Welchen Ligenlink nehme ich?
+**Ausschließlich die Links für Liga 6.** Wer unrechtmäßig über einen Link für Liga 1 bis 5 beitritt, wird kommentarlos gekickt. Wiederholtes unrechtmäßiges Beitreten kann zum Ausschluss aus der KBL führen.
+
+## Warum gibt es keine Anmeldeliste?
+Wegen der vielen Interessenten haben wir uns der Einfachheit halber für First come, first served entschieden. Eine Anmeldeliste würde den Aufwand für uns Admins deutlich erhöhen.
+
+## Wann ist der Ligenreset?
+Etwa **10 bis 17 Tage vor Ligastart**: im Winter meist 10 bis 14 Tage vor dem Rückrundenstart, im Sommer 14 bis 17 Tage vorher. Alle weiteren Regeln findest du auf dem [Discord-Server](https://discord.gg/JderBpWf33) im Kanal #kbl-regeln.
+
+# KBL-Cup
+Der Cup ist den Managern aus **Liga 1 bis 5** vorbehalten. Wer neu einsteigt, muss sich also erst beweisen, bevor er sich anmelden darf.
+
+Der Cup läuft ligaübergreifend: Die Spieltagspunkte werden mit dem **Faktor der eigenen Liga** multipliziert (siehe Ligastruktur weiter unten). Der **KBL-Score** sammelt Punkte für Platzierungen und Cup-Ergebnisse über alle Saisons und entscheidet über die Freilose. Mehr dazu in der angepinnten Nachricht im Kanal #kbl-cup.

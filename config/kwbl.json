@@ -1,0 +1,69 @@
+{
+    "league_system_name": "KickBase Women BundesLiga",
+    "league_system_shortcut": "KWBL",
+    "levels_in_database": 4,
+    "admin_id": 2453055,
+    "automatik": {"wettbewerb": 4, "wartezeit_stunden": 12},
+    "cup_scores": [40, 25, 15, 10, 5, 0],
+    "leagues": [
+        {
+            "names": ["KWBL - Liga 1"],
+            "level": "1",
+            "distribution": [1,1,1,7,3,0],
+            "kbl_score": [100,90,85,80,75,72,69,66,63,60,55,52,49],
+            "cup_factor": 1
+        },
+        {
+            "names": ["KWBL - Liga 2"],
+            "level": "2",
+            "distribution": [0,3,0,6,4,0],
+            "kbl_score": [65,60,55,52,49,46,43,40,37,34,31,28,25],
+            "cup_factor": 0.95
+        },
+        {
+            "names": ["KWBL - Liga 3A", "KWBL - Liga 3B"],
+            "level": "3",
+            "distribution": [0,2,0,9,2,0],
+            "kbl_score": [45,40,35,30,27,24,21,18,15,12,9,6,3],
+            "cup_factor": 0.9
+        },
+        {
+            "names": ["KWBL - Liga 4A", "KWBL - Liga 4B"],
+            "level": "4",
+            "distribution": [0,2,0,11,0,0],
+            "kbl_score": [0,0,0,0,0,0,0,0,0,0,0,0,0],
+            "cup_factor": 0.8
+        }
+    ],
+    "seasons": [
+ 	  {
+            "name": "2026B",
+            "matchday_number": "13",
+            "first_matchday": "1",
+            "last_matchday": "13",
+            "leagues":[{}]
+        },
+
+         {
+            "name": "2026A",
+            "matchday_number": "12",
+            "first_matchday": "15",
+            "last_matchday": "26",
+            "leagues":[{}]
+        },
+         {
+            "name": "2025B",
+            "matchday_number": "14",
+            "first_matchday": "1",
+            "last_matchday": "14",
+            "leagues":[{}]
+        },
+	{
+            "name": "2024BA",
+            "matchday_number": "22",
+            "first_matchday": "1",
+            "last_matchday": "22",
+            "leagues":[{}]
+        }
+    ]
+}

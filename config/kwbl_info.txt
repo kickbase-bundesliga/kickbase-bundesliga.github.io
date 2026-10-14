@@ -1,0 +1,49 @@
+// Texte fuer den Reiter "Info" der KWBL. Format wie in kbl_info.txt beschrieben:
+//   # Abschnitt  |  ## Zwischenueberschrift  |  - Aufzaehlung  |  **fett**  |  [Linktext](https://...)
+//   {{auf-abstieg}} = Schaubild aus config/kwbl.json  |  // Kommentar
+
+# Das Wichtigste in Kürze
+Die KickBase Women BundesLiga ist das Ligasystem auf Basis der Frauen-Bundesliga, mit vier Ebenen und Auf- und Abstieg. Die Spieltage richten sich nach der Frauen-Bundesliga und laufen deshalb nicht zeitgleich mit der KBL.
+
+- Eine KWBL-Saison ist eine **Halbserie**: vom Saisonstart bis zur Winterpause (B) oder von der Winterpause bis zum Saisonende (A).
+- In jeder Liga spielen **13 Manager**. Der Admin-Account ist in jeder Liga dabei, zählt aber nicht mit.
+- Gespielt wird mit **200 Mio. Startbudget**, ohne Teams.
+- **Kaderbegrenzung 16**, kein Spielerlimit, Erfolge sind ausgeschaltet.
+- **Underpay ist deaktiviert**: Spieler können nicht unter Marktwert gekauft werden.
+- Neben der Liga gibt es den **KWBL-Pokal**.
+
+# Regeln
+- Ein **freundlicher Umgangston** ist selbstverständlich. Dazu gehört natürlich auch: kein Rassismus, kein Sexismus.
+- **Transfergespräche** laufen immer nur im Ligachat oder auf dem [Discord-Server](https://discord.gg/JderBpWf33), nie extern. Bei zwielichtigen Transfers muss nachvollziehbar sein, wie sie zustande kamen, sonst droht der Rauswurf.
+- **Multiaccounting** und **unfaire Transfers unter Freunden** werden mit dem Rauswurf bestraft. Auch sonstige Deals wie Kredite sind nicht erlaubt.
+- Die Ligen werden **nicht überwacht**. Verstöße müssen von den Managern an die Admins gemeldet werden, bitte nur bei wichtigen Sachen und nicht bei jeder Kleinigkeit.
+- **Aussteiger** werden mit der Punktzahl gewertet, die sie beim Ausstieg erreicht hatten. Frei werdende Plätze werden immer mit Nachrückern besetzt, Absteiger bleiben nicht drin.
+
+## Rückerstattung bei Nullstellen-Fehlern
+Wer sich beim Gebot um eine Null vertippt hat, kann das zu viel gezahlte Geld zurückbekommen, abzüglich eines **Strafzinses von 20 % des Kaufpreises (höchstens 3 Mio.)**. Das gilt nur für Nullstellen-Fehler.
+
+Der Admin schreibt den Betrag über die Admin-Einstellungen in der App gut, sobald die Spielerin an den Markt verkauft wurde oder sich ein Mitmanager mit dem eigentlich höchsten Gebot meldet. Einen Anspruch auf eine sofortige Erstattung gibt es nicht, etwa wenn es an einem Freitagabend passiert.
+
+# Auf- und Abstieg
+Die Farben zeigen, was am Saisonende mit den Plätzen passiert. In der KWBL gibt es **keinen Doppelauf- oder -abstieg**.
+
+{{auf-abstieg}}
+
+- Die **ersten drei aus Liga 2** steigen in Liga 1 auf, die **letzten drei aus Liga 1** steigen ab.
+- Die **ersten zwei aus Liga 3A und 3B** steigen in Liga 2 auf, die **letzten vier aus Liga 2** steigen ab.
+- Die **ersten zwei aus Liga 4A und 4B** steigen in die Liga 3 auf, die **letzten zwei aus Liga 3A und 3B** steigen ab.
+
+# Neu einsteigen
+Die Anmeldung läuft über unseren **[Discord-Server](https://discord.gg/JderBpWf33)**. Dort gibt es auch alle Ankündigungen und die vollständigen Regeln.
+
+## Wann kann ich einsteigen?
+In der **Sommer- und in der Winterpause**, nachdem die Ligen mit den Auf- und Absteigern neu gefüllt wurden.
+
+## Wie melde ich mich an?
+Trag im Discord-Kanal **#kwbl-anmeldung** deinen **Kickbase-Usernamen** ein. Ein Admin meldet sich anschließend dort bei dir und kümmert sich um alles Weitere.
+
+## Welcher Liga trete ich bei?
+**Ausschließlich der Liga, deren Link dir ein Admin gibt.** Wer ohne Absprache einer anderen Liga beitritt, wird kommentarlos gekickt. Wiederholtes unrechtmäßiges Beitreten kann zum Ausschluss führen.
+
+## Wann ist der Ligenreset?
+Die Ligen starten etwa **drei Wochen vor dem 1. Spieltag**.

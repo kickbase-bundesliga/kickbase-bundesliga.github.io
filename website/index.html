@@ -1,0 +1,1366 @@
+<meta charset="utf-8">
+<title>KickBase BundesLiga</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&family=Barlow:wght@600;700&family=EB+Garamond:wght@500&family=Source+Serif+4:opsz,wght@8..60,600;8..60,800&family=Great+Vibes&display=swap">
+<style>
+/* Layout: Stadionheft-Optik – schmale Kopfleiste mit Ligasystem-Schalter, darunter eine Spalte
+   mit Tabellen in Anzeigetafel-Typo (schmale Groteske, Tabellenziffern), Zonenstreifen wie im Kickbase-Bild. */
+:root{
+  --bg:#f3f4f6; --surface:#ffffff; --surface-2:#eceef1; --ink:#15171c; --muted:#5b616d; --line:#dcdfe5;
+  --accent:#b01f2a; --accent-soft:#f7e3e4; --on-accent:#ffffff;
+  --gold:#a8800c; --silver:#7d8590; --bronze:#9c5a26; --good:#1f7a43; --bad:#b3261e;
+  --z0:#c8444b; --z1:#e0861a; --z2:#cfa915; --z3:transparent; --z4:#4a95db; --z5:#6656c4;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --radius:6px;
+  --brand:var(--accent); --top-bg:var(--surface); --top-ink:var(--ink); --top-muted:var(--muted); --top-line:var(--line);
+  --top-active:var(--accent); --switch-on:var(--accent); --switch-on-ink:#ffffff; --switch-line:var(--line);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1014; --surface:#161920; --surface-2:#1d212a; --ink:#eceef2; --muted:#9aa1ad; --line:#2a2f39;
+  --accent:#e2464f; --accent-soft:#3a1b1e; --on-accent:#ffffff;
+  --gold:#e3b53b; --silver:#b8bfc8; --bronze:#d08a52; --good:#4cc27a; --bad:#ff7a70;
+  --z0:#e0636a; --z1:#f0a040; --z2:#e6c640; --z4:#6cb2f0; --z5:#8f80ea; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1014; --surface:#161920; --surface-2:#1d212a; --ink:#eceef2; --muted:#9aa1ad; --line:#2a2f39;
+  --accent:#e2464f; --accent-soft:#3a1b1e; --on-accent:#ffffff;
+  --gold:#e3b53b; --silver:#b8bfc8; --bronze:#d08a52; --good:#4cc27a; --bad:#ff7a70;
+  --z0:#e0636a; --z1:#f0a040; --z2:#e6c640; --z4:#6cb2f0; --z5:#8f80ea; color-scheme:dark}
+
+/* KBL: Rot aus dem Logo (#EF3727) – Kopfleiste minimal dunkler (#DA2E21), damit weisse Schrift lesbar bleibt */
+:root[data-sys="kbl"]{
+  --bg:#f6f4f3; --surface-2:#f1ecea; --line:#e5dedb; --muted:#625a57;
+  --accent:#c0221b; --accent-soft:#fbe4e1; --brand:#ef3727;
+  --top-bg:#da2e21; --top-ink:#ffffff; --top-muted:#ffd9d4; --top-line:#c4271b;
+  --top-active:#ffffff; --switch-on:#ffffff; --switch-on-ink:#c0221b; --switch-line:rgba(255,255,255,.45);
+}
+@media (prefers-color-scheme: dark){:root[data-sys="kbl"]:not([data-theme="light"]){
+  --bg:#110d0d; --surface:#1a1414; --surface-2:#221a19; --line:#332927; --muted:#ab9f9c;
+  --accent:#ff5a4e; --accent-soft:#3a1714; --brand:#ef3727;
+  --top-bg:#2a0f0c; --top-ink:#fff1ef; --top-muted:#f0a49c; --top-line:#45180f;
+  --top-active:#ef3727; --switch-on:#ef3727; --switch-on-ink:#ffffff; --switch-line:#5a2219}}
+:root[data-sys="kbl"][data-theme="dark"]{
+  --bg:#110d0d; --surface:#1a1414; --surface-2:#221a19; --line:#332927; --muted:#ab9f9c;
+  --accent:#ff5a4e; --accent-soft:#3a1714; --brand:#ef3727;
+  --top-bg:#2a0f0c; --top-ink:#fff1ef; --top-muted:#f0a49c; --top-line:#45180f;
+  --top-active:#ef3727; --switch-on:#ef3727; --switch-on-ink:#ffffff; --switch-line:#5a2219}
+
+/* KWBL: Himmelblau aus dem Logo (#00C1FF) als Kopfleiste, dunkleres Blau für Text-Akzente (Kontrast >= 4.5) */
+:root[data-sys="kwbl"]{
+  --bg:#f2f6f9; --surface-2:#e8f0f5; --line:#d6e1e8; --muted:#56646f;
+  --accent:#006fa8; --accent-soft:#dff4fc; --brand:#00c1ff;
+  --top-bg:#00c1ff; --top-ink:#04263a; --top-muted:#0b4a68; --top-line:#00a9e0;
+  --top-active:#04263a; --switch-on:#04263a; --switch-on-ink:#ffffff; --switch-line:rgba(4,38,58,.35);
+}
+@media (prefers-color-scheme: dark){:root[data-sys="kwbl"]:not([data-theme="light"]){
+  --bg:#0b1117; --surface:#121a22; --surface-2:#18232d; --line:#24323e; --muted:#93a4b2;
+  --accent:#33ccff; --accent-soft:#0d2a38; --brand:#00c1ff;
+  --top-bg:#062636; --top-ink:#e6f7ff; --top-muted:#8fc9e3; --top-line:#0e3a50;
+  --top-active:#00c1ff; --switch-on:#00c1ff; --switch-on-ink:#04263a; --switch-line:#1d4d63}}
+:root[data-sys="kwbl"][data-theme="dark"]{
+  --bg:#0b1117; --surface:#121a22; --surface-2:#18232d; --line:#24323e; --muted:#93a4b2;
+  --accent:#33ccff; --accent-soft:#0d2a38; --brand:#00c1ff;
+  --top-bg:#062636; --top-ink:#e6f7ff; --top-muted:#8fc9e3; --top-line:#0e3a50;
+  --top-active:#00c1ff; --switch-on:#00c1ff; --switch-on-ink:#04263a; --switch-line:#1d4d63}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);margin:0}
+button,select,input{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* Kopfleiste */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--top-bg);color:var(--top-ink);border-bottom:1px solid var(--top-line);transition:background .2s}
+.top-inner{max-width:1080px;margin:0 auto;padding-inline:16px;display:flex;align-items:center;gap:16px;min-height:56px;flex-wrap:wrap}
+.brand{font:800 26px/1 var(--display);letter-spacing:.02em;color:var(--brand);text-transform:uppercase;display:flex;align-items:center;gap:10px;white-space:nowrap}
+:root[data-sys] .brand{color:var(--top-ink);letter-spacing:.18em}
+.brand img{width:36px;height:36px;border-radius:7px;display:block;box-shadow:0 0 0 1px var(--top-line)}
+.brand small{font:600 13px/1 var(--display);color:var(--top-muted);letter-spacing:.08em}
+.switch{display:flex;border:1px solid var(--switch-line);border-radius:999px;padding:2px;gap:2px}
+.switch button{border:0;background:none;padding:4px 12px;border-radius:999px;cursor:pointer;font:700 14px/1.2 var(--display);letter-spacing:.06em;color:var(--top-ink)}
+.switch button[aria-pressed="true"]{background:var(--switch-on);color:var(--switch-on-ink)}
+.nav{max-width:1080px;margin:0 auto;padding-inline:16px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{text-decoration:none;padding:10px 12px;font:700 15px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--top-muted);border-bottom:3px solid transparent;white-space:nowrap}
+.nav a[aria-current="page"]{color:var(--top-ink);border-bottom-color:var(--top-active)}
+.nav a:hover{color:var(--top-ink)}
+
+main{max-width:1080px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:24px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(34px,6vw,52px);font-weight:800;text-transform:uppercase;letter-spacing:.01em}
+h2{font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+h3{font-size:19px;font-weight:700}
+.eyebrow{font:700 13px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+.lede{color:var(--muted);max-width:65ch;margin:6px 0 0}
+
+/* Steuerung */
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.controls .field{flex-direction:column;align-items:stretch;gap:4px;min-width:150px}
+.controls select{min-width:150px}
+.field{display:flex;align-items:center;gap:8px}
+.field label{font:700 12px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+select,input[type=search]{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:6px 10px;min-height:36px}
+input[type=search]{min-width:0;width:100%;max-width:340px}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden}
+.stepper button{border:0;background:none;width:36px;height:36px;cursor:pointer;font-size:18px}
+.stepper button:disabled{opacity:.3;cursor:default}
+.stepper select{border:0;border-inline:1px solid var(--line);border-radius:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;cursor:pointer;font:700 15px/1.3 var(--display);letter-spacing:.03em}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip-group{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip-group+.chip-group{margin-top:6px}
+
+/* Saisonkopf */
+.headline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:flex-end}
+.facts{display:flex;flex-wrap:wrap;gap:24px}
+.fact b{display:block;font:700 28px/1 var(--display)}
+.fact span{font:600 12px/1.2 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* Tabellen */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{font:700 12px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+.r{text-align:right}.c{text-align:center}
+td.pl{font:700 18px/1 var(--display);width:44px;text-align:center;position:relative}
+td.pl::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:5px;border-radius:0 3px 3px 0;background:var(--zone,transparent)}
+td.pts{font:700 19px/1 var(--display);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+td.md{font:600 17px/1 var(--display);font-variant-numeric:tabular-nums;text-align:right;color:var(--muted);white-space:nowrap}
+td.corr{font:700 15px/1 var(--display);text-align:right;color:var(--good);white-space:nowrap}
+td.corr.neg{color:var(--bad)}
+td.trend{font:600 14px/1 var(--display);white-space:nowrap;width:48px;color:var(--muted)}
+.up{color:var(--good)}.down{color:var(--bad)}
+.mgr{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.mgr button{background:none;border:0;padding:0;cursor:pointer;font-weight:600;text-align:left}
+.mgr button:hover{color:var(--accent);text-decoration:underline}
+.badges{display:inline-flex;gap:3px;align-items:center}
+.medal{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 4px;border-radius:9px;font:700 11px/1 var(--display);color:#fff}
+.medal.g{background:var(--gold)}.medal.s{background:var(--silver)}.medal.b{background:var(--bronze)}
+.cupicon{width:15px;height:15px;color:var(--gold);flex:none}
+.move{font:700 12px/1 var(--display);padding:2px 5px;border-radius:4px}
+.move.up{background:color-mix(in srgb,var(--good) 15%,transparent)}
+.move.down{background:color-mix(in srgb,var(--bad) 15%,transparent)}
+.legend{display:flex;flex-wrap:wrap;gap:16px;padding:10px 12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.note{font-size:13px;color:var(--muted);padding:10px 12px;border-top:1px solid var(--line)}
+.lg{font:600 13px/1 var(--display);letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+
+/* Pokal */
+.winner{display:flex;gap:16px;align-items:center;padding:16px;flex-wrap:wrap}
+.winner svg{width:44px;height:44px;color:var(--gold);flex:none}
+.winner .who{font:800 30px/1 var(--display);text-transform:uppercase}
+.rounds{display:flex;gap:6px;flex-wrap:wrap}
+.matches{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px}
+.match{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);min-width:0}
+.match .side{display:flex;gap:8px;align-items:baseline;min-width:0}
+.match .side span.n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.match .s{font:700 18px/1.2 var(--display);font-variant-numeric:tabular-nums;text-align:right;color:var(--muted)}
+.match .won .n,.match .s.won{color:var(--ink);font-weight:700}
+.match .lost .n{color:var(--muted)}
+.bye{color:var(--muted);font-style:italic}
+.bracket{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(190px,1fr);gap:16px;overflow-x:auto;padding:4px 2px 8px}
+.bcol{display:grid;grid-template-rows:auto 1fr;gap:8px}
+.bcol h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.bslots{display:grid;grid-template-rows:repeat(var(--n),1fr);gap:8px}
+.bslots .match{align-self:center;grid-template-columns:1fr auto;padding:8px 10px}
+
+/* Ruhmeshalle */
+.halls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:24px;align-items:start}
+.honour{display:grid;grid-template-columns:72px 1fr;gap:0 12px;padding:12px 14px;border-bottom:1px solid var(--line);align-items:center}
+.honour:last-child{border-bottom:0}
+.honour .yr{font:800 22px/1 var(--display);color:var(--accent)}
+.honour button.yr{all:unset;cursor:pointer;font:800 22px/1 var(--display);color:var(--accent)}
+.honour button.yr:hover{text-decoration:underline}
+.honour button.yr:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* Trophäen */
+.showcase{display:flex;flex-direction:column;gap:14px}
+.tro-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),420px));gap:20px;justify-content:start}
+.tro-card{margin:0;display:flex;flex-direction:column;gap:10px}
+.tro{position:relative;aspect-ratio:1;border-radius:var(--radius);overflow:hidden;background:var(--surface-2);box-shadow:0 1px 0 var(--line)}
+.tro img,.tro svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.tro img{object-fit:cover}
+.tro-card figcaption{display:flex;flex-direction:column;gap:4px}
+.tro-who{font:800 26px/1.05 var(--display);text-transform:uppercase}
+.tro-who button{all:unset;cursor:pointer}
+.tro-who button:hover{color:var(--accent)}
+.tro-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.tro-gallery .tro-who{font-size:17px}
+.tro-gallery .eyebrow{font-size:11px}
+.honour .champ{font:700 22px/1.1 var(--display);text-transform:uppercase;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.honour .champ button{all:unset;cursor:pointer}
+.honour .champ button:hover{color:var(--accent)}
+.honour .rest{font-size:13px;color:var(--muted);grid-column:2}
+.honour .rest button{all:unset;cursor:pointer}
+.honour .rest button:hover{text-decoration:underline}
+
+/* Manager */
+.results{display:flex;flex-direction:column}
+.results button{all:unset;cursor:pointer;padding:8px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+.results button:hover{background:var(--surface-2)}
+.profile-head{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between}
+.trophies{display:flex;gap:16px;flex-wrap:wrap}
+.trophy{display:flex;align-items:center;gap:8px;font:700 18px/1 var(--display)}
+.curve{width:100%;height:auto;display:block}
+.curve text{font:600 11px var(--display);fill:var(--muted)}
+.curve .lvl{fill:var(--ink);font-size:12px}
+/* Spieltag: Elfen auf dem Spielfeld */
+:root{--on-strong:#ffffff;--pitch:#2f7a4c;--pitch-2:#2a6f45;--pitch-line:rgba(255,255,255,.32);--token:rgba(8,24,14,.55);--token-ink:#ffffff;--token-muted:#cfe8d8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--on-strong:#0e1014;--pitch:#1c4a2f;--pitch-2:#19432a;--pitch-line:rgba(255,255,255,.18);--token:rgba(0,0,0,.45)}}
+:root[data-theme="dark"]{--on-strong:#0e1014;--pitch:#1c4a2f;--pitch-2:#19432a;--pitch-line:rgba(255,255,255,.18);--token:rgba(0,0,0,.45)}
+.elfs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:24px;align-items:start}
+.elf h2{font-size:22px}
+.elf .sub{font-size:13px;color:var(--muted);margin:4px 0 10px;min-height:20px}
+.elf .sub button{all:unset;cursor:pointer;font-weight:700;color:var(--ink)}
+.elf .sub button:hover{color:var(--accent);text-decoration:underline}
+.pitch{position:relative;border-radius:var(--radius);padding:14px 6px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;overflow:hidden;
+  background:repeating-linear-gradient(180deg,var(--pitch) 0 48px,var(--pitch-2) 48px 96px)}
+.pitch::before{content:"";position:absolute;inset:8px;border:2px solid var(--pitch-line);border-radius:3px;pointer-events:none}
+.pitch::after{content:"";position:absolute;left:28%;right:28%;bottom:8px;height:16%;border:2px solid var(--pitch-line);border-bottom:0;pointer-events:none}
+.prow{position:relative;z-index:1;display:flex;justify-content:center;gap:4px;min-width:0}
+.tok{flex:0 1 88px;min-width:0;background:var(--token);color:var(--token-ink);border-radius:6px;padding:6px 3px;text-align:center}
+.tok b{display:block;font:700 15px/1.1 var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tok span{white-space:nowrap}
+.tok span{display:block;font:600 13px/1.2 var(--display);color:var(--token-muted);font-variant-numeric:tabular-nums}
+.tok span em{font-style:normal;opacity:.85}
+.formation{font:700 13px/1 var(--display);letter-spacing:.08em;color:var(--muted)}
+.tv-chart{width:100%;height:auto;display:block}
+.tv-chart text{font:600 11px var(--display);fill:var(--muted)}
+.tv-chart .pt{cursor:pointer}
+.tv-chart .pt:focus-visible circle{stroke:var(--ink)}
+.lineup-head{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+/* Info */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px;align-items:start}
+.prose{padding:16px 18px;max-width:72ch}
+.prose h2{margin-bottom:10px}
+.prose p{margin:0 0 10px}
+.prose ul{margin:0 0 10px;padding-left:20px}
+.prose li{margin:4px 0}
+.prose a{color:var(--accent);font-weight:600}
+.prose > :last-child{margin-bottom:0}
+.hist-chart{position:relative;padding:12px}
+.hist-chart svg{width:100%;height:auto;display:block}
+.hist-chart text{font:600 11px var(--display);fill:var(--muted)}
+.hist-chart .bar{cursor:default;outline:none}
+.hist-chart .bar rect.hit{fill:transparent}
+.hist-chart .bar:hover path,.hist-chart .bar:focus path{fill:var(--brand)}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font:600 13px/1.3 var(--body);padding:6px 9px;border-radius:5px;white-space:nowrap;transform:translate(-50%,-100%);margin-top:-8px;z-index:2}
+.tip[hidden]{display:none}
+td .star{color:var(--muted);font-size:12px}
+.prose h3{font:700 17px/1.2 var(--display);margin:16px 0 4px;letter-spacing:.02em}
+.prose h2 + h3{margin-top:4px}
+.info-grid .prose{max-width:none}
+.info-wide{grid-column:1/-1}
+.promo{margin:4px 0 12px;display:grid;gap:6px}
+.pr-row{display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:center}
+.pr-lab{font:700 16px/1.1 var(--display)}
+.pr-lab span{display:block;font:600 12px/1.2 var(--display);color:var(--muted);letter-spacing:.04em}
+.pr-cells{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:2px}
+.pr-cells span{display:grid;place-items:center;height:28px;border-radius:3px;font:700 13px/1 var(--display);font-variant-numeric:tabular-nums}
+.mv-champ{background:var(--gold);color:var(--on-strong)}
+.mv-up2{background:var(--good);color:var(--on-strong)}
+.mv-up2c{background:repeating-linear-gradient(135deg,var(--good) 0 4px,color-mix(in srgb,var(--good) 45%,var(--surface)) 4px 8px);color:var(--on-strong)}
+.mv-up{background:color-mix(in srgb,var(--good) 28%,var(--surface));color:var(--ink)}
+.mv-stay{background:var(--surface-2);color:var(--muted)}
+.mv-down{background:color-mix(in srgb,var(--bad) 26%,var(--surface));color:var(--ink)}
+.mv-down2{background:var(--bad);color:var(--on-strong)}
+.promo .legend i{width:12px;height:12px}
+@media (max-width:560px){
+  .pr-row{grid-template-columns:1fr;gap:3px}
+  .pr-lab span{display:inline;margin-left:6px}
+  .pr-cells span{height:24px;font-size:11px}
+}
+.hist-table .mgr{flex-wrap:nowrap;white-space:nowrap}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+.loading{padding:48px;text-align:center;color:var(--muted)}
+footer{max-width:1080px;margin:0 auto;padding:0 16px 32px;color:var(--muted);font-size:12px}
+@media (max-width:560px){
+  td.trend,th.trend{display:none}
+  .brand small{display:none}
+  .fact b{font-size:22px}
+  .facts{gap:16px}
+  td{padding:6px 4px}
+  th{padding:10px 4px}
+  td.pts{font-size:17px}
+  td.md{font-size:15px}
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .controls .field,.controls select{min-width:0;width:100%}
+}
+@media (prefers-reduced-motion:no-preference){tbody tr{transition:background .12s}}
+.gap-row td{color:var(--muted);font-style:italic}
+
+/* Pokal-Auslosung live: Banner, Lostopf, Ziehung */
+.drawbar{background:#16181d;color:#f3f4f6;border-bottom:1px solid rgba(255,255,255,.08)}
+:root{--glass-1:rgba(255,255,255,.7);--glass-2:rgba(159,179,200,.14);--glass-3:rgba(91,107,125,.3)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--glass-1:rgba(255,255,255,.16);--glass-2:rgba(160,175,195,.06);--glass-3:rgba(160,175,195,.14)}}
+:root[data-theme="dark"]{--glass-1:rgba(255,255,255,.16);--glass-2:rgba(160,175,195,.06);--glass-3:rgba(160,175,195,.14)}
+.drawbar[hidden]{display:none}
+.drawbar-row{max-width:1080px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font:600 15px/1.3 var(--display);letter-spacing:.03em}
+.drawbar-row b{font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.drawbar-row .cd{font-variant-numeric:tabular-nums;font-weight:700}
+.drawbar-row button{margin-left:auto;border:0;border-radius:999px;padding:5px 14px;background:var(--brand);color:#fff;font:700 14px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+:root[data-sys="kwbl"] .drawbar-row button{color:#04263a}
+.livedot{width:10px;height:10px;border-radius:50%;background:#8a909a;flex:none}
+.livedot.live{background:#ff3b30;box-shadow:0 0 0 0 rgba(255,59,48,.6)}
+.livedot.vor{background:#e3b53b}
+@media (prefers-reduced-motion:no-preference){.livedot.live{animation:pulse 1.4s infinite}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,48,.55)}100%{box-shadow:0 0 0 10px rgba(255,59,48,0)}}
+
+.draw-stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;padding:20px;overflow:hidden}
+.pot{width:100%;max-width:340px;height:auto;display:block;margin:0 auto}
+.pot .glass{fill:url(#potGlass);stroke:var(--line);stroke-width:3}
+.pot .rim{fill:none;stroke:var(--muted);stroke-width:4;opacity:.55}
+.pot .foot{fill:var(--surface-2);stroke:var(--line);stroke-width:2}
+.pot .shine{fill:none;stroke:#fff;stroke-width:6;stroke-linecap:round;opacity:.45}
+.pot .ball .lo{fill:var(--brand)}
+.pot .ball .hi{fill:#fff}
+.pot .ball .edge{fill:none;stroke:rgba(0,0,0,.18);stroke-width:1}
+.pot .ball[hidden]{display:none}
+.pot .bob{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){
+  .pot .bob{animation:bob var(--t,3s) ease-in-out var(--d,0s) infinite alternate}
+  .pot.mixing .bob{animation-duration:calc(var(--t,3s) / 6)}
+}
+@keyframes bob{from{transform:translate(0,0)}to{transform:translate(var(--dx,2px),var(--dy,-3px))}}
+
+.reveal{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:260px;text-align:center}
+.reveal .spot{display:grid;place-items:center;min-height:150px;width:100%}
+.reveal .spot > *{grid-area:1/1}
+.reveal .step{font:700 13px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.bigball{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.95) 0 12%,transparent 13%),linear-gradient(180deg,#fff 0 49%,rgba(0,0,0,.15) 49% 51%,var(--brand) 51%);box-shadow:inset -8px -10px 18px rgba(0,0,0,.22),0 8px 18px rgba(0,0,0,.18)}
+.bigball.gone{visibility:hidden}
+.slip{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--brand);border-radius:var(--radius);padding:12px 18px;min-width:min(100%,280px);max-width:100%;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.slip .who{font:800 clamp(24px,4vw,34px)/1.05 var(--display);text-transform:uppercase;overflow-wrap:anywhere}
+.slip .lg{display:block;margin-top:4px}
+.slip.empty-slip{border-top-color:var(--line);color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){
+  .bigball.fresh{animation:rise .8s cubic-bezier(.2,.8,.3,1) both,popout .35s ease-in .95s forwards}
+  .slip.fresh{animation:slipin .45s cubic-bezier(.2,.9,.3,1.2) 1s both}
+  .slip.fresh.nowait{animation-delay:0s}
+  .dmatch .fresh{animation:flash 1.6s ease-out 1s both}
+}
+@keyframes rise{from{transform:translateY(120px) scale(.3);opacity:0}35%{opacity:1}to{transform:none;opacity:1}}
+@keyframes popout{to{transform:scale(1.25);opacity:0}}
+@keyframes slipin{from{transform:scale(.6) rotate(-3deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes flash{from{background:var(--accent-soft)}to{background:transparent}}
+
+.count-big{font:800 clamp(44px,9vw,76px)/1 var(--display);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.dmatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:8px}
+.dmatch{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);align-items:center}
+.dmatch .nr{grid-row:span 2;font:800 22px/1 var(--display);color:var(--muted);min-width:28px;text-align:center}
+.dmatch .p{display:flex;gap:8px;align-items:baseline;min-width:0;border-radius:4px;padding:1px 4px;margin:0 -4px}
+.dmatch .p .n{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dmatch .p.open .n{color:var(--muted);font-weight:400}
+.dmatch.next{border-color:var(--accent)}
+.draw-actions{display:flex;flex-wrap:wrap;gap:8px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cup-live{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;padding:14px 16px}
+.cup-live .t{font:700 20px/1.2 var(--display);text-transform:uppercase}
+@media (max-width:700px){
+  .draw-stage{grid-template-columns:1fr;padding:14px;gap:8px}
+  .pot{max-width:240px}
+  .reveal{min-height:190px;gap:8px}
+  .reveal .spot{min-height:120px}
+  .bigball{width:92px;height:92px}
+  .drawbar-row button{margin-left:0}
+}
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand" id="brand">KBL <small>KickBase BundesLiga</small></div>
+    <div class="switch" id="sysSwitch" role="group" aria-label="Ligasystem"></div>
+  </div>
+  <nav class="nav" id="nav" aria-label="Bereiche">
+    <a href="#tabellen" data-view="tabellen">Tabellen</a>
+    <a href="#spieltag" data-view="spieltag">Spieltag</a>
+    <a href="#pokal" data-view="pokal">Pokal</a>
+    <a href="#ruhmeshalle" data-view="ruhmeshalle">Hall of Fame</a>
+    <a href="#score" data-view="score">KBL-Score</a>
+    <a href="#ewig" data-view="ewig">Ewige Tabelle</a>
+    <a href="#manager" data-view="manager">Manager</a>
+    <a href="#info" data-view="info">Info</a>
+  </nav>
+</header>
+<div class="drawbar" id="drawBar" hidden></div>
+<main id="app"><div class="loading">Lade Daten …</div></main>
+<footer id="foot"></footer>
+
+<script>
+(() => {
+const CUP_SVG = '<svg class="cupicon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 3h10v2h3v3a4 4 0 0 1-4 4h-.3A5 5 0 0 1 13 14.9V18h3v3H8v-3h3v-3.1A5 5 0 0 1 8.3 12H8a4 4 0 0 1-4-4V5h3V3Zm0 4H6v1a2 2 0 0 0 1 1.7V7Zm10 0v2.7A2 2 0 0 0 18 8V7h-1Z"/></svg>';
+const BIG_CUP = CUP_SVG.replace('class="cupicon"', '');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => n == null ? '–' : Number(n).toLocaleString('de-DE');
+const store = { get(k){ try { return localStorage.getItem(k) } catch(e){ return null } }, set(k,v){ try { localStorage.setItem(k,v) } catch(e){} } };
+const cache = {};
+async function getJSON(path){ if(!cache[path]) cache[path] = fetch(path).then(r => { if(!r.ok) throw new Error(path); return r.json() }); return cache[path]; }
+
+const state = { systems: [], sys: null, idx: null, view: 'tabellen', season: null, league: null, md: null,
+  cupSeason: null, cupRound: null, manager: null, scoreFilter: '', ewigLevel: 1, query: '', hofSeason: null,
+  xSeason: null, xMd: null, mgrXSeason: null, mgrMd: null };
+const app = document.getElementById('app');
+
+function roundName(n){ return ({2:'Finale',4:'Halbfinale',8:'Viertelfinale',16:'Achtelfinale'})[n] || `Runde der letzten ${n}`; }
+function mgr(id){ return state.idx.managers[id] || { n: id === 'Freilos' ? 'Freilos' : ((state.drawPeople || {})[id] || {}).n || `ID ${id}`, career: [], titles: {} }; }
+function nameBtn(id){ return `<button type="button" data-mgr="${esc(id)}">${esc(mgr(id).n)}</button>`; }
+
+/* ---------- Ehrenabzeichen ---------- */
+function badges(id, season){
+  const t = mgr(id).titles || {}; const before = a => (a || []).filter(s => !season || s < season).length;
+  let h = '';
+  const g = before(t.gold), s = before(t.silver), b = before(t.bronze), c = before(t.cup);
+  if (g) h += `<span class="medal g" title="${g}× Meister ${state.idx.short} 1">${g}× 1.</span>`;
+  if (s) h += `<span class="medal s" title="${s}× Vizemeister">${s}× 2.</span>`;
+  if (b) h += `<span class="medal b" title="${b}× Platz 3">${b}× 3.</span>`;
+  if (c) h += `<span class="badges" title="${c}× Pokalsieger">${CUP_SVG}${c > 1 ? `<b class="lg">${c}</b>` : ''}</span>`;
+  return h ? `<span class="badges">${h}</span>` : '';
+}
+function movement(id, season){
+  const car = mgr(id).career.filter(c => !c.q); const i = car.findIndex(c => c.s === season);
+  if (i <= 0) return i === 0 && car.length ? '<span class="move up" title="Neu im System">neu</span>' : '';
+  const d = car[i-1].level - car[i].level;
+  if (d > 0) return `<span class="move up" title="Aufgestiegen aus ${esc(car[i-1].league)}">▲${d > 1 ? d : ''}</span>`;
+  if (d < 0) return `<span class="move down" title="Abgestiegen aus ${esc(car[i-1].league)}">▼${-d > 1 ? -d : ''}</span>`;
+  return '';
+}
+
+/* ---------- Tabellen ---------- */
+function zoneColors(zones){
+  const out = []; (zones || []).forEach((n, z) => { for (let i = 0; i < n; i++) out.push(z); }); return out;
+}
+function zoneLabels(level){
+  // Zonen wie in config "distribution": 0 Meister bzw. Doppelaufstieg, 1 Aufstieg/Vize, 2 Platz 3, 3 bleibt, 4 Abstieg, 5 Doppelabstieg
+  if (level === 1) return ['Meister','Vizemeister','Platz 3',null,'Abstieg','Doppelabstieg'];
+  const st = (state.idx.structure || []).find(l => l.level === level);
+  const multi = st && st.leagues.length > 1;
+  return [multi ? 'Aufstieg (bester Staffelsieger doppelt)' : 'Doppelaufstieg','Aufstieg','Relegation',null,'Abstieg','Doppelabstieg'];
+}
+const MOVES = {
+  champ: ['Meister', 'mv-champ'], up2: ['Doppelaufstieg', 'mv-up2'], up2c: ['Aufstieg, bester Staffelsieger doppelt', 'mv-up2c'],
+  up: ['Aufstieg', 'mv-up'], stay: ['Klassenerhalt', 'mv-stay'], down: ['Abstieg', 'mv-down'], down2: ['Doppelabstieg', 'mv-down2'],
+};
+function moveOf(level, zone, multi){
+  if (level === 1) return zone === 0 ? 'champ' : zone <= 3 ? 'stay' : zone === 4 ? 'down' : 'down2';
+  return zone === 0 ? (multi ? 'up2c' : 'up2') : zone === 1 ? 'up' : zone <= 3 ? 'stay' : zone === 4 ? 'down' : 'down2';
+}
+function promoChart(){
+  const st = state.idx.structure || [];
+  if (!st.length) return '';
+  const used = new Set();
+  const rows = st.map(l => {
+    const multi = l.leagues.length > 1; const cells = [];
+    (l.zones || []).forEach((n, z) => { for (let i = 0; i < n; i++) { const m = moveOf(l.level, z, multi); used.add(m); cells.push(m); } });
+    return `<div class="pr-row"><div class="pr-lab">${state.idx.short} ${l.level}${multi ? ` <span>${l.leagues.length} Staffeln</span>` : ''}</div>
+      <div class="pr-cells" style="--n:${cells.length}">${cells.map((m, i) => `<span class="${MOVES[m][1]}" title="Platz ${i + 1}: ${MOVES[m][0]}">${i + 1}</span>`).join('')}</div></div>`;
+  }).join('');
+  const order = ['champ', 'up2', 'up2c', 'up', 'stay', 'down', 'down2'].filter(m => used.has(m));
+  return `<div class="promo">${rows}<div class="legend" style="border:0;padding:10px 0 0">${order.map(m => `<span><i class="${MOVES[m][1]}"></i>${MOVES[m][0]}</span>`).join('')}</div></div>`;
+}
+function corrUpto(row, x){ let s = 0; for (const k in (row.corr || {})) if (+k <= x) s += row.corr[k]; return s; }
+function totalUpto(row, x){ let s = 0; for (let i = 1; i <= x && i < row.md.length; i++) s += row.md[i] || 0; return s + corrUpto(row, x); }
+function standings(league, x, season){
+  const final = !season.current && x >= season.last_md && league.rows.every(r => r.place > 0);
+  const rank = y => { const a = league.rows.map(r => ({ r, t: totalUpto(r, y) })).sort((p, q) => q.t - p.t); const m = {}; a.forEach((o, i) => m[o.r.id] = i + 1); return m; };
+  const now = rank(x), prev = x > 1 ? rank(x - 1) : null;
+  const rows = league.rows.map(r => ({ id: r.id, md: x > 0 ? (r.md[x] ?? 0) : null, corr: corrUpto(r, x),
+    total: final && r.points != null ? r.points : totalUpto(r, x),
+    place: final ? r.place : now[r.id], trend: prev ? prev[r.id] - now[r.id] : null }));
+  rows.sort((a, b) => a.place - b.place);
+  return { rows, final };
+}
+
+async function viewTables(){
+  const idx = state.idx;
+  if (!state.season) state.season = idx.current;
+  const meta = idx.seasons.find(s => s.name === state.season) || idx.seasons[0];
+  const season = await getJSON(`data/${state.sys}/season_${meta.name}.json`);
+  if (!season.leagues.find(l => l.name === state.league)) {
+    const byShort = state.leagueShort && season.leagues.find(l => l.short === state.leagueShort);
+    state.league = byShort ? byShort.name : season.leagues[0].name;
+  }
+  state.leagueShort = null;
+  const league = season.leagues.find(l => l.name === state.league);
+  // Ligen, von denen nur die Abschlusstabelle vorliegt (keine Spieltagspunkte)
+  const onlyFinal = !season.current && league.rows.length && league.rows.every(r => !(r.md || []).some(v => v));
+  if (state.md == null || state.md > season.last_md || onlyFinal) state.md = season.last_md;
+  const x = state.md;
+  const { rows, final } = standings(league, x, season);
+  const anyCorr = rows.some(r => r.corr);
+  const zc = zoneColors(league.zones); const zl = zoneLabels(league.level);
+  const usedZones = [...new Set(rows.map(r => zc[r.place - 1]).filter(z => z != null && zl[z]))];
+
+  const byLevel = {}; season.leagues.forEach(l => (byLevel[l.level] = byLevel[l.level] || []).push(l));
+  const opt = l => `<option value="${esc(l.name)}" ${l.name === state.league ? 'selected' : ''}>${esc(l.short)}</option>`;
+  const leagueOpts = Object.keys(byLevel).sort((a, b) => a - b).map(lv => byLevel[lv].length === 1
+    ? opt(byLevel[lv][0])
+    : `<optgroup label="${idx.short} ${lv}">${byLevel[lv].map(opt).join('')}</optgroup>`).join('');
+
+  const mdOpts = [];
+  for (let i = season.last_md; i >= 0; i--) mdOpts.push(`<option value="${i}" ${i === x ? 'selected' : ''}>${i === 0 ? 'Vor Saisonstart' : `Spieltag ${i}`}</option>`);
+  const realMd = x > 0 ? season.first_matchday + x - 1 : null;
+  const leader = rows[0];
+
+  app.innerHTML = `
+  <section class="headline">
+    <div><div class="eyebrow">Saison ${esc(meta.name)}${meta.current ? ' · läuft' : ''}${meta.quali ? ' · Qualifikation' : ''}</div>
+      <h1>${esc(league.short)}</h1>
+      <p class="lede">${final ? 'Abschlusstabelle' : x === 0 ? 'Vor dem ersten Spieltag' : `Stand nach ${idx.short}-Spieltag ${x} (Bundesliga-Spieltag ${realMd})`} · ${rows.length} Manager</p></div>
+    <div class="facts">
+      ${leader && x > 0 ? `<div class="fact"><b>${esc(mgr(leader.id).n)}</b><span>${meta.quali ? (final ? 'Gruppensieger' : 'Gruppenerster') : final ? 'Meister' : 'Tabellenführer'}</span></div>` : ''}
+    </div>
+  </section>
+  <section class="controls">
+    <div class="field"><label for="seasonSel">Saison</label>
+      <select id="seasonSel">${idx.seasons.map(s => `<option value="${s.name}" ${s.name === meta.name ? 'selected' : ''}>${s.name}${s.current ? ' (aktuell)' : s.quali ? ' (Quali)' : ''}</option>`).join('')}</select></div>
+    <div class="field"><label for="leagueSel">Liga</label>
+      <select id="leagueSel">${leagueOpts}</select></div>
+    ${season.last_md > 0 && !onlyFinal ? `<div class="field"><label for="mdSel">Spieltag</label>
+      <select id="mdSel">${mdOpts.join('')}</select></div>` : ''}
+  </section>
+  <section class="panel">
+    <div class="scroll"><table>
+      <thead><tr><th class="c">Pl.</th><th class="trend">Trend</th><th>Manager</th>${x > 0 && !final ? '<th class="r">ST</th>' : ''}${anyCorr ? '<th class="r" title="Admin-Korrektur">Korr.</th>' : ''}<th class="r">Punkte</th></tr></thead>
+      <tbody>${rows.map(r => {
+        const z = zc[r.place - 1];
+        const tr = r.trend == null ? '' : r.trend > 0 ? `<span class="up">▲ ${r.trend}</span>` : r.trend < 0 ? `<span class="down">▼ ${-r.trend}</span>` : '<span>–</span>';
+        return `<tr>
+          <td class="pl" style="--zone:var(--z${z ?? 3})">${r.place || '–'}</td>
+          <td class="trend">${tr}</td>
+          <td><div class="mgr">${nameBtn(r.id)}${movement(r.id, meta.name)}${badges(r.id, meta.name)}</div></td>
+          ${x > 0 && !final ? `<td class="md">${fmt(r.md)}</td>` : ''}
+          ${anyCorr ? `<td class="corr ${r.corr < 0 ? 'neg' : ''}">${r.corr ? (r.corr > 0 ? '+' : '') + fmt(r.corr) : ''}</td>` : ''}
+          <td class="pts">${fmt(r.total)}</td></tr>`; }).join('')}</tbody>
+    </table></div>
+    ${usedZones.length ? `<div class="legend">${usedZones.sort().map(z => `<span><i style="background:var(--z${z})"></i>${zl[z]}</span>`).join('')}</div>` : ''}
+    ${anyCorr ? `<div class="note">Korr. = Punkte, die der Admin gutgeschrieben hat. Sie zählen in der Gesamtwertung, aber nicht als Spieltagspunkte (ST).</div>` : ''}
+    ${(() => { const mx = Math.max(0, ...league.rows.map(r => r.place || 0)); return mx > rows.length ? `<div class="note">Für diese Saison sind nur ${rows.length} von mindestens ${mx} Managern in der Datenbank erfasst. Fehlende Plätze sind nicht aufgeführt.</div>` : ''; })()}
+    ${meta.gaps ? `<div class="note">Für ${meta.gaps.map(l => `Liga ${l}`).join(' und ')} liegen aus der Saison ${esc(meta.name)} keine Tabellen mehr vor.</div>` : ''}
+    ${meta.quali ? `<div class="note">Qualifikationssaison vor dem Start der ${idx.short}. Sie wird zur Erinnerung gezeigt und zählt nicht für Titel, ${idx.short}-Score und Ewige Tabelle.</div>` : ''}
+    ${onlyFinal ? `<div class="note">Für diese Liga liegt nur die Abschlusstabelle vor, keine Spieltagsdaten.</div>`
+      : final ? `<div class="note">Abschlusstabelle mit den offiziellen Platzierungen und Gesamtpunkten aus Kickbase. Mit der Spieltag-Auswahl kannst du frühere Stände ansehen.</div>` : ''}
+  </section>`;
+
+  on('#seasonSel', 'change', e => { state.season = e.target.value; state.md = null; render(); });
+  on('#mdSel', 'change', e => { state.md = +e.target.value; render(); });
+  on('#leagueSel', 'change', e => { state.league = e.target.value; render(); });
+}
+
+/* ---------- Pokal ---------- */
+function matchHTML(m, leagues){
+  const side = (id, pts, won, decided) => {
+    if (id === 'Freilos') return `<div class="side"><span class="n bye">Freilos</span></div><div class="s"></div>`;
+    const cls = decided ? (won ? 'won' : 'lost') : '';
+    return `<div class="side ${cls}"><span class="n">${nameBtnInline(id)}</span><span class="lg">${esc(leagues[id] || '')}</span></div><div class="s ${won ? 'won' : ''}">${pts == null ? '' : fmt(pts)}</div>`;
+  };
+  const decided = !!m.w;
+  return `<div class="match">${side(m.a, m.pa, m.w === m.a, decided)}${side(m.b, m.pb, m.w === m.b, decided)}</div>`;
+}
+function nameBtnInline(id){ return `<button type="button" data-mgr="${esc(id)}" style="all:unset;cursor:pointer">${esc(mgr(id).n)}</button>`; }
+
+function bracketOrder(rounds){
+  // Turnierbaum ab dem Achtelfinale rückwärts aus dem Finale ableiten (Auslosung ist pro Runde neu).
+  const bySize = {}; rounds.forEach(r => bySize[r.size] = r);
+  const sizes = [16, 8, 4, 2].filter(s => bySize[s]);
+  if (!sizes.length) return null;
+  const last = sizes[sizes.length - 1];
+  let order = { [last]: bySize[last].matches.slice() };
+  for (let i = sizes.length - 1; i > 0; i--) {
+    const cur = order[sizes[i]], prevRound = bySize[sizes[i - 1]];
+    const used = new Set(); const out = [];
+    cur.forEach(m => [m.a, m.b].forEach(p => {
+      const src = prevRound.matches.findIndex((pm, k) => !used.has(k) && (pm.a === p || pm.b === p));
+      if (src >= 0) { used.add(src); out.push(prevRound.matches[src]); }
+    }));
+    prevRound.matches.forEach((pm, k) => { if (!used.has(k)) out.push(pm); });
+    order[sizes[i - 1]] = out;
+  }
+  return sizes.map(s => ({ size: s, matches: order[s] }));
+}
+
+async function viewCup(){
+  const idx = state.idx;
+  // Neuer Pokal, dessen erste Runde live gelost wird, steht noch nicht in idx.cups
+  const sysDraw = (state.systems.find(x => x.id === state.sys) || {}).draw;
+  const cups = idx.cups.slice();
+  if (sysDraw && sysDraw.first && !cups.find(c => c.season === sysDraw.season))
+    cups.unshift({ season: sysDraw.season, participants: sysDraw.n, finished: false, current_round: sysDraw.round, pending: true });
+  if (!cups.length) { app.innerHTML = '<div class="empty">Für dieses Ligasystem gibt es noch keinen Pokal.</div>'; return; }
+  if (!state.cupSeason || !cups.find(c => c.season === state.cupSeason)) state.cupSeason = cups[0].season;
+  const meta = cups.find(c => c.season === state.cupSeason);
+  const cup = meta.pending ? { rounds: [], leagues: {} } : await getJSON(`data/${state.sys}/cup_${meta.season}.json`);
+  const rounds = cup.rounds.slice();
+  // Live-Auslosung dieser Saison: Hinweis zeigen; nach der Ziehung die neue Runde einblenden
+  let liveNote = '';
+  if (sysDraw && sysDraw.season === meta.season) {
+    const dr = sysDraw.status === 'gezogen' ? (await loadDraw(state.sys)) || sysDraw : sysDraw;
+    const w = drawWindow(dr, Date.now());
+    if (dr.pairs && w && w.phase === 'fertig' || dr.pairs && !w && Date.now() > Date.parse(dr.start)) {
+      if (!rounds.find(r => r.size === dr.round)) {
+        rounds.push({ size: dr.round, done: false, matches: dr.pairs.map(([a, b]) => ({ a, b, pa: null, pb: null, w: null })) });
+        Object.entries(dr.people || {}).forEach(([id, q]) => { if (!(id in cup.leagues)) cup.leagues[id] = q.l; });
+        state.drawPeople = dr.people || {};
+        if (state.cupRound == null) state.cupRound = dr.round;
+      }
+    }
+    if (w) liveNote = `<section class="panel cup-live"><span class="livedot ${w.phase}" aria-hidden="true"></span>
+      <div><div class="t">Live-Auslosung ${esc(roundName(dr.round))}</div><div class="muted">${w.phase === 'vor' ? esc(whenText(w.start)) : w.phase === 'live' ? 'läuft gerade' : 'beendet'}</div></div>
+      <button type="button" class="chip" id="toDraw" style="margin-left:auto">${w.phase === 'fertig' ? '↻ Ziehung ansehen' : 'Zur Auslosung'}</button></section>`;
+  }
+  if (!rounds.length) {
+    app.innerHTML = `<section class="headline"><div><div class="eyebrow">${idx.short}-Pokal</div><h1>Pokal ${esc(meta.season)}</h1>
+      <p class="lede">${meta.participants} Teilnehmer · die erste Runde wird live ausgelost.</p></div></section>${liveNote}`;
+    on('#toDraw', 'click', () => { state.drawShift = 0; go('auslosung'); });
+    return;
+  }
+  if (!rounds.find(r => r.size === state.cupRound)) state.cupRound = rounds[rounds.length - 1].size;
+  const round = rounds.find(r => r.size === state.cupRound);
+  const tree = bracketOrder(rounds);
+  const showTree = tree && tree.length >= 2;
+
+  app.innerHTML = `
+  <section class="headline">
+    <div><div class="eyebrow">${idx.short}-Pokal</div><h1>Pokal ${esc(meta.season)}</h1>
+      <p class="lede">${meta.participants} Teilnehmer · ${meta.finished ? 'abgeschlossen' : `aktuell: ${roundName(Math.min(...rounds.map(r => r.size)))}`}. Punkte im Pokal sind Spieltagspunkte mal Liga-Faktor.</p></div>
+  </section>
+  ${liveNote}
+  ${meta.finished ? `<section class="panel winner">${BIG_CUP}<div><div class="eyebrow">Pokalsieger</div><div class="who">${nameBtnInline(meta.winner)}</div>
+     <div class="muted">Finale gegen ${nameBtnInline(meta.runner_up)}${meta.score ? ` · ${fmt(meta.score[0])} : ${fmt(meta.score[1])}` : ''}</div></div></section>` : ''}
+  <section class="controls">
+    <div class="field"><label for="cupSel">Saison</label>
+      <select id="cupSel">${cups.map(c => `<option value="${c.season}" ${c.season === meta.season ? 'selected' : ''}>${c.season}${c.finished ? '' : ' (läuft)'}</option>`).join('')}</select></div>
+    <div class="field"><label for="roundSel">Runde</label>
+      <select id="roundSel">${rounds.map(r => `<option value="${r.size}" ${r.size === round.size ? 'selected' : ''}>${roundName(r.size)}</option>`).join('')}</select></div>
+  </section>
+  <section><h2>${roundName(round.size)}</h2></section>
+  <section class="matches">${round.matches.map(m => matchHTML(m, cup.leagues)).join('')}</section>
+  ${!round.done ? '<p class="muted">Diese Runde ist ausgelost, die Ergebnisse stehen noch aus.</p>' : ''}
+  ${showTree ? `<section><h2>Turnierbaum</h2><div class="bracket" style="margin-top:12px">${tree.map(r => `
+      <div class="bcol"><h3>${roundName(r.size)}</h3><div class="bslots" style="--n:${tree[0].matches.length}">
+      ${r.matches.map(m => `<div style="grid-row:span ${tree[0].matches.length / r.matches.length};display:grid">${matchHTML(m, cup.leagues)}</div>`).join('')}</div></div>`).join('')}
+    </div></section>` : ''}`;
+  on('#cupSel', 'change', e => { state.cupSeason = e.target.value; state.cupRound = null; render(); });
+  on('#roundSel', 'change', e => { state.cupRound = +e.target.value; render(); });
+  on('#toDraw', 'click', () => { state.drawShift = 0; go('auslosung'); });
+}
+
+/* ---------- Pokal-Auslosung live ----------
+   Ablauf haengt nur an der Uhrzeit: Kugel k erscheint um start + k * sec. Dadurch sehen alle
+   Besucher dasselbe, ohne Server. Die Daten (auslosung.json) werden kurz vor dem Start
+   veroeffentlicht; bis dahin zeigt die Seite einen Countdown. */
+const pad2 = n => String(n).padStart(2, '0');
+function berlinParts(ms){
+  const p = {}; new Intl.DateTimeFormat('de-DE', { timeZone: 'Europe/Berlin', weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })
+    .formatToParts(new Date(ms)).forEach(x => p[x.type] = x.value);
+  return p;
+}
+function whenText(ms){
+  const p = berlinParts(ms), today = berlinParts(Date.now()), tomorrow = berlinParts(Date.now() + 864e5);
+  const day = `${p.day}.${p.month}.${p.year}`;
+  const label = day === `${today.day}.${today.month}.${today.year}` ? 'heute'
+    : day === `${tomorrow.day}.${tomorrow.month}.${tomorrow.year}` ? 'morgen' : `${p.weekday.replace('.', '')} ${p.day}.${p.month}.`;
+  return `${label} ${p.hour}:${p.minute} Uhr`;
+}
+function durText(sec){
+  sec = Math.max(0, Math.ceil(sec));
+  const d = Math.floor(sec / 86400), h = Math.floor(sec % 86400 / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60;
+  if (d) return `${d} T ${h} Std`;
+  return h ? `${h}:${pad2(m)}:${pad2(s)}` : `${m}:${pad2(s)}`;
+}
+function drawWindow(dr, now){
+  // Zeitfenster, in dem Banner/Hinweise sichtbar sind
+  if (!dr) return null;
+  const start = Date.parse(dr.start), steps = dr.pairs ? drawSeq(dr.pairs).length : (dr.n || 0);
+  const end = start + steps * dr.sec * 1000;
+  if (dr.status === 'angekuendigt' && now > start + 15 * 60e3) return null;   // abgesagt / nicht veroeffentlicht
+  if (now > end + 12 * 3600e3) return null;
+  return { start, end, phase: now < start ? 'vor' : now < end ? 'live' : 'fertig' };
+}
+
+// Ziehungsreihenfolge: je Paarung zwei Kugeln, ein Freilos ist nur eine Kugel (Name + "Freilos")
+function drawSeq(pairs){
+  const seq = [];
+  let nr = 0, bye = 0;
+  pairs.forEach((p, i) => {
+    if (p[1] === 'Freilos') seq.push({ i, side: 0, id: p[0], bye: ++bye });
+    else { nr++; seq.push({ i, side: 0, id: p[0], nr }); seq.push({ i, side: 1, id: p[1], nr }); }
+  });
+  return seq;
+}
+
+let barKey = '';
+function updateDrawBar(){
+  const bar = document.getElementById('drawBar'); if (!bar) return;
+  const now = Date.now();
+  const items = state.systems.map(s => ({ s, w: drawWindow(s.draw, now) })).filter(x => x.w);
+  const key = items.map(x => x.s.id + x.w.phase).join('|') + '|' + state.view + state.sys;
+  if (!items.length) { bar.hidden = true; barKey = ''; return; }
+  if (key !== barKey) {
+    barKey = key; bar.hidden = false;
+    bar.innerHTML = items.map(({ s, w }) => {
+      const here = state.view === 'auslosung' && state.sys === s.id;
+      const text = w.phase === 'vor' ? `${whenText(w.start)} · noch <span class="cd" data-cd="${w.start}"></span>`
+        : w.phase === 'live' ? 'läuft gerade live' : 'beendet – Ziehung ansehen';
+      return `<div class="drawbar-row"><span class="livedot ${w.phase}" aria-hidden="true"></span>
+        <b>${esc(s.short)}-Pokal</b><span>Auslosung ${esc(roundName(s.draw.round))}</span><span>${text}</span>
+        ${here ? '' : `<button type="button" data-draw="${esc(s.id)}">${w.phase === 'live' ? 'Live dabei sein' : 'Zur Auslosung'}</button>`}</div>`;
+    }).join('');
+  }
+  bar.querySelectorAll('[data-cd]').forEach(el => el.textContent = durText((+el.dataset.cd - now) / 1000));
+}
+
+async function loadDraw(sys){
+  try { const r = await fetch(`data/${sys}/auslosung.json?t=${Date.now()}`, { cache: 'no-store' }); return r.ok ? await r.json() : null; }
+  catch (e) { return null; }
+}
+
+function potSVG(n){
+  // Lostopf: Glaskugel auf einem Fuss, darin n Kugeln (deterministisch verteilt)
+  const cx = 160, cy = 160, R = 118, shown = Math.min(n, 64);
+  const r = Math.max(8, Math.min(19, R * 0.82 / Math.sqrt(Math.max(shown, 1)) * 0.88));
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  // Schwerkraft: jede Kugel nimmt die tiefste freie Stelle (mit etwas Zufall), so entsteht ein Haufen am Boden
+  const pts = [], inner = R - r - 5;
+  for (let i = 0; i < shown; i++) {
+    let best = null;
+    for (let tries = 0; tries < 400; tries++) {
+      const x = cx + (rnd() * 2 - 1) * inner, y = cy + (rnd() * 2 - 1) * inner;
+      if ((x - cx) ** 2 + (y - cy) ** 2 > inner * inner) continue;
+      if (pts.some(q => Math.hypot(q.x - x, q.y - y) < 2 * r * 0.93)) continue;
+      const score = y + rnd() * r * 1.2;
+      if (!best || score > best.score) best = { x, y, score };
+    }
+    if (best) pts.push(best);
+  }
+  const balls = pts.map((p, i) => `<g class="ball" data-i="${i}"><g class="bob" style="--t:${(2.2 + rnd() * 2).toFixed(2)}s;--d:-${(rnd() * 3).toFixed(2)}s;--dx:${(rnd() * 4 - 2).toFixed(1)}px;--dy:${(-1 - rnd() * 3).toFixed(1)}px">
+      <path class="hi" d="M${(p.x - r).toFixed(1)} ${p.y.toFixed(1)}a${r.toFixed(1)} ${r.toFixed(1)} 0 0 1 ${(2 * r).toFixed(1)} 0z"/>
+      <path class="lo" d="M${(p.x - r).toFixed(1)} ${p.y.toFixed(1)}a${r.toFixed(1)} ${r.toFixed(1)} 0 0 0 ${(2 * r).toFixed(1)} 0z"/>
+      <circle class="edge" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r.toFixed(1)}"/></g></g>`).join('');
+  return `<svg class="pot" viewBox="0 0 320 340" role="img" aria-label="Lostopf">
+    <defs><radialGradient id="potGlass" cx="38%" cy="30%" r="75%"><stop offset="0" style="stop-color:var(--glass-1)"/><stop offset=".7" style="stop-color:var(--glass-2)"/><stop offset="1" style="stop-color:var(--glass-3)"/></radialGradient>
+      <clipPath id="potClip"><circle cx="${cx}" cy="${cy}" r="${R - 3}"/></clipPath></defs>
+    <path class="foot" d="M118 274h84l16 44H102z"/><rect class="foot" x="88" y="314" width="144" height="14" rx="4"/>
+    <circle class="glass" cx="${cx}" cy="${cy}" r="${R}"/>
+    <g clip-path="url(#potClip)">${balls}</g>
+    <ellipse class="rim" cx="${cx}" cy="${cy - R + 8}" rx="42" ry="9"/>
+    <path class="shine" d="M${cx - 78} ${cy - 50}a95 95 0 0 1 52 -52"/>
+  </svg>`;
+}
+
+async function viewDraw(){
+  const sys = state.sys, idx = state.idx;
+  let d = await loadDraw(sys);
+  document.querySelectorAll('#nav a').forEach(a => a.setAttribute('aria-current', a.dataset.view === 'pokal' ? 'page' : 'false'));
+  if (!d) {
+    app.innerHTML = `<section><div class="eyebrow">${esc(idx.short)}-Pokal</div><h1>Auslosung</h1>
+      <p class="lede">Zurzeit ist keine Live-Auslosung angekündigt.</p></section>
+      <section><button type="button" class="chip" id="toCup">‹ Zum Pokal</button></section>`;
+    on('#toCup', 'click', () => go('pokal'));
+    return;
+  }
+  const n = d.n || (d.pairs ? drawSeq(d.pairs).length : 0);
+  app.innerHTML = `
+  <section class="headline"><div><div class="eyebrow">${esc(idx.short)}-Pokal ${esc(d.season)}${d.first ? ' · neuer Pokal' : ''} · Live-Auslosung</div>
+    <h1>${esc(roundName(d.round))}</h1>
+    <p class="lede" id="drawLede"></p></div></section>
+  <section class="panel draw-stage">
+    <div id="potBox">${potSVG(n)}</div>
+    <div class="reveal" id="reveal"></div>
+  </section>
+  <div class="sr-only" aria-live="polite" id="drawSay"></div>
+  <section id="drawListHead"></section>
+  <section class="dmatches" id="drawList"></section>
+  <section class="draw-actions" id="drawActions"></section>`;
+  const el = id => document.getElementById(id);
+  const pot = app.querySelector('.pot'), potBalls = [...app.querySelectorAll('.pot .ball')];
+  let shownStep = -2, phaseKey = '', lastPoll = 0, polling = false;
+
+  const tick = async () => {
+    if (state.view !== 'auslosung' || state.sys !== sys || !document.body.contains(pot)) { clearInterval(drawLoop); drawLoop = null; return; }
+    const real = Date.now(), now = real - (state.drawShift || 0);
+    const start = Date.parse(d.start);
+    // Daten nachladen, solange die Paarungen noch fehlen (kurz vor und nach dem Start)
+    if (!d.pairs && !polling && real > start - 10 * 60e3 && real - lastPoll > (real > start ? 8000 : 20000)) {
+      polling = true; lastPoll = real;
+      const nd = await loadDraw(sys); polling = false;
+      if (nd) d = nd;
+    }
+    const seq = drawSeq(d.pairs || []);
+    const byes = seq.filter(x => x.bye).length || d.byes || 0, realPairs = (d.pairs || []).filter(p => p[1] !== 'Freilos').length;
+    const posOf = {}; seq.forEach((x, k) => { posOf[x.i + ':' + x.side] = k; });
+    const end = start + seq.length * d.sec * 1000;
+    const phase = now < start ? 'vor' : !d.pairs ? (real > start + 15 * 60e3 ? 'weg' : 'warten') : now < end ? 'live' : 'fertig';
+    const step = phase === 'live' ? Math.floor((now - start) / (d.sec * 1000)) : phase === 'fertig' ? seq.length - 1 : -1;
+    const left = Math.max(0, (start - now) / 1000);
+
+    if (phase + step !== phaseKey) {
+      const firstPaint = phaseKey === '';
+      phaseKey = phase + step;
+      // Lede und Aktionen
+      el('drawLede').innerHTML = phase === 'vor' ? `Beginn ${whenText(start)} · ${n} Kugeln im Topf${byes ? ` · zuerst ${byes === 1 ? 'das Freilos' : `die ${byes} Freilose`}${d.first ? ' (nach KBL-Score)' : ''}` : ''} · ${d.sec} Sekunden pro Kugel`
+        : phase === 'warten' ? 'Gleich geht es los – die Kugeln werden in den Topf gelegt …'
+        : phase === 'weg' ? 'Die Auslosung wurde verschoben oder abgesagt.'
+        : phase === 'live' ? `<span class="livedot live" style="display:inline-block;margin-right:6px"></span>Live · Kugel ${step + 1} von ${seq.length}`
+        : `Ausgelost ${whenText(start).replace(/^(heute|morgen) /, '$1 um ')} · ${realPairs} Paarungen${byes ? ` · ${byes} ${byes === 1 ? 'Freilos' : 'Freilose'}` : ''}`;
+      el('drawActions').innerHTML = phase === 'fertig'
+        ? `<button type="button" class="chip" id="replay">↻ Ziehung noch einmal ansehen</button><button type="button" class="chip" id="toCup">Zur Pokalübersicht</button>`
+        : `<button type="button" class="chip" id="toCup">‹ Zum Pokal</button>`;
+      on('#replay', 'click', () => { state.drawShift = Date.now() - start + 3000; phaseKey = ''; shownStep = -2; tick(); });
+      on('#toCup', 'click', () => { state.drawShift = 0; go('pokal'); });
+
+      // Kugeln im Topf: gezogene verschwinden (die zuletzt gelegten zuerst)
+      const drawnReal = step + 1;
+      const remain = Math.max(0, n - drawnReal);
+      potBalls.forEach((b, i) => b.toggleAttribute('hidden', i >= Math.min(remain, potBalls.length)));
+      pot.classList.toggle('mixing', phase === 'warten' || (phase === 'vor' && left < 60));
+
+      // Buehne rechts
+      if (phase === 'vor' || phase === 'warten' || phase === 'weg') {
+        el('reveal').innerHTML = phase === 'vor'
+          ? `<div class="step">Die Ziehung beginnt in</div><div class="count-big" id="cdBig"></div><div class="muted">${esc(whenText(start))}</div>`
+          : `<div class="step">${phase === 'weg' ? 'Keine Auslosung' : 'Gleich geht es los'}</div><div class="spot"><div class="bigball" aria-hidden="true"></div></div>`;
+      } else {
+        const cur = seq[step], fresh = !firstPaint && step !== shownStep && phase === 'live';
+        const p = d.people[cur.id] || {};
+        el('reveal').innerHTML = phase === 'fertig'
+          ? `<div class="step">Alle Kugeln gezogen</div><div class="spot"><div class="slip"><div class="who">${esc(roundName(d.round))}</div><span class="lg">${realPairs} Paarungen${byes ? ` · ${byes} ${byes === 1 ? 'Freilos' : 'Freilose'}` : ''} stehen fest</span></div></div>`
+          : `<div class="step">${cur.bye ? `Freilos ${cur.bye} von ${byes}${d.first ? ' · nach KBL-Score' : ''}` : `Paarung ${cur.nr} · ${cur.side ? 'Gegner' : 'erste Kugel'}`}</div>
+             <div class="spot"><div class="bigball ${fresh ? 'fresh' : 'gone'}" aria-hidden="true"></div>
+             <div class="slip ${fresh ? 'fresh' : ''}"><div class="who">${esc(p.n)}</div><span class="lg">${esc(p.l || '')}${cur.bye ? ' · <b>Freilos</b> – direkt weiter' : ''}</span></div></div>`;
+        if (fresh || firstPaint) el('drawSay').textContent = phase === 'fertig' ? 'Auslosung beendet.' : `${cur.bye ? 'Freilos' : `Paarung ${cur.nr}`}: ${p.n}`;
+      }
+
+      // Freilose und Paarungen
+      if (d.pairs && phase !== 'vor' && phase !== 'warten') {
+        const known = k => phase === 'fertig' || k <= step;
+        const isNew = k => !firstPaint && phase === 'live' && k === step && step !== shownStep;
+        const person = (id, k) => `<div class="p ${isNew(k) ? 'fresh' : ''}"><span class="n">${state.idx.managers[id] ? nameBtnInline(id) : esc((d.people[id] || {}).n || id)}</span><span class="lg">${esc((d.people[id] || {}).l || '')}</span></div>`;
+        const byeItems = seq.filter((x, k) => x.bye && known(k));
+        const pairIdx = [...new Set(seq.filter((x, k) => !x.bye && known(k)).map(x => x.i))];
+        el('drawListHead').innerHTML = (byeItems.length ? `<h2>${byes === 1 ? 'Freilos' : 'Freilose'}</h2>
+          <div class="dmatches" style="margin:12px 0 24px">${byeItems.map(x => `<div class="dmatch"><div class="nr">${x.bye}</div>${person(x.id, posOf[x.i + ':0'])}<div class="p"><span class="lg">Freilos – direkt in der nächsten Runde</span></div></div>`).join('')}</div>` : '')
+          + (pairIdx.length ? '<h2>Paarungen</h2>' : '');
+        const cards = pairIdx.map(i => {
+          const pr = d.pairs[i], k0 = posOf[i + ':0'], k1 = posOf[i + ':1'];
+          const open = !known(k1);
+          return `<div class="dmatch ${phase === 'live' && open ? 'next' : ''}"><div class="nr">${seq[k0].nr}</div>${person(pr[0], k0)}${open ? '<div class="p open"><span class="n">?</span></div>' : person(pr[1], k1)}</div>`;
+        });
+        el('drawList').innerHTML = (phase === 'live' ? cards.reverse() : cards).join('');
+      } else { el('drawListHead').innerHTML = ''; el('drawList').innerHTML = ''; }
+      shownStep = step;
+    }
+    const cd = el('cdBig'); if (cd) cd.textContent = durText(left);
+    if (phase === 'fertig' && state.drawShift) state.drawShift = 0;
+  };
+  if (drawLoop) clearInterval(drawLoop);
+  drawLoop = setInterval(tick, 200); tick();
+}
+let drawLoop = null;
+
+/* ---------- Trophäen mit Gravur ---------- */
+// Koordinaten beziehen sich auf die Originalbilder (2048 x 2048). Die Bilder unter trophaeen/
+// sind ohne Saison und Namen; beides wird hier je Sieger eingraviert.
+const GOLD = ['#f3e2b0', '#d7b46a', '#a8803e'];
+const TROPHIES = {
+  kbl: {
+    schale: { img: 'trophaeen/kbl_schale.jpg', label: 'Meisterschale', parts: [
+      { x: 1026, y: 1000, size: 86, font: "'Barlow',sans-serif", weight: 600, fill: 'gold', shade: '#2a2620', text: s => `SAISON ${s}`, max: 640 },
+      { arc: 'M 712 1410 Q 1028 1522 1342 1405', size: 112, font: "'Barlow',sans-serif", weight: 700, fill: '#2b2419', light: '#f7e4a8', text: (s, n) => n.toUpperCase(), max: 600 },
+    ] },
+    cup: { img: 'trophaeen/kbl_cup.jpg', label: 'KBL-Cup', parts: [
+      { x: 1024, y: 1660, size: 82, font: "'EB Garamond',serif", weight: 500, fill: 'gold', shade: '#1d140c', text: s => `Season ${s}`, max: 540 },
+      { x: 1024, y: 1752, size: 82, font: "'EB Garamond',serif", weight: 500, fill: 'gold', shade: '#1d140c', text: (s, n) => n, max: 540 },
+    ] },
+  },
+  kwbl: {
+    schale: { img: 'trophaeen/kwbl_schale.jpg', label: 'Meisterschale', parts: [
+      { x: 1018, y: 1316, size: 70, font: "'Public Sans',sans-serif", weight: 700, fill: '#161616', light: '#ffffff', text: s => `SAISON ${s}`, max: 500 },
+      { x: 1024, y: 1452, size: 150, font: "'Great Vibes',cursive", weight: 400, fill: '#141414', light: '#ffffff', text: (s, n) => n, max: 560 },
+    ] },
+    cup: { img: 'trophaeen/kwbl_cup.jpg', label: 'KWBL-Pokal', parts: [
+      { x: 1028, y: 1630, size: 92, font: "'Source Serif 4',serif", weight: 600, fill: '#141210', light: 'rgba(255,240,200,.35)', text: s => `SEASON ${s}`, max: 860 },
+      { x: 1028, y: 1738, size: 100, font: "'Source Serif 4',serif", weight: 800, fill: '#141210', light: 'rgba(255,240,200,.35)', text: (s, n) => n.toUpperCase(), max: 860 },
+    ] },
+  },
+};
+let troSeq = 0;
+function trophyArt(kind, season, name){
+  const t = (TROPHIES[state.sys] || {})[kind];
+  if (!t) return '';
+  const id = 't' + (++troSeq);
+  const fillOf = p => p.fill === 'gold' ? `url(#${id}g)` : p.fill;
+  const parts = t.parts.map((p, i) => {
+    const txt = esc(p.text(season, name || ''));
+    const attrs = `font-family="${p.font}" font-size="${p.size}" font-weight="${p.weight}" text-anchor="middle" data-max="${p.max}"`;
+    if (p.arc) {
+      return `<path id="${id}p${i}" d="${p.arc}" fill="none"/>
+        <text ${attrs} fill="${p.light}" opacity=".55" transform="translate(0 3)"><textPath href="#${id}p${i}" startOffset="50%">${txt}</textPath></text>
+        <text ${attrs} fill="${fillOf(p)}"><textPath href="#${id}p${i}" startOffset="50%">${txt}</textPath></text>`;
+    }
+    const under = p.shade ? `<text ${attrs} x="${p.x + 3}" y="${p.y + 4}" fill="${p.shade}" opacity=".8">${txt}</text>`
+                          : `<text ${attrs} x="${p.x}" y="${p.y + 3}" fill="${p.light}">${txt}</text>`;
+    return `${under}<text ${attrs} x="${p.x}" y="${p.y}" fill="${fillOf(p)}">${txt}</text>`;
+  }).join('');
+  return `<div class="tro"><img src="${t.img}" alt="" loading="lazy" decoding="async">
+    <svg viewBox="0 0 2048 2048" aria-hidden="true"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${GOLD[0]}"/><stop offset=".55" stop-color="${GOLD[1]}"/><stop offset="1" stop-color="${GOLD[2]}"/></linearGradient></defs>${parts}</svg></div>`;
+}
+function fitTrophies(root){
+  // Lange Namen schmaler setzen, damit sie auf Plakette bzw. Band passen
+  const run = () => root.querySelectorAll('.tro svg text[data-max]').forEach(t => {
+    const max = +t.dataset.max, tp = t.querySelector('textPath'), el = tp || t;
+    el.removeAttribute('textLength');
+    let len = 0; try { len = t.getComputedTextLength(); } catch (e) { return; }
+    if (len > max) { el.setAttribute('textLength', max); el.setAttribute('lengthAdjust', 'spacingAndGlyphs'); }
+  });
+  run();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+}
+function trophyCard(kind, season, id, sub){
+  const t = (TROPHIES[state.sys] || {})[kind];
+  if (!t || !id) return '';
+  return `<figure class="tro-card">${trophyArt(kind, season, mgr(id).n)}
+    <figcaption><span class="eyebrow">${esc(t.label)} ${esc(season)}</span><span class="tro-who">${nameBtn(id)}</span>${sub ? `<span class="lg">${sub}</span>` : ''}</figcaption></figure>`;
+}
+
+/* ---------- Hall of Fame ---------- */
+function viewHall(){
+  const idx = state.idx;
+  const ranking = Object.entries(idx.managers).map(([id, m]) => ({ id, g: (m.titles.gold||[]).length, s: (m.titles.silver||[]).length, b: (m.titles.bronze||[]).length, c: (m.titles.cup||[]).length }))
+    .filter(r => r.g + r.s + r.b + r.c > 0)
+    .sort((a, b) => b.g - a.g || b.c - a.c || b.s - a.s || b.b - a.b || mgr(a.id).n.localeCompare(mgr(b.id).n));
+  // Trophäenschrank: Meisterschale und Pokal der gewählten Saison
+  const champBy = {}; idx.champions.forEach(c => { if (c.podium[0]) champBy[c.season] = c.podium[0]; });
+  const cupBy = {}; idx.cups.filter(c => c.finished && c.winner).forEach(c => cupBy[c.season] = c);
+  const troSeasons = [...new Set([...Object.keys(champBy), ...Object.keys(cupBy)])].sort().reverse();
+  const hasArt = !!TROPHIES[state.sys];
+  if (!troSeasons.includes(state.hofSeason)) state.hofSeason = troSeasons[0];
+  const hs = state.hofSeason, ch = champBy[hs], cu = cupBy[hs];
+  const showcase = hasArt && troSeasons.length ? `
+  <section class="showcase">
+    <div class="headline"><div><div class="eyebrow">Trophäenschrank</div><h2>Saison ${esc(hs)}</h2></div>
+      <div class="field"><label for="hofSel">Saison</label><select id="hofSel">${troSeasons.map(s => `<option ${s === hs ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></div></div>
+    <div class="tro-row">
+      ${ch ? trophyCard('schale', hs, ch.id, `Meister ${idx.short} 1 · ${fmt(ch.points)} Pkt.`) : ''}
+      ${cu ? trophyCard('cup', hs, cu.winner, `Finale gegen ${esc(mgr(cu.runner_up).n)}${cu.score ? ` · ${fmt(cu.score[0])} : ${fmt(cu.score[1])}` : ''}`) : ''}
+    </div></section>` : '';
+  const yr = s => hasArt ? `<button type="button" class="yr" data-hof="${esc(s)}" title="Trophäen ${esc(s)} ansehen">${esc(s)}</button>` : `<div class="yr">${esc(s)}</div>`;
+  app.innerHTML = `
+  <section><div class="eyebrow">${esc(idx.name)}</div><h1>Hall of Fame</h1>
+    <p class="lede">Alle Meister der ${idx.short} 1 und alle Pokalsieger seit Beginn der Aufzeichnungen.</p></section>
+  ${showcase}
+  <section class="halls">
+    <div><h2>Meister ${idx.short} 1</h2><div class="panel" style="margin-top:12px">
+      ${idx.champions.map(c => `<div class="honour">${yr(c.season)}
+        <div class="champ">${c.podium[0] ? nameBtn(c.podium[0].id) : '–'}<span class="lg">${c.podium[0] ? fmt(c.podium[0].points) + ' Pkt.' : ''}</span></div>
+        <div class="rest">${c.podium[1] ? '2. ' + nameBtn(c.podium[1].id) : ''}${c.podium[2] ? ' · 3. ' + nameBtn(c.podium[2].id) : ''}</div></div>`).join('') || '<div class="empty">Noch keine abgeschlossene Saison.</div>'}
+    </div></div>
+    <div><h2>Pokalsieger</h2><div class="panel" style="margin-top:12px">
+      ${idx.cups.filter(c => c.finished).map(c => `<div class="honour">${yr(c.season)}
+        <div class="champ">${CUP_SVG}${nameBtn(c.winner)}</div>
+        <div class="rest">Finale gegen ${nameBtn(c.runner_up)}${c.score ? ` · ${fmt(c.score[0])} : ${fmt(c.score[1])}` : ''}</div></div>`).join('') || '<div class="empty">Noch kein Pokal abgeschlossen.</div>'}
+    </div></div>
+  </section>
+  <section><h2>Ewige Titelliste</h2>
+    <div class="panel scroll" style="margin-top:12px"><table>
+      <thead><tr><th class="c">#</th><th>Manager</th><th class="r">Meister</th><th class="r">Pokal</th><th class="r">Vize</th><th class="r">Platz 3</th><th>Titel-Saisons</th></tr></thead>
+      <tbody>${ranking.map((r, i) => { const t = mgr(r.id).titles; return `<tr><td class="pl">${i + 1}</td><td><div class="mgr">${nameBtn(r.id)}</div></td>
+        <td class="pts">${r.g || ''}</td><td class="pts">${r.c || ''}</td><td class="md">${r.s || ''}</td><td class="md">${r.b || ''}</td>
+        <td class="lg">${[...(t.gold||[]).map(s => s + ' Meister'), ...(t.cup||[]).map(s => s + ' Pokal')].sort().join(' · ')}</td></tr>`; }).join('')}</tbody>
+    </table></div></section>`;
+  fitTrophies(app);
+  on('#hofSel', 'change', e => { state.hofSeason = e.target.value; render(); });
+  app.querySelectorAll('[data-hof]').forEach(b => b.addEventListener('click', () => {
+    state.hofSeason = b.dataset.hof; render();
+    const sc = app.querySelector('.showcase'); if (sc) sc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+}
+
+/* ---------- KBL-Score ---------- */
+function viewScore(){
+  const idx = state.idx; const ks = idx.kbl_score; const seasons = ks.seasons.slice().reverse();
+  const q = state.scoreFilter.toLowerCase();
+  const rows = ks.rows.map((r, i) => ({ ...r, rank: i + 1 })).filter(r => !q || mgr(r.id).n.toLowerCase().includes(q));
+  app.innerHTML = `
+  <section class="headline"><div><div class="eyebrow">Rangliste über alle Saisons</div><h1>${idx.short}-Score</h1>
+    <p class="lede">Punkte für die Platzierung in der Liga plus Bonus für das Pokal-Abschneiden (in Klammern). Die laufende Saison zählt mit dem aktuellen Tabellenplatz. Der Score entscheidet über Freilose im Pokal.</p></div>
+    <div class="field" style="flex:1;justify-content:flex-end"><label for="scoreQ">Suche</label><input type="search" id="scoreQ" placeholder="Manager suchen" value="${esc(state.scoreFilter)}"></div></section>
+  <section class="panel scroll"><table>
+    <thead><tr><th class="c">#</th><th>Manager</th><th>Liga</th><th class="r">Gesamt</th>${seasons.map(s => `<th class="r">${s}</th>`).join('')}</tr></thead>
+    <tbody>${rows.slice(0, 400).map(r => `<tr><td class="pl">${r.rank}</td><td><div class="mgr">${nameBtn(r.id)}</div></td><td class="lg">${esc(mgr(r.id).league || '–')}</td>
+      <td class="pts">${fmt(r.total)}</td>${seasons.map(s => { const v = r.seasons[s]; return `<td class="md">${v ? `${v[0]}${v[1] ? ` <span class="lg">(${v[1]})</span>` : ''}` : ''}</td>`; }).join('')}</tr>`).join('')}</tbody>
+  </table>${rows.length ? '' : '<div class="empty">Kein Manager gefunden.</div>'}</section>`;
+  const inp = document.getElementById('scoreQ');
+  inp.addEventListener('input', e => { state.scoreFilter = e.target.value; const pos = e.target.selectionStart; viewScore(); const n = document.getElementById('scoreQ'); n.focus(); n.setSelectionRange(pos, pos); });
+}
+
+/* ---------- Ewige Tabelle ---------- */
+function viewEwig(){
+  const idx = state.idx;
+  const mdOf = {}; idx.seasons.forEach(s => mdOf[s.name] = s.current ? s.last_md : s.matchdays);
+  const levels = [...new Set(Object.values(idx.managers).flatMap(m => m.career.filter(c => !c.q).map(c => c.level)))].sort((a, b) => a - b);
+  if (!levels.includes(state.ewigLevel)) state.ewigLevel = levels[0];
+  const rows = [];
+  for (const [id, m] of Object.entries(idx.managers)) {
+    const cs = m.career.filter(c => !c.q && c.level === state.ewigLevel && c.points);
+    if (!cs.length) continue;
+    const pts = cs.reduce((a, c) => a + c.points, 0), md = cs.reduce((a, c) => a + (mdOf[c.s] || 0), 0);
+    rows.push({ id, pts, md, n: cs.length, avg: md ? Math.round(pts / md) : 0 });
+  }
+  rows.sort((a, b) => b.pts - a.pts);
+  app.innerHTML = `
+  <section><div class="eyebrow">Alle Saisons zusammengezählt</div><h1>Ewige Tabelle</h1>
+    <p class="lede">Gesamtpunkte aller Saisons, die ein Manager in dieser Ligaebene gespielt hat. Bei Liga 4 und tiefer sind alle Staffeln zusammengefasst.</p></section>
+  <section class="chips">${levels.map(l => `<button type="button" class="chip" data-level="${l}" aria-pressed="${l === state.ewigLevel}">${idx.short} ${l}</button>`).join('')}</section>
+  <section class="panel scroll"><table>
+    <thead><tr><th class="c">#</th><th>Manager</th><th>Aktuelle Liga</th><th class="r">Saisons</th><th class="r">Spieltage</th><th class="r">Ø je Spieltag</th><th class="r">Punkte</th></tr></thead>
+    <tbody>${rows.map((r, i) => `<tr><td class="pl">${i + 1}</td><td><div class="mgr">${nameBtn(r.id)}${badges(r.id)}</div></td><td class="lg">${esc(mgr(r.id).league || '–')}</td>
+      <td class="md">${r.n}</td><td class="md">${r.md}</td><td class="md">${fmt(r.avg)}</td><td class="pts">${fmt(r.pts)}</td></tr>`).join('')}</tbody>
+  </table></section>`;
+  app.querySelectorAll('[data-level]').forEach(b => b.addEventListener('click', () => { state.ewigLevel = +b.dataset.level; render(); }));
+}
+
+/* ---------- Manager ---------- */
+function careerCurve(real, gaps){
+  // Saisons ohne Tabelle (gaps) erscheinen als gestrichelter, leerer Punkt
+  const car = [...real, ...(gaps || []).map(g => ({ s: g.s, level: g.level, gap: true }))].sort((a, b) => a.s.localeCompare(b.s));
+  if (car.length < 2) return '';
+  const maxL = Math.max(...car.map(c => c.level)), W = Math.max(560, car.length * 64), H = 48 + maxL * 34, padL = 54, padR = 24;
+  const xs = i => padL + i * (W - padL - padR) / (car.length - 1), ys = l => 20 + (l - 1) * 34;
+  let s = `<svg class="curve" viewBox="0 0 ${W} ${H}" role="img" aria-label="Ligaverlauf">`;
+  for (let l = 1; l <= maxL; l++) s += `<line x1="${padL - 8}" x2="${W - padR + 8}" y1="${ys(l)}" y2="${ys(l)}" stroke="var(--line)"/><text class="lvl" x="4" y="${ys(l) + 4}">Liga ${l}</text>`;
+  for (let i = 1; i < car.length; i++) {
+    const g = car[i].gap || car[i - 1].gap;
+    s += `<line x1="${xs(i - 1)}" y1="${ys(car[i - 1].level)}" x2="${xs(i)}" y2="${ys(car[i].level)}" stroke="${g ? 'var(--muted)' : 'var(--accent)'}" stroke-width="${g ? 2 : 3}" stroke-linecap="round"${g ? ' stroke-dasharray="4 5"' : ''}/>`;
+  }
+  car.forEach((c, i) => {
+    if (c.gap) {
+      s += `<circle cx="${xs(i)}" cy="${ys(c.level)}" r="5" fill="var(--surface)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="3 3"><title>${esc(c.s)}: keine Tabelle vorhanden</title></circle>`;
+      s += `<text x="${xs(i)}" y="${ys(c.level) - 11}" text-anchor="middle">?</text><text x="${xs(i)}" y="${H - 6}" text-anchor="middle">${esc(c.s)}</text>`;
+      return;
+    }
+    const champ = c.level === 1 && c.place === 1 && !c.current;
+    s += `<circle cx="${xs(i)}" cy="${ys(c.level)}" r="${champ ? 7 : 5}" fill="${champ ? 'var(--gold)' : 'var(--surface)'}" stroke="var(--accent)" stroke-width="2.5"/>`;
+    s += `<text x="${xs(i)}" y="${ys(c.level) - 11}" text-anchor="middle">${c.place ? c.place + '.' : ''}</text>`;
+    s += `<text x="${xs(i)}" y="${H - 6}" text-anchor="middle">${esc(c.s)}</text>`;
+  });
+  return s + '</svg>';
+}
+function cupText(r, season, id){
+  if (r == null) return '–';
+  const meta = state.idx.cups.find(c => c.season === season);
+  if (meta && !meta.finished) return 'läuft';
+  return ({0:'Sieger',2:'Finale',4:'Halbfinale',8:'Viertelfinale',16:'Achtelfinale',32:'früh ausgeschieden'})[r];
+}
+
+async function viewManager(){
+  const idx = state.idx;
+  if (!state.manager || !idx.managers[state.manager]) {
+    const q = state.query.toLowerCase();
+    const list = Object.entries(idx.managers).filter(([, m]) => m.career.length && (!q || m.n.toLowerCase().includes(q)))
+      .sort((a, b) => b[1].score - a[1].score).slice(0, 60);
+    app.innerHTML = `<section><div class="eyebrow">${Object.keys(idx.managers).length} Manager</div><h1>Manager</h1>
+      <p class="lede">Suche einen Manager, um Ligaverlauf, Titel und Pokal-Ergebnisse zu sehen. Ohne Suche siehst du die 60 Manager mit dem höchsten ${idx.short}-Score.</p></section>
+      <section><input type="search" id="mgrQ" placeholder="Name eingeben" value="${esc(state.query)}" aria-label="Manager suchen"></section>
+      <section class="panel results">${list.map(([id, m]) => `<button type="button" data-mgr="${esc(id)}"><span><b>${esc(m.n)}</b> ${badges(id)}</span><span class="lg">${esc(m.league || 'nicht mehr dabei')} · ${m.score} Score</span></button>`).join('') || '<div class="empty">Kein Manager gefunden.</div>'}</section>`;
+    const inp = document.getElementById('mgrQ');
+    inp.addEventListener('input', e => { state.query = e.target.value; const p = e.target.selectionStart; viewManager(); const n = document.getElementById('mgrQ'); n.focus(); n.setSelectionRange(p, p); });
+    return;
+  }
+  const id = state.manager, m = idx.managers[id];
+  const car = m.career.map(c => ({ ...c, current: c.s === idx.current }));
+  const rank = idx.kbl_score.rows.findIndex(r => r.id === id) + 1;
+  const t = m.titles;
+  const trophy = (n, label, html) => n ? `<div class="trophy">${html}<span>${n}× ${label}</span></div>` : '';
+  const kader = await kaderSection(id);
+  app.innerHTML = `
+  <section><button type="button" class="chip" id="back">‹ Alle Manager</button></section>
+  <section class="profile-head">
+    <div><div class="eyebrow">${esc(m.league || 'Nicht mehr im System')}</div><h1>${esc(m.n)}</h1>
+      <div class="trophies" style="margin-top:10px">
+        ${trophy((t.gold||[]).length, 'Meister', '<span class="medal g">1.</span>')}
+        ${trophy((t.cup||[]).length, 'Pokalsieger', CUP_SVG)}
+        ${trophy((t.silver||[]).length, 'Vizemeister', '<span class="medal s">2.</span>')}
+        ${trophy((t.bronze||[]).length, 'Platz 3', '<span class="medal b">3.</span>')}
+      </div></div>
+    <div class="facts"><div class="fact"><b>${fmt(m.score)}</b><span>${idx.short}-Score${rank ? ` · Rang ${rank}` : ''}</span></div>
+      <div class="fact"><b>${car.length}</b><span>Saisons</span></div></div>
+  </section>
+  ${TROPHIES[state.sys] && ((t.gold||[]).length || (t.cup||[]).length) ? `<section><h2>Trophäen</h2><div class="tro-gallery" style="margin-top:12px">
+    ${[...(t.gold||[]).map(x => ['schale', x]), ...(t.cup||[]).map(x => ['cup', x])].sort((p, q) => q[1].localeCompare(p[1]))
+      .map(([k, x]) => trophyCard(k, x, id, '')).join('')}</div></section>` : ''}
+  ${car.filter(c => !c.q).length + (m.gaps || []).length > 1 ? `<section class="panel scroll" style="padding:12px">${careerCurve(car.filter(c => !c.q), m.gaps)}</section>` : ''}
+  ${kader}
+  <section class="panel scroll"><table>
+    <thead><tr><th>Saison</th><th>Liga</th><th class="r">Platz</th><th class="r">Punkte</th><th>Pokal</th><th class="r">Score</th></tr></thead>
+    <tbody>${[...car, ...(m.gaps || []).map(g => ({ ...g, gap: true }))].sort((a, b) => b.s.localeCompare(a.s)).map(c => c.gap
+      ? `<tr class="gap-row"><td class="lg" style="font-size:15px">${esc(c.s)}</td><td class="lg">vermutlich Liga ${c.level}</td><td colspan="4" class="lg">Keine Tabelle vorhanden</td></tr>`
+      : `<tr><td class="lg" style="font-size:15px;color:var(--ink)">${esc(c.s)}${c.current ? ' <span class="muted">(läuft)</span>' : ''}${c.q ? ' <span class="muted">(Quali)</span>' : ''}</td>
+      <td><button type="button" class="chip" data-goto-season="${esc(c.s)}" data-goto-league="${esc(c.league)}">${esc(c.league)}</button></td>
+      <td class="pts">${c.place ? c.place + '.' : '–'}</td><td class="md">${fmt(c.points)}</td><td class="lg">${cupText(c.cup, c.s)}</td><td class="md">${c.score || ''}</td></tr>`).join('')}</tbody>
+  </table>
+    ${(m.gaps || []).length ? `<div class="note">Für ${m.gaps.map(g => `Liga ${g.level} in ${esc(g.s)}`).join(' und ')} liegen keine Tabellen mehr vor. Nach den Saisons davor und danach hat ${esc(m.n)} dort vermutlich gespielt.</div>` : ''}
+  </section>`;
+  fitTrophies(app);
+  on('#back', 'click', () => { state.manager = null; render(); });
+  on('#tvSeasonSel', 'change', ev => { state.mgrXSeason = ev.target.value; state.mgrMd = null; render(); });
+  app.querySelectorAll('[data-tvmd]').forEach(g => {
+    const pick = () => { state.mgrMd = +g.dataset.tvmd; render(); };
+    g.addEventListener('click', pick);
+    g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); pick(); } });
+  });
+  app.querySelectorAll('[data-goto-season]').forEach(b => b.addEventListener('click', () => {
+    state.season = b.dataset.gotoSeason; state.league = null; state.leagueShort = b.dataset.gotoLeague; state.md = null; go('tabellen');
+  }));
+}
+
+/* ---------- Spieltag: Elfen und Aufstellungen ---------- */
+const mio = v => v ? (v / 1e6).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' Mio' : '–';
+function pname(x, p){ return (x.players[p] || [])[0] || p; }
+function countsOf(day){ const c = {}; for (const u in day.m) for (const p of day.m[u][3]) c[p] = (c[p] || 0) + 1; return c; }
+function pitch(ids, x, label){
+  // Reihen von oben nach unten: Sturm, Mittelfeld, Abwehr, Tor
+  const pos = p => (x.players[p] || [])[1];
+  const rows = [4, 3, 2, 1].map(n => ids.filter(p => pos(p) === n));
+  rows[1] = rows[1].concat(ids.filter(p => ![1, 2, 3, 4].includes(pos(p))));
+  if (!ids.length) return '<div class="empty">Keine Aufstellung.</div>';
+  return `<div class="pitch" role="list">${rows.filter(r => r.length).map(r => `<div class="prow">${r.map(p => {
+    const club = (x.players[p] || [])[2];
+    return `<div class="tok" role="listitem" title="${esc(pname(x, p))}${club ? ' · ' + esc(club) : ''}"><b>${esc(pname(x, p))}</b><span>${label(p)}</span></div>`;
+  }).join('')}</div>`).join('')}</div>`;
+}
+
+async function viewMatchday(){
+  const idx = state.idx; const seasons = idx.extras || [];
+  if (!seasons.length) {
+    app.innerHTML = `<section><div class="eyebrow">${esc(idx.name)}</div><h1>Spieltag</h1></section>
+      <div class="panel empty">Für dieses Ligasystem gibt es noch keine Spieltagsdaten. Sie kommen mit dem nächsten Update.</div>`;
+    return;
+  }
+  if (!seasons.includes(state.xSeason)) state.xSeason = seasons[0];
+  const x = await getJSON(`data/${state.sys}/extras_${state.xSeason}.json`);
+  const mds = Object.keys(x.md).map(Number).sort((a, b) => b - a);
+  if (!mds.includes(state.xMd)) state.xMd = mds[0];
+  const day = x.md[state.xMd], cnt = countsOf(day), pts = day.pts || {};
+  const nMgr = Object.keys(day.m).length, nLeagues = new Set(Object.values(day.m).map(m => m[0])).size;
+  const P = p => fmt(pts[p] ?? 0);
+  const sum = (ids, f) => ids.reduce((a, p) => a + f(p), 0);
+  const e = day.elfs || {}, w = e.winner || { p: [] }, wm = day.m[w.id] || [];
+  const most = e.most || { p: [] }, top = e.top || { p: [] };
+
+  app.innerHTML = `
+  <section class="headline">
+    <div><div class="eyebrow">Saison ${esc(x.season)} · alle ${nLeagues} Ligen</div><h1>${idx.short}-Spieltag ${state.xMd}</h1>
+      <p class="lede">Bundesliga-Spieltag ${esc(day.bl)} · ${nMgr} Manager. Unter jedem Spieler stehen seine Punkte; die Zahl in Klammern zeigt, in wie vielen Ligen er aufgestellt war (maximal ${nLeagues}).</p></div>
+  </section>
+  <section class="controls">
+    ${seasons.length > 1 ? `<div class="field"><label for="xSeasonSel">Saison</label>
+      <select id="xSeasonSel">${seasons.map(s => `<option value="${esc(s)}" ${s === state.xSeason ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></div>` : ''}
+    <div class="field"><label for="xMdSel">Spieltag</label>
+      <select id="xMdSel">${mds.map(m => `<option value="${m}" ${m === state.xMd ? 'selected' : ''}>Spieltag ${m}</option>`).join('')}</select></div>
+  </section>
+  <section class="elfs">
+    <div class="elf"><div class="eyebrow">Meiste Spieltagspunkte</div><h2>Elf des Spieltagssiegers</h2>
+      <div class="sub">${w.id ? `${nameBtn(w.id)} · ${esc(wm[0] || '')} · ${fmt(wm[1])} Punkte · <span class="formation">${esc(w.f || '')}</span>` : ''}</div>
+      ${pitch(w.p, x, p => P(p))}</div>
+    <div class="elf"><div class="eyebrow">Über alle Ligen</div><h2>Meistaufgestellte Elf</h2>
+      <div class="sub">${fmt(sum(most.p, p => cnt[p] || 0))} Aufstellungen · <span class="formation">${esc(most.f || '')}</span></div>
+      ${pitch(most.p, x, p => `(${cnt[p] || 0}) <em>· ${P(p)}</em>`)}</div>
+    <div class="elf"><div class="eyebrow">Beste erlaubte Formation</div><h2>Top-Elf nach Punkten</h2>
+      <div class="sub">${fmt(sum(top.p, p => pts[p] || 0))} Punkte · <span class="formation">${esc(top.f || '')}</span></div>
+      ${pitch(top.p, x, p => `${P(p)} <em>(${cnt[p] || 0})</em>`)}</div>
+  </section>
+  <p class="muted" style="margin:0;font-size:13px">Meistaufgestellte Elf und Top-Elf berücksichtigen nur Spieler, die an diesem Spieltag in mindestens einer ${idx.short}-Liga aufgestellt waren, und verwenden die Formation aus Kickbase, mit der die höchste Summe erreicht wird.</p>`;
+  on('#xSeasonSel', 'change', ev => { state.xSeason = ev.target.value; state.xMd = null; render(); });
+  on('#xMdSel', 'change', ev => { state.xMd = +ev.target.value; render(); });
+}
+
+/* Kaderwert-Verlauf im Manager-Profil, Klick auf einen Spieltag zeigt die Aufstellung */
+async function kaderSection(id){
+  const seasons = state.idx.extras || [];
+  if (!seasons.length) return '';
+  if (!seasons.includes(state.mgrXSeason)) state.mgrXSeason = seasons[0];
+  let x;
+  try { x = await getJSON(`data/${state.sys}/extras_${state.mgrXSeason}.json`); } catch (e) { return ''; }
+  const mds = Object.keys(x.md).map(Number).sort((a, b) => a - b).filter(m => x.md[m].m[id]);
+  if (!mds.length) return '';
+  if (!mds.includes(state.mgrMd)) state.mgrMd = mds[mds.length - 1];
+  const vals = mds.map(m => x.md[m].m[id][2]);
+  // Breite = tatsaechlich verfuegbarer Platz, damit die Schrift nicht mitskaliert
+  const W = Math.max(300, Math.min(1048, (app.clientWidth || 600) - 26), mds.length * 40), H = 210, L = 64, R = 24, T = 26, B = 30;
+  const lo0 = Math.min(...vals), hi0 = Math.max(...vals), padV = Math.max((hi0 - lo0) * 0.15, 2e6);
+  const lo = Math.max(0, lo0 - padV), hi = hi0 + padV;
+  const xs = i => mds.length === 1 ? (L + W - R) / 2 : L + i * (W - L - R) / (mds.length - 1);
+  const ys = v => T + (hi - v) / (hi - lo) * (H - T - B);
+  let s = `<svg class="tv-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Kaderwert je Spieltag">`;
+  for (let k = 0; k <= 3; k++) { const v = lo + (hi - lo) * k / 3, y = ys(v);
+    s += `<line x1="${L - 6}" x2="${W - R + 6}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${L - 10}" y="${y + 4}" text-anchor="end">${esc(mio(v))}</text>`; }
+  s += `<polyline points="${mds.map((m, i) => `${xs(i)},${ys(vals[i])}`).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round"/>`;
+  mds.forEach((m, i) => {
+    const sel = m === state.mgrMd;
+    s += `<g class="pt" tabindex="0" role="button" data-tvmd="${m}" aria-label="Spieltag ${m}: ${esc(mio(vals[i]))}" aria-pressed="${sel}">
+      <circle cx="${xs(i)}" cy="${ys(vals[i])}" r="16" fill="transparent"/>
+      <circle cx="${xs(i)}" cy="${ys(vals[i])}" r="${sel ? 7 : 5}" fill="${sel ? 'var(--accent)' : 'var(--surface)'}" stroke="var(--accent)" stroke-width="2.5"/></g>
+      <text x="${xs(i)}" y="${H - 8}" text-anchor="middle">${m}</text>`;
+    if (sel) s += `<text x="${xs(i)}" y="${ys(vals[i]) - 13}" text-anchor="middle" style="fill:var(--ink)">${esc(mio(vals[i]))}</text>`;
+  });
+  s += '</svg>';
+  const day = x.md[state.mgrMd], me = day.m[id], pts = day.pts || {};
+  return `
+  <section>
+    <div class="headline"><div><div class="eyebrow">Saison ${esc(x.season)}</div><h2>Kaderwert je Spieltag</h2></div>
+      ${seasons.length > 1 ? `<div class="field"><label for="tvSeasonSel">Saison</label><select id="tvSeasonSel">${seasons.map(v => `<option ${v === state.mgrXSeason ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></div>` : ''}</div>
+    <p class="lede" style="margin-bottom:12px">Tippe auf einen Spieltag, um die Aufstellung zu sehen.</p>
+    <div class="panel scroll" style="padding:12px">${s}</div>
+  </section>
+  <section class="panel" style="padding:14px">
+    <div class="lineup-head"><h3>Aufstellung ${state.idx.short}-Spieltag ${state.mgrMd}</h3>
+      <span class="lg">${esc(me[0])} · ${fmt(me[1])} Punkte · Kaderwert ${esc(mio(me[2]))}</span></div>
+    <div style="max-width:520px;margin:0 auto">${pitch(me[3], x, p => `${fmt(pts[p] ?? 0)} Pkt.`)}</div>
+  </section>`;
+}
+
+/* ---------- Info: Regeln, Einstieg, Ligastruktur, Saison-Historie ---------- */
+function viewInfo(){
+  const idx = state.idx;
+  const seasons = idx.seasons.slice().reverse();            // alt -> neu
+  const count = s => Math.max(s.managers || 0, s.min_managers || 0);
+  const champ = {}; (idx.champions || []).forEach(c => { if (c.podium && c.podium[0]) champ[c.season] = c.podium[0].id; });
+  const cupW = {}; (idx.cups || []).forEach(c => { if (c.finished && c.winner) cupW[c.season] = c.winner; });
+  const cur = seasons[seasons.length - 1];
+  const peak = seasons.reduce((a, s) => count(s) > count(a) ? s : a, seasons[0]);
+  const anyStar = seasons.some(s => (s.min_managers || 0) > (s.managers || 0));
+  const sections = idx.info || [];
+  const struct = idx.structure || [];
+
+  // Balkendiagramm: Manager je Saison (eine Reihe, eine Farbe)
+  const W = Math.max(320, Math.min(1048, (app.clientWidth || 600) - 26)), H = 220, L = 40, R = 12, T = 22, B = 30;
+  const max = Math.max(...seasons.map(count), 1);
+  const nice = Math.ceil(max / 100) * 100 || 10;
+  const slot = (W - L - R) / seasons.length, bw = Math.max(6, Math.min(44, slot - 6));
+  const y = v => T + (H - T - B) * (1 - v / nice);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Teilnehmende Manager je Saison">`;
+  for (let k = 0; k <= 4; k++) { const v = nice * k / 4;
+    svg += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`; }
+  const thin = seasons.length > 10 && W < 700;
+  seasons.forEach((s, i) => {
+    const v = count(s), x = L + i * slot + (slot - bw) / 2, top = y(v), base = y(0), r = Math.min(4, bw / 2, base - top);
+    const d = v ? `M${x},${base}V${top + r}Q${x},${top} ${x + r},${top}H${x + bw - r}Q${x + bw},${top} ${x + bw},${top + r}V${base}Z` : '';
+    const tip = `${s.name}: ${fmt(v)} Manager · ${s.leagues.length} ${s.leagues.length === 1 ? 'Liga' : 'Ligen'}${s.gaps ? ` · ohne ${s.gaps.map(l => `Liga ${l}`).join('/')}` : ''}`;
+    svg += `<g class="bar" tabindex="0" data-tip="${esc(tip)}" data-x="${x + bw / 2}" data-y="${top}">
+      <rect class="hit" x="${L + i * slot}" y="${T}" width="${slot}" height="${base - T}"/>
+      <path d="${d}" fill="var(--accent)"/></g>`;
+    if (s === cur || s === peak) svg += `<text x="${x + bw / 2}" y="${top - 6}" text-anchor="middle" style="fill:var(--ink)">${fmt(v)}</text>`;
+    if (!thin || (seasons.length - 1 - i) % 2 === 0) svg += `<text x="${x + bw / 2}" y="${H - 10}" text-anchor="middle">${esc(s.name)}</text>`;
+  });
+  svg += '</svg>';
+
+  app.innerHTML = `
+  <section class="headline"><div><div class="eyebrow">${esc(idx.name)}</div><h1>Info</h1>
+    <p class="lede">Regeln, Einstieg und die Geschichte der ${idx.short} auf einen Blick.</p></div>
+    <div class="facts">
+      <div class="fact"><b>${fmt(count(cur))}</b><span>Manager ${esc(cur.name)}</span></div>
+      <div class="fact"><b>${cur.leagues.length}</b><span>Ligen</span></div>
+      <div class="fact"><b>${seasons.length}</b><span>Saisons seit ${esc(seasons[0].name)}</span></div>
+    </div></section>
+  ${sections.length ? `<section class="info-grid">${sections.map(s => `<div class="panel prose${s.html.includes('data-slot=') ? ' info-wide' : ''}"><h2>${esc(s.title)}</h2>${s.html}</div>`).join('')}</section>` : ''}
+  ${struct.length ? `<section><h2>Ligastruktur</h2>
+    <div class="panel scroll" style="margin-top:12px"><table>
+      <thead><tr><th>Ebene</th><th>Ligen</th><th class="r">Pokal-Faktor</th><th class="r">${idx.short}-Score für Platz 1</th></tr></thead>
+      <tbody>${struct.map(l => `<tr><td class="pts" style="text-align:left">${idx.short} ${l.level}</td>
+        <td class="lg">${l.leagues.length > 1 ? `${l.leagues.length} Staffeln (${esc(l.leagues[0].replace(/^Liga\s*/, ''))}–${esc(l.leagues[l.leagues.length - 1].replace(/^Liga\s*/, ''))})` : esc(l.leagues[0] || '')}</td>
+        <td class="md">${l.cup_factor != null ? String(l.cup_factor).replace('.', ',') : '–'}</td>
+        <td class="md">${l.score_first ? fmt(l.score_first) : '–'}</td></tr>`).join('')}</tbody>
+    </table></div></section>` : ''}
+  <section><h2>Saison-Historie</h2>
+    <p class="lede">Teilnehmende Manager je Saison${anyStar ? '. In frühen Saisons sind nicht alle Manager in der Datenbank erfasst; dort ist die Mindestzahl aus den Platzierungen angegeben (*)' : ''}.${(idx.gaps || []).length ? ` ${(() => { const by = {}; idx.gaps.forEach(g => g.levels.forEach(l => (by[l] = by[l] || []).push(g.s)));
+      return Object.keys(by).map(l => `Für Liga ${l} in ${by[l].join(' und ')}`).join(', ') + ' liegen keine Tabellen mehr vor; dort fehlen diese Manager in den Zahlen (†).'; })()}` : ''}</p>
+    <div class="panel hist-chart" style="margin-top:12px">${svg}<div class="tip" hidden></div></div>
+    <div class="panel scroll hist-table" style="margin-top:12px"><table>
+      <thead><tr><th>Saison</th><th class="r">Manager</th><th class="r">Ligen</th><th class="r">Spieltage</th><th>Meister ${idx.short} 1</th><th>Pokalsieger</th></tr></thead>
+      <tbody>${seasons.slice().reverse().map(s => { const star = (s.min_managers || 0) > (s.managers || 0);
+        return `<tr><td class="lg" style="font-size:15px;color:var(--ink)">${esc(s.name)}${s.current ? ' <span class="muted">(läuft)</span>' : ''}${s.quali ? ' <span class="muted">(Quali)</span>' : ''}</td>
+        <td class="pts">${fmt(count(s))}${star ? '<span class="star">*</span>' : ''}${s.gaps ? `<span class="star" title="ohne ${s.gaps.map(l => `Liga ${l}`).join('/')} (keine Tabellen)">†</span>` : ''}</td>
+        <td class="md">${s.leagues.length}</td>
+        <td class="md">${s.current ? `${s.last_md} / ${s.matchdays}` : s.matchdays}</td>
+        <td><div class="mgr">${champ[s.name] && !s.current ? nameBtn(champ[s.name]) : '<span class="muted">–</span>'}</div></td>
+        <td><div class="mgr">${cupW[s.name] ? nameBtn(cupW[s.name]) : '<span class="muted">–</span>'}</div></td></tr>`; }).join('')}</tbody>
+    </table></div></section>`;
+
+  app.querySelectorAll('[data-slot="aufabstieg"]').forEach(el => { el.innerHTML = promoChart(); });
+  const box = app.querySelector('.hist-chart'), tipEl = box.querySelector('.tip'), svgEl = box.querySelector('svg');
+  const show = g => { const sc = svgEl.getBoundingClientRect().width / W;
+    tipEl.textContent = g.dataset.tip; tipEl.hidden = false;
+    const half = tipEl.offsetWidth / 2, bw = box.clientWidth;
+    tipEl.style.left = Math.min(bw - half - 4, Math.max(half + 4, 12 + g.dataset.x * sc)) + 'px';
+    tipEl.style.top = (12 + g.dataset.y * sc) + 'px'; };
+  box.querySelectorAll('.bar').forEach(g => {
+    g.addEventListener('mouseenter', () => show(g)); g.addEventListener('focus', () => show(g));
+    g.addEventListener('mouseleave', () => tipEl.hidden = true); g.addEventListener('blur', () => tipEl.hidden = true);
+  });
+}
+
+/* ---------- Gerüst ---------- */
+function on(sel, ev, fn){ const el = app.querySelector(sel); if (el) el.addEventListener(ev, fn); }
+function go(view){ state.view = view; if (location.hash !== '#' + view) history.replaceState(null, '', '#' + view); render(); window.scrollTo(0, 0); }
+
+async function render(){
+  document.querySelectorAll('#nav a').forEach(a => a.setAttribute('aria-current', a.dataset.view === state.view ? 'page' : 'false'));
+  if (state.view !== 'auslosung' && drawLoop) { clearInterval(drawLoop); drawLoop = null; }
+  updateDrawBar();
+  const views = { auslosung: viewDraw, tabellen: viewTables, spieltag: viewMatchday, pokal: viewCup, ruhmeshalle: viewHall, score: viewScore, ewig: viewEwig, manager: viewManager, info: viewInfo };
+  try { await (views[state.view] || viewTables)(); }
+  catch (e) { console.error(e); app.innerHTML = `<div class="empty">Diese Ansicht konnte nicht geladen werden (${esc(e.message)}). Lade die Seite neu.</div>`; }
+}
+
+async function selectSystem(id){
+  state.sys = id; store.set('kbl.sys', id);
+  state.idx = await getJSON(`data/${id}/index.json`);
+  Object.assign(state, { season: null, league: null, md: null, cupSeason: null, cupRound: null, manager: null, scoreFilter: '', query: '',
+    xSeason: null, xMd: null, mgrXSeason: null, mgrMd: null, hofSeason: null });
+  const s = state.systems.find(x => x.id === id);
+  document.documentElement.dataset.sys = id;
+  document.getElementById('brand').innerHTML = `${s.icon ? `<img src="data/${esc(id)}/logo_icon.png" alt="">` : ''}${esc(s.short)} <small>${esc(s.name)}</small>`;
+  document.querySelector('#nav a[data-view="score"]').textContent = `${s.short}-Score`;
+  document.querySelectorAll('#sysSwitch button').forEach(b => b.setAttribute('aria-pressed', b.dataset.sys === id));
+  document.getElementById('foot').textContent = `Datenstand: ${state.idx.generated} · Saison ${state.idx.current}`;
+  render();
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-mgr]');
+  if (b && b.dataset.mgr !== 'Freilos') { if (state.manager !== b.dataset.mgr) state.mgrMd = null; state.manager = b.dataset.mgr; go('manager'); }
+});
+document.getElementById('drawBar').addEventListener('click', async e => {
+  const b = e.target.closest('[data-draw]'); if (!b) return;
+  state.drawShift = 0;
+  if (b.dataset.draw !== state.sys) { state.view = 'auslosung'; history.replaceState(null, '', '#auslosung'); await selectSystem(b.dataset.draw); window.scrollTo(0, 0); }
+  else go('auslosung');
+});
+setInterval(updateDrawBar, 1000);
+document.getElementById('nav').addEventListener('click', e => {
+  const a = e.target.closest('a[data-view]'); if (!a) return; e.preventDefault();
+  if (a.dataset.view === 'manager') state.manager = null;
+  go(a.dataset.view);
+});
+window.addEventListener('hashchange', () => { const v = location.hash.slice(1); if (v && v !== state.view) { state.view = v; render(); } });
+
+(async () => {
+  try {
+    state.systems = await getJSON('data/systems.json');
+    document.getElementById('sysSwitch').innerHTML = state.systems.map(s => `<button type="button" data-sys="${s.id}">${esc(s.short)}</button>`).join('');
+    document.getElementById('sysSwitch').addEventListener('click', e => { const b = e.target.closest('[data-sys]'); if (b && b.dataset.sys !== state.sys) selectSystem(b.dataset.sys); });
+    const v = location.hash.slice(1); if (v) state.view = v;
+    const saved = store.get('kbl.sys');
+    await selectSystem(state.systems.find(s => s.id === saved) ? saved : state.systems[0].id);
+  } catch (e) { console.error(e); app.innerHTML = '<div class="empty">Die Daten konnten nicht geladen werden. Wenn du die Datei direkt geöffnet hast: starte im Projektordner <code>python -m http.server -d docs</code> und öffne http://localhost:8000.</div>'; }
+})();
+})();
+</script>

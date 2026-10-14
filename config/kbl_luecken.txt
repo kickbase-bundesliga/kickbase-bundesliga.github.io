@@ -1,0 +1,6 @@
+// Ligen, fuer die keine Tabellen mehr vorliegen.
+// Je Zeile: Saison; Ligaebene
+// Die Webseite zeigt dazu Hinweise (Info-Seite, Tabellen, Managerprofile).
+// Taucht eine Tabelle doch noch auf: Zeile loeschen.
+2021A; 5
+2025A; 6

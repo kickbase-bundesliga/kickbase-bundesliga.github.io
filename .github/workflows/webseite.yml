@@ -1,0 +1,53 @@
+# Baut die Webseite aus den Daten im Repository und veroeffentlicht sie (GitHub Pages).
+# Laeuft automatisch, wenn Daten, Info-Texte oder die Vorlage geaendert werden,
+# nach jedem automatischen Spieltags-Update, und per Knopf "Run workflow".
+name: Webseite
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "league_systems/**"
+      - "config/**"
+      - "website/**"
+      - "scripts/build_site.py"
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: webseite
+  cancel-in-progress: false
+
+jobs:
+  bauen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Webseite bauen
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python scripts/build_site.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  veroeffentlichen:
+    needs: bauen
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
