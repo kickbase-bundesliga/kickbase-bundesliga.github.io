@@ -3,6 +3,26 @@ import numpy as np
 import sys
 import os
 import base64
+
+
+def ordner_fuer(datei):
+    """Legt den Zielordner an, falls er fehlt (z. B. tables/ auf GitHub, wird nicht hochgeladen)."""
+    ordner = os.path.dirname(datei)
+    if ordner:
+        os.makedirs(ordner, exist_ok=True)
+
+
+def bild_speichern(fig, datei, **optionen):
+    """Speichert ein Tabellenbild. Ein Fehler beim Bild darf nie das Speichern der Daten verhindern:
+    er wird nur als Warnung gemeldet."""
+    try:
+        ordner_fuer(datei)
+        fig.write_image(datei, **optionen)
+        return True
+    except Exception as e:
+        hinweis = "Tabellenbild nicht erstellt (%s): %s" % (os.path.basename(datei), e)
+        print(("::warning::" if os.environ.get("GITHUB_ACTIONS") else "⚠️  ") + hinweis)
+        return False
 sys.path.append("./")
 from scripts import utils
 
@@ -137,7 +157,7 @@ def save_matchday_table_as_image(table_data, season, matchday, league_name, conf
     else:
         print(f"⚠️ Logo file not found at: {logo_path}. Skipping logo overlay.")
 
-    fig.write_image(filename + '.jpeg', format="jpeg", scale=2)
+    bild_speichern(fig, filename + '.jpeg', format="jpeg", scale=2)
     print(f"💾 Saved table as {filename}")
 
 
@@ -173,7 +193,7 @@ def save_kblscore_table_as_image(system, tablelist, seasons, filename):
                    align=['center', 'left', 'left'] + ['right']*len(seasons) + ['right']),
         )],layout=layout)
 
-        nicetable.write_image(filename + ".jpeg", width=image_width, height=image_height)  # früher 23.4
+        bild_speichern(nicetable, filename + ".jpeg", width=image_width, height=image_height)  # früher 23.4
         print(f"💾 KBL Score Table written to {filename}.")
 
 
@@ -205,7 +225,7 @@ def save_alltime_table_as_image(filename, tablelist, header, columnwid):
                    align=['center', 'left', 'left', 'right', 'right']),
         )],layout=layout)
 
-        nicetable.write_image(filename + '.jpeg', format="jpeg", scale=2, width=image_width, height=image_height)
+        bild_speichern(nicetable, filename + '.jpeg', format="jpeg", scale=2, width=image_width, height=image_height)
         print(f"💾 Saved table as {filename}")
 
 
@@ -259,5 +279,5 @@ def save_cup_round_as_image(tablelist, header, tablename, foldername, is_results
         layout=layout
     )
 
-    fig.write_image(f"{foldername}{tablename}.jpeg", width=image_width, height=image_height)
+    bild_speichern(fig, f"{foldername}{tablename}.jpeg", width=image_width, height=image_height)
     print(f"💾 Saved table as {foldername}{tablename}")

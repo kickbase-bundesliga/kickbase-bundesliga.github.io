@@ -25,11 +25,11 @@ jobs:
     outputs:
       geaendert: ${{ steps.speichern.outputs.geaendert }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.repository.default_branch }}
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -50,6 +50,7 @@ jobs:
           PYTHONUNBUFFERED: "1"
           PYTHONIOENCODING: utf-8
         run: |
+          mkdir -p "league_systems/$SYSTEM/tables"
           PREFIX=$(echo "$SYSTEM" | tr '[:lower:]' '[:upper:]')
           export "${PREFIX}_EMAIL=$EMAIL" "${PREFIX}_PASSWORT=$PASSWORT"
           ARGS=("$SYSTEM" --ohne-webseite)
@@ -63,7 +64,7 @@ jobs:
           python automatik.py "${ARGS[@]}"
 
       - name: Tabellenbilder zum Herunterladen bereitstellen
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Tabellenbilder-${{ inputs.system }}-${{ github.run_number }}
           path: league_systems/${{ inputs.system }}/tables/
