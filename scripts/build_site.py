@@ -153,7 +153,8 @@ def build_system(system):
                     else:
                         league_cfg[d["League"]] = level_cfg.get(lv, {"distribution": [], "kbl_score": []})
 
-    gaps = read_gaps(system)            # {Saison: [Ebenen ohne Tabellen]}
+    gap_est = {}
+    gaps = read_gaps(system, gap_est)   # {Saison: [Ebenen ohne Tabellen]}, gap_est: Schaetzung je Saison
 
     def season_entry(m, s):
         d = m.get(s)
@@ -221,6 +222,7 @@ def build_system(system):
             "leagues": [l["short"] for l in league_list],
             "has_cup": s in cups,
             **({"gaps": gaps[s]} if s in gaps else {}),
+            **({"est_managers": gap_est[s]["managers"], "est_leagues": gap_est[s]["leagues"]} if s in gap_est else {}),
         })
 
     # ---------------- Pokal ----------------
@@ -470,9 +472,11 @@ def build_system(system):
     return entry
 
 
-def read_gaps(system):
+def read_gaps(system, estimates=None):
     """config/<system>_luecken.txt: Ligen, fuer die es keine Tabellen mehr gibt.
-    Je Zeile  Saison; Ebene   z. B.  2023B; 6   (// = Kommentar). Fehlt die Datei: keine Luecken."""
+    Je Zeile  Saison; Ebene[; Anzahl Ligen; Manager je Liga]   z. B.  2021A; 5; 6; 17
+    (// = Kommentar). Die optionale Schaetzung fliesst nur in die Saison-Historie ein.
+    estimates: dict, wird mit {Saison: {"managers": n, "leagues": n}} gefuellt."""
     path = f"config/{system}_luecken.txt"
     out = {}
     if not os.path.exists(path):
@@ -485,6 +489,10 @@ def read_gaps(system):
             parts = [x.strip() for x in line.replace(",", ";").split(";")]
             try:
                 out.setdefault(parts[0], []).append(int(parts[1]))
+                if estimates is not None and len(parts) >= 4 and parts[2] and parts[3]:
+                    e = estimates.setdefault(parts[0], {"managers": 0, "leagues": 0})
+                    e["leagues"] += int(parts[2])
+                    e["managers"] += int(parts[2]) * int(parts[3])
             except (IndexError, ValueError):
                 print(f"   Hinweis: Zeile in {path} nicht verstanden: {raw.strip()}")
     return out

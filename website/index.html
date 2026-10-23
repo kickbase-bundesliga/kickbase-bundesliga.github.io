@@ -1239,7 +1239,10 @@ async function kaderSection(id){
 function viewInfo(){
   const idx = state.idx;
   const seasons = idx.seasons.slice().reverse();            // alt -> neu
-  const count = s => Math.max(s.managers || 0, s.min_managers || 0);
+  // Saisons mit fehlenden Tabellen: geschaetzte Manager/Ligen aus config/<system>_luecken.txt zaehlen mit
+  const count = s => Math.max(s.managers || 0, s.min_managers || 0) + (s.est_managers || 0);
+  const nLeagues = s => s.leagues.length + (s.est_leagues || 0);
+  const estText = s => s.est_managers ? `davon ca. ${fmt(s.est_managers)} geschätzt (${s.gaps.map(l => `Liga ${l}`).join('/')}, ${s.est_leagues} ${s.est_leagues === 1 ? 'Liga' : 'Ligen'})` : '';
   const champ = {}; (idx.champions || []).forEach(c => { if (c.podium && c.podium[0]) champ[c.season] = c.podium[0].id; });
   const cupW = {}; (idx.cups || []).forEach(c => { if (c.finished && c.winner) cupW[c.season] = c.winner; });
   const cur = seasons[seasons.length - 1];
@@ -1261,7 +1264,7 @@ function viewInfo(){
   seasons.forEach((s, i) => {
     const v = count(s), x = L + i * slot + (slot - bw) / 2, top = y(v), base = y(0), r = Math.min(4, bw / 2, base - top);
     const d = v ? `M${x},${base}V${top + r}Q${x},${top} ${x + r},${top}H${x + bw - r}Q${x + bw},${top} ${x + bw},${top + r}V${base}Z` : '';
-    const tip = `${s.name}: ${fmt(v)} Manager · ${s.leagues.length} ${s.leagues.length === 1 ? 'Liga' : 'Ligen'}${s.gaps ? ` · ohne ${s.gaps.map(l => `Liga ${l}`).join('/')}` : ''}`;
+    const tip = `${s.name}: ${s.est_managers ? 'ca. ' : ''}${fmt(v)} Manager · ${nLeagues(s)} ${nLeagues(s) === 1 ? 'Liga' : 'Ligen'}${s.est_managers ? ` · ${estText(s)}` : s.gaps ? ` · ohne ${s.gaps.map(l => `Liga ${l}`).join('/')}` : ''}`;
     svg += `<g class="bar" tabindex="0" data-tip="${esc(tip)}" data-x="${x + bw / 2}" data-y="${top}">
       <rect class="hit" x="${L + i * slot}" y="${T}" width="${slot}" height="${base - T}"/>
       <path d="${d}" fill="var(--accent)"/></g>`;
@@ -1275,7 +1278,7 @@ function viewInfo(){
     <p class="lede">Regeln, Einstieg und die Geschichte der ${idx.short} auf einen Blick.</p></div>
     <div class="facts">
       <div class="fact"><b>${fmt(count(cur))}</b><span>Manager ${esc(cur.name)}</span></div>
-      <div class="fact"><b>${cur.leagues.length}</b><span>Ligen</span></div>
+      <div class="fact"><b>${nLeagues(cur)}</b><span>Ligen</span></div>
       <div class="fact"><b>${seasons.length}</b><span>Saisons seit ${esc(seasons[0].name)}</span></div>
     </div></section>
   ${sections.length ? `<section class="info-grid">${sections.map(s => `<div class="panel prose${s.html.includes('data-slot=') ? ' info-wide' : ''}"><h2>${esc(s.title)}</h2>${s.html}</div>`).join('')}</section>` : ''}
@@ -1289,14 +1292,17 @@ function viewInfo(){
     </table></div></section>` : ''}
   <section><h2>Saison-Historie</h2>
     <p class="lede">Teilnehmende Manager je Saison${anyStar ? '. In frühen Saisons sind nicht alle Manager in der Datenbank erfasst; dort ist die Mindestzahl aus den Platzierungen angegeben (*)' : ''}.${(idx.gaps || []).length ? ` ${(() => { const by = {}; idx.gaps.forEach(g => g.levels.forEach(l => (by[l] = by[l] || []).push(g.s)));
-      return Object.keys(by).map(l => `Für Liga ${l} in ${by[l].join(' und ')}`).join(', ') + ' liegen keine Tabellen mehr vor; dort fehlen diese Manager in den Zahlen (†).'; })()}` : ''}</p>
+      const est = seasons.some(s => s.est_managers);
+      return Object.keys(by).map(l => `Für Liga ${l} in ${by[l].join(' und ')}`).join(', ') + (est
+        ? ' liegen keine Tabellen mehr vor; die Manager dieser Ligen sind dort geschätzt (†).'
+        : ' liegen keine Tabellen mehr vor; dort fehlen diese Manager in den Zahlen (†).'); })()}` : ''}</p>
     <div class="panel hist-chart" style="margin-top:12px">${svg}<div class="tip" hidden></div></div>
     <div class="panel scroll hist-table" style="margin-top:12px"><table>
       <thead><tr><th>Saison</th><th class="r">Manager</th><th class="r">Ligen</th><th class="r">Spieltage</th><th>Meister ${idx.short} 1</th><th>Pokalsieger</th></tr></thead>
       <tbody>${seasons.slice().reverse().map(s => { const star = (s.min_managers || 0) > (s.managers || 0);
         return `<tr><td class="lg" style="font-size:15px;color:var(--ink)">${esc(s.name)}${s.current ? ' <span class="muted">(läuft)</span>' : ''}${s.quali ? ' <span class="muted">(Quali)</span>' : ''}</td>
-        <td class="pts">${fmt(count(s))}${star ? '<span class="star">*</span>' : ''}${s.gaps ? `<span class="star" title="ohne ${s.gaps.map(l => `Liga ${l}`).join('/')} (keine Tabellen)">†</span>` : ''}</td>
-        <td class="md">${s.leagues.length}</td>
+        <td class="pts">${fmt(count(s))}${star ? '<span class="star">*</span>' : ''}${s.gaps ? `<span class="star" title="${s.est_managers ? esc(estText(s)) : `ohne ${s.gaps.map(l => `Liga ${l}`).join('/')} (keine Tabellen)`}">†</span>` : ''}</td>
+        <td class="md">${nLeagues(s)}</td>
         <td class="md">${s.current ? `${s.last_md} / ${s.matchdays}` : s.matchdays}</td>
         <td><div class="mgr">${champ[s.name] && !s.current ? nameBtn(champ[s.name]) : '<span class="muted">–</span>'}</div></td>
         <td><div class="mgr">${cupW[s.name] ? nameBtn(cupW[s.name]) : '<span class="muted">–</span>'}</div></td></tr>`; }).join('')}</tbody>

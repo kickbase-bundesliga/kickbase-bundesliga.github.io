@@ -1,6 +1,7 @@
 // Ligen, fuer die keine Tabellen mehr vorliegen.
-// Je Zeile: Saison; Ligaebene
+// Je Zeile: Saison; Ligaebene; Anzahl Ligen; Manager je Liga
+// Die letzten beiden Angaben sind optional und eine Schaetzung nur fuer die Saison-Historie.
 // Die Webseite zeigt dazu Hinweise (Info-Seite, Tabellen, Managerprofile).
 // Taucht eine Tabelle doch noch auf: Zeile loeschen.
-2021A; 5
-2025A; 6
+2021A; 5; 6; 17
+2025A; 6; 12; 16
