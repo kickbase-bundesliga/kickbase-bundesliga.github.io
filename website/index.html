@@ -166,6 +166,11 @@ td.trend{font:600 14px/1 var(--display);white-space:nowrap;width:48px;color:var(
 .match .won .n,.match .s.won{color:var(--ink);font-weight:700}
 .match .lost .n{color:var(--muted)}
 .bye{color:var(--muted);font-style:italic}
+.match .raw{font:600 12px/1 var(--display);color:var(--muted);margin-left:5px;font-variant-numeric:tabular-nums}
+.factors{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.factors .fl{font:700 12px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.fchip{font:600 14px/1 var(--display);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.fchip b{font-weight:800}
 .bracket{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(190px,1fr);gap:16px;overflow-x:auto;padding:4px 2px 8px}
 .bcol{display:grid;grid-template-rows:auto 1fr;gap:8px}
 .bcol h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -554,14 +559,16 @@ async function viewTables(){
 }
 
 /* ---------- Pokal ---------- */
+const fmtFactor = f => '×' + String(f).replace('.', ',');
 function matchHTML(m, leagues){
-  const side = (id, pts, won, decided) => {
+  const side = (id, pts, raw, won, decided) => {
     if (id === 'Freilos') return `<div class="side"><span class="n bye">Freilos</span></div><div class="s"></div>`;
     const cls = decided ? (won ? 'won' : 'lost') : '';
-    return `<div class="side ${cls}"><span class="n">${nameBtnInline(id)}</span><span class="lg">${esc(leagues[id] || '')}</span></div><div class="s ${won ? 'won' : ''}">${pts == null ? '' : fmt(pts)}</div>`;
+    const rawTxt = raw != null && raw !== pts ? `<span class="raw" title="Spieltagspunkte ohne Faktor">(${fmt(raw)})</span>` : '';
+    return `<div class="side ${cls}"><span class="n">${nameBtnInline(id)}</span><span class="lg">${esc(leagues[id] || '')}</span></div><div class="s ${won ? 'won' : ''}">${pts == null ? '' : fmt(pts)}${rawTxt}</div>`;
   };
   const decided = !!m.w;
-  return `<div class="match">${side(m.a, m.pa, m.w === m.a, decided)}${side(m.b, m.pb, m.w === m.b, decided)}</div>`;
+  return `<div class="match">${side(m.a, m.pa, m.ra, m.w === m.a, decided)}${side(m.b, m.pb, m.rb, m.w === m.b, decided)}</div>`;
 }
 function nameBtnInline(id){ return `<button type="button" data-mgr="${esc(id)}" style="all:unset;cursor:pointer">${esc(mgr(id).n)}</button>`; }
 
@@ -628,7 +635,8 @@ async function viewCup(){
   app.innerHTML = `
   <section class="headline">
     <div><div class="eyebrow">${idx.short}-Pokal</div><h1>Pokal ${esc(meta.season)}</h1>
-      <p class="lede">${meta.participants} Teilnehmer · ${meta.finished ? 'abgeschlossen' : `aktuell: ${roundName(Math.min(...rounds.map(r => r.size)))}`}. Punkte im Pokal sind Spieltagspunkte mal Liga-Faktor.</p></div>
+      <p class="lede">${meta.participants} Teilnehmer · ${meta.finished ? 'abgeschlossen' : `aktuell: ${roundName(Math.min(...rounds.map(r => r.size)))}`}. Punkte im Pokal sind Spieltagspunkte mal Liga-Faktor, in Klammern die Spieltagspunkte ohne Faktor.</p>
+      <div class="factors" aria-label="Liga-Faktoren im Pokal"><span class="fl">Liga-Faktor</span>${idx.structure.filter(l => l.cup_factor > 0).map(l => `<span class="fchip"><b>${esc(idx.short)} ${l.level}</b> ${fmtFactor(l.cup_factor)}</span>`).join('')}</div></div>
   </section>
   ${liveNote}
   ${meta.finished ? `<section class="panel winner">${BIG_CUP}<div><div class="eyebrow">Pokalsieger</div><div class="who">${nameBtnInline(meta.winner)}</div>

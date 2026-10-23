@@ -224,6 +224,36 @@ def build_system(system):
         })
 
     # ---------------- Pokal ----------------
+    def cup_factor_of(mid, s):
+        d = season_entry(managers.get(mid, {}), s)
+        return (league_cfg.get(d["League"]) or {}).get("cup_factor") if d else None
+
+    def add_raw_points(matches, s):
+        """Originale Spieltagspunkte (vor Liga-Faktor) ergaenzen. Der Spieltag einer Pokalrunde ist
+        nicht gespeichert; er wird gesucht: der Spieltag, an dem Punkte x Faktor die Pokalpunkte ergeben."""
+        rows = []
+        for m in matches:
+            for side, pkey in (("a", "pa"), ("b", "pb")):
+                mid, p = m[side], m[pkey]
+                f = cup_factor_of(mid, s) if mid != "Freilos" else None
+                d = season_entry(managers.get(mid, {}), s) if mid != "Freilos" else None
+                md = (managers.get(mid, {}).get(s) or {}).get("MdPoints") if d else None
+                if p is not None and f is not None and md:
+                    rows.append((m, side, p, f, md))
+        if not rows:
+            return
+        best_k, best_hits = None, 0
+        for k in range(1, max(len(r[4]) for r in rows)):
+            hits = sum(1 for _, _, p, f, md in rows if k < len(md) and md[k] is not None and round(md[k] * f) == p)
+            if hits > best_hits:
+                best_k, best_hits = k, hits
+        if best_k is None or best_hits < 0.7 * len(rows):
+            return
+        for m, side, p, f, md in rows:
+            raw = md[best_k] if best_k < len(md) else None
+            if raw is not None and round(raw * f) == p:
+                m["r" + side] = raw
+
     cup_meta = []
     for s, cup in sorted(cups.items()):
         rounds = []
@@ -246,6 +276,7 @@ def build_system(system):
                 elif b in winners:
                     w = b
                 matches.append({"a": a, "b": b, "pa": pa, "pb": pb, "w": w})
+            add_raw_points(matches, s)
             rounds.append({"size": int(rnd), "matches": matches, "done": bool(r.get("Winners"))})
         if not rounds:
             continue
