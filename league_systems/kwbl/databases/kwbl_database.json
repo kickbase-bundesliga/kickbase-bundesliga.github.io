@@ -2,9 +2,9 @@
     "1027810": {
         "Username": "specialone",
         "Info": {
-            "KBL Score": 229,
+            "KBL Score": 289,
             "League": "KWBL - Liga 1",
-            "Place": 11
+            "Place": 10
         },
         "2024BA": {
             "League": "KWBL - Liga 1",
@@ -137,8 +137,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 1",
-            "Place": 11,
-            "Points": 4251,
+            "Place": 10,
+            "Points": 4709,
             "MdPoints": [
                 0,
                 523,
@@ -147,7 +147,7 @@
                 689,
                 931,
                 885,
-                0,
+                458,
                 0,
                 0,
                 0,
@@ -163,7 +163,7 @@
                 12,
                 11,
                 11,
-                0,
+                10,
                 0,
                 0,
                 0,
@@ -177,7 +177,7 @@
     "1403991": {
         "Username": "Cello",
         "Info": {
-            "KBL Score": 275,
+            "KBL Score": 360,
             "League": "KWBL - Liga 1",
             "Place": 3
         },
@@ -313,7 +313,7 @@
         "2026B": {
             "League": "KWBL - Liga 1",
             "Place": 3,
-            "Points": 5803,
+            "Points": 6802,
             "MdPoints": [
                 0,
                 1146,
@@ -322,7 +322,7 @@
                 541,
                 1124,
                 1012,
-                0,
+                999,
                 0,
                 0,
                 0,
@@ -338,7 +338,7 @@
                 4,
                 3,
                 3,
-                0,
+                3,
                 0,
                 0,
                 0,
@@ -489,9 +489,9 @@
     "1487878": {
         "Username": "Poeti",
         "Info": {
-            "KBL Score": 152,
+            "KBL Score": 197,
             "League": "KWBL - Liga 3A",
-            "Place": 4
+            "Place": 1
         },
         "2024BA": {
             "League": "KWBL - Liga 1",
@@ -624,8 +624,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 4,
-            "Points": 5309,
+            "Place": 1,
+            "Points": 6366,
             "MdPoints": [
                 0,
                 448,
@@ -634,7 +634,7 @@
                 827,
                 1062,
                 1256,
-                0,
+                1057,
                 0,
                 0,
                 0,
@@ -650,7 +650,7 @@
                 7,
                 5,
                 4,
-                0,
+                1,
                 0,
                 0,
                 0,
@@ -664,9 +664,9 @@
     "1571955": {
         "Username": "DW7",
         "Info": {
-            "KBL Score": 213,
+            "KBL Score": 268,
             "League": "KWBL - Liga 1",
-            "Place": 9
+            "Place": 11
         },
         "2024BA": {
             "League": "KWBL - Liga 1",
@@ -799,8 +799,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 1",
-            "Place": 9,
-            "Points": 4410,
+            "Place": 11,
+            "Points": 4700,
             "MdPoints": [
                 0,
                 910,
@@ -809,7 +809,7 @@
                 575,
                 873,
                 755,
-                0,
+                290,
                 0,
                 0,
                 0,
@@ -825,7 +825,7 @@
                 8,
                 8,
                 9,
-                0,
+                11,
                 0,
                 0,
                 0,
@@ -839,7 +839,7 @@
     "1623645": {
         "Username": "Poet10",
         "Info": {
-            "KBL Score": 146,
+            "KBL Score": 158,
             "League": "KWBL - Liga 3A",
             "Place": 10
         },
@@ -975,7 +975,7 @@
         "2026B": {
             "League": "KWBL - Liga 3A",
             "Place": 10,
-            "Points": 3785,
+            "Points": 5069,
             "MdPoints": [
                 0,
                 584,
@@ -984,7 +984,7 @@
                 723,
                 707,
                 618,
-                0,
+                1284,
                 0,
                 0,
                 0,
@@ -1000,7 +1000,7 @@
                 11,
                 10,
                 10,
-                0,
+                10,
                 0,
                 0,
                 0,
@@ -1014,7 +1014,7 @@
     "1881506": {
         "Username": "Spooky 09",
         "Info": {
-            "KBL Score": 267,
+            "KBL Score": 367,
             "League": "KWBL - Liga 1",
             "Place": 1
         },
@@ -1150,7 +1150,7 @@
         "2026B": {
             "League": "KWBL - Liga 1",
             "Place": 1,
-            "Points": 6621,
+            "Points": 7826,
             "MdPoints": [
                 0,
                 856,
@@ -1159,7 +1159,7 @@
                 1286,
                 831,
                 1462,
-                0,
+                1205,
                 0,
                 0,
                 0,
@@ -1175,7 +1175,7 @@
                 1,
                 2,
                 1,
-                0,
+                1,
                 0,
                 0,
                 0,
@@ -1189,9 +1189,9 @@
     "1981519": {
         "Username": "Daniel_Niederlande",
         "Info": {
-            "KBL Score": 228,
+            "KBL Score": 280,
             "League": "KWBL - Liga 1",
-            "Place": 10
+            "Place": 12
         },
         "2024BA": {
             "League": "KWBL - Liga 1",
@@ -1324,8 +1324,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 1",
-            "Place": 10,
-            "Points": 4353,
+            "Place": 12,
+            "Points": 4557,
             "MdPoints": [
                 0,
                 629,
@@ -1334,7 +1334,7 @@
                 683,
                 758,
                 1142,
-                0,
+                204,
                 0,
                 0,
                 0,
@@ -1350,7 +1350,7 @@
                 11,
                 12,
                 10,
-                0,
+                12,
                 0,
                 0,
                 0,
@@ -1364,7 +1364,7 @@
     "2259396": {
         "Username": "Oli",
         "Info": {
-            "KBL Score": 233,
+            "KBL Score": 282,
             "League": "KWBL - Liga 1",
             "Place": 13
         },
@@ -1500,7 +1500,7 @@
         "2026B": {
             "League": "KWBL - Liga 1",
             "Place": 13,
-            "Points": 3348,
+            "Points": 3941,
             "MdPoints": [
                 0,
                 403,
@@ -1509,7 +1509,7 @@
                 764,
                 476,
                 724,
-                0,
+                593,
                 0,
                 0,
                 0,
@@ -1525,7 +1525,7 @@
                 13,
                 13,
                 13,
-                0,
+                13,
                 0,
                 0,
                 0,
@@ -1539,9 +1539,9 @@
     "2474874": {
         "Username": "VeroKa",
         "Info": {
-            "KBL Score": 290,
+            "KBL Score": 365,
             "League": "KWBL - Liga 1",
-            "Place": 7
+            "Place": 5
         },
         "2024BA": {
             "League": "KWBL - Liga 1",
@@ -1674,8 +1674,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 1",
-            "Place": 7,
-            "Points": 4762,
+            "Place": 5,
+            "Points": 5861,
             "MdPoints": [
                 0,
                 907,
@@ -1684,7 +1684,7 @@
                 627,
                 833,
                 1266,
-                0,
+                1099,
                 0,
                 0,
                 0,
@@ -1700,7 +1700,7 @@
                 10,
                 9,
                 7,
-                0,
+                5,
                 0,
                 0,
                 0,
@@ -1851,9 +1851,9 @@
     "1054248": {
         "Username": "StevieG",
         "Info": {
-            "KBL Score": 163,
+            "KBL Score": 200,
             "League": "KWBL - Liga 2",
-            "Place": 8
+            "Place": 9
         },
         "2024BA": {
             "League": "KWBL - Liga 2",
@@ -1986,8 +1986,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 2",
-            "Place": 8,
-            "Points": 4304,
+            "Place": 9,
+            "Points": 5138,
             "MdPoints": [
                 0,
                 641,
@@ -1996,7 +1996,7 @@
                 910,
                 798,
                 410,
-                0,
+                834,
                 0,
                 0,
                 0,
@@ -2012,7 +2012,7 @@
                 5,
                 5,
                 8,
-                0,
+                9,
                 0,
                 0,
                 0,
@@ -2026,9 +2026,9 @@
     "1124221": {
         "Username": "Cee_eff",
         "Info": {
-            "KBL Score": 49,
+            "KBL Score": 89,
             "League": "KWBL - Liga 3A",
-            "Place": 1
+            "Place": 2
         },
         "2024BA": {
             "League": "KWBL - Liga 2",
@@ -2161,8 +2161,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 1,
-            "Points": 5664,
+            "Place": 2,
+            "Points": 6257,
             "MdPoints": [
                 0,
                 1023,
@@ -2171,7 +2171,7 @@
                 851,
                 987,
                 939,
-                0,
+                593,
                 0,
                 0,
                 0,
@@ -2187,7 +2187,7 @@
                 1,
                 1,
                 1,
-                0,
+                2,
                 0,
                 0,
                 0,
@@ -2201,9 +2201,9 @@
     "1159929": {
         "Username": "Zettel_Ewald",
         "Info": {
-            "KBL Score": 171,
+            "KBL Score": 205,
             "League": "KWBL - Liga 2",
-            "Place": 7
+            "Place": 10
         },
         "2024BA": {
             "League": "KWBL - Liga 2",
@@ -2336,8 +2336,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 2",
-            "Place": 7,
-            "Points": 4318,
+            "Place": 10,
+            "Points": 4908,
             "MdPoints": [
                 0,
                 834,
@@ -2346,7 +2346,7 @@
                 849,
                 518,
                 773,
-                0,
+                590,
                 0,
                 0,
                 0,
@@ -2362,7 +2362,7 @@
                 6,
                 7,
                 7,
-                0,
+                10,
                 0,
                 0,
                 0,
@@ -2376,7 +2376,7 @@
     "1236707": {
         "Username": "Fabinho",
         "Info": {
-            "KBL Score": 99,
+            "KBL Score": 127,
             "League": "KWBL - Liga 2",
             "Place": 12
         },
@@ -2512,7 +2512,7 @@
         "2026B": {
             "League": "KWBL - Liga 2",
             "Place": 12,
-            "Points": 3613,
+            "Points": 4670,
             "MdPoints": [
                 0,
                 724,
@@ -2521,7 +2521,7 @@
                 600,
                 539,
                 1023,
-                0,
+                1057,
                 0,
                 0,
                 0,
@@ -2537,7 +2537,7 @@
                 13,
                 13,
                 12,
-                0,
+                12,
                 0,
                 0,
                 0,
@@ -2551,9 +2551,9 @@
     "1451237": {
         "Username": "marcothebaumi",
         "Info": {
-            "KBL Score": 46,
+            "KBL Score": 76,
             "League": "KWBL - Liga 3A",
-            "Place": 3
+            "Place": 4
         },
         "2024BA": {
             "League": "KWBL - Liga 2",
@@ -2686,8 +2686,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 3,
-            "Points": 5326,
+            "Place": 4,
+            "Points": 6046,
             "MdPoints": [
                 0,
                 836,
@@ -2696,7 +2696,7 @@
                 1099,
                 1321,
                 825,
-                0,
+                720,
                 0,
                 0,
                 0,
@@ -2712,7 +2712,7 @@
                 6,
                 2,
                 3,
-                0,
+                4,
                 0,
                 0,
                 0,
@@ -2726,9 +2726,9 @@
     "1631954": {
         "Username": "YW7",
         "Info": {
-            "KBL Score": 120,
+            "KBL Score": 172,
             "League": "KWBL - Liga 2",
-            "Place": 3
+            "Place": 4
         },
         "2024BA": {
             "League": "KWBL - Liga 2",
@@ -2861,8 +2861,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 2",
-            "Place": 3,
-            "Points": 5267,
+            "Place": 4,
+            "Points": 5827,
             "MdPoints": [
                 0,
                 859,
@@ -2871,7 +2871,7 @@
                 961,
                 1024,
                 523,
-                0,
+                560,
                 0,
                 0,
                 0,
@@ -2887,7 +2887,7 @@
                 1,
                 1,
                 3,
-                0,
+                4,
                 0,
                 0,
                 0,
@@ -2901,9 +2901,9 @@
     "1646647": {
         "Username": "Baumann",
         "Info": {
-            "KBL Score": 207,
+            "KBL Score": 270,
             "League": "KWBL - Liga 1",
-            "Place": 12
+            "Place": 9
         },
         "2024BA": {
             "League": "KWBL - Liga 2",
@@ -3036,8 +3036,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 1",
-            "Place": 12,
-            "Points": 4153,
+            "Place": 9,
+            "Points": 5576,
             "MdPoints": [
                 0,
                 462,
@@ -3046,7 +3046,7 @@
                 885,
                 703,
                 694,
-                0,
+                1423,
                 0,
                 0,
                 0,
@@ -3062,7 +3062,7 @@
                 9,
                 10,
                 12,
-                0,
+                9,
                 0,
                 0,
                 0,
@@ -3076,7 +3076,7 @@
     "1780422": {
         "Username": "FloBo",
         "Info": {
-            "KBL Score": 80,
+            "KBL Score": 104,
             "League": "KWBL - Liga 3B",
             "Place": 6
         },
@@ -3212,7 +3212,7 @@
         "2026B": {
             "League": "KWBL - Liga 3B",
             "Place": 6,
-            "Points": 4489,
+            "Points": 5357,
             "MdPoints": [
                 0,
                 836,
@@ -3221,7 +3221,7 @@
                 887,
                 669,
                 660,
-                0,
+                868,
                 0,
                 0,
                 0,
@@ -3237,7 +3237,7 @@
                 5,
                 5,
                 6,
-                0,
+                6,
                 0,
                 0,
                 0,
@@ -3251,9 +3251,9 @@
     "432191": {
         "Username": "LiLo",
         "Info": {
-            "KBL Score": 15,
+            "KBL Score": 39,
             "League": "KWBL - Liga 3A",
-            "Place": 5
+            "Place": 6
         },
         "2024BA": {
             "League": "KWBL - Liga 3",
@@ -3386,8 +3386,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 5,
-            "Points": 4955,
+            "Place": 6,
+            "Points": 5898,
             "MdPoints": [
                 0,
                 573,
@@ -3396,7 +3396,7 @@
                 698,
                 998,
                 1003,
-                0,
+                943,
                 0,
                 0,
                 0,
@@ -3412,7 +3412,7 @@
                 8,
                 7,
                 5,
-                0,
+                6,
                 0,
                 0,
                 0,
@@ -3767,7 +3767,7 @@
     "1334852": {
         "Username": "Max715",
         "Info": {
-            "KBL Score": 143,
+            "KBL Score": 233,
             "League": "KWBL - Liga 1",
             "Place": 2
         },
@@ -3903,7 +3903,7 @@
         "2026B": {
             "League": "KWBL - Liga 1",
             "Place": 2,
-            "Points": 6453,
+            "Points": 7312,
             "MdPoints": [
                 0,
                 882,
@@ -3912,7 +3912,7 @@
                 1182,
                 1428,
                 1096,
-                0,
+                859,
                 0,
                 0,
                 0,
@@ -3928,7 +3928,7 @@
                 2,
                 1,
                 2,
-                0,
+                2,
                 0,
                 0,
                 0,
@@ -3942,7 +3942,7 @@
     "1688417": {
         "Username": "Acke1899",
         "Info": {
-            "KBL Score": 125,
+            "KBL Score": 205,
             "League": "KWBL - Liga 1",
             "Place": 4
         },
@@ -4078,7 +4078,7 @@
         "2026B": {
             "League": "KWBL - Liga 1",
             "Place": 4,
-            "Points": 5426,
+            "Points": 6291,
             "MdPoints": [
                 0,
                 939,
@@ -4087,7 +4087,7 @@
                 715,
                 877,
                 782,
-                0,
+                865,
                 0,
                 0,
                 0,
@@ -4103,7 +4103,7 @@
                 3,
                 4,
                 4,
-                0,
+                4,
                 0,
                 0,
                 0,
@@ -4253,7 +4253,7 @@
         "2026B": {
             "League": "KWBL - Liga 4B",
             "Place": 5,
-            "Points": 3922,
+            "Points": 4770,
             "MdPoints": [
                 0,
                 775,
@@ -4262,7 +4262,7 @@
                 805,
                 985,
                 0,
-                0,
+                848,
                 0,
                 0,
                 0,
@@ -4278,7 +4278,7 @@
                 4,
                 4,
                 5,
-                0,
+                5,
                 0,
                 0,
                 0,
@@ -4292,9 +4292,9 @@
     "1923586": {
         "Username": "Eckman05",
         "Info": {
-            "KBL Score": 83,
+            "KBL Score": 126,
             "League": "KWBL - Liga 2",
-            "Place": 6
+            "Place": 7
         },
         "2024BA": {
             "League": "KWBL - Liga 3",
@@ -4427,8 +4427,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 2",
-            "Place": 6,
-            "Points": 4492,
+            "Place": 7,
+            "Points": 5185,
             "MdPoints": [
                 0,
                 529,
@@ -4437,7 +4437,7 @@
                 816,
                 550,
                 1075,
-                0,
+                693,
                 0,
                 0,
                 0,
@@ -4453,7 +4453,7 @@
                 8,
                 10,
                 6,
-                0,
+                7,
                 0,
                 0,
                 0,
@@ -4467,7 +4467,7 @@
     "1932207": {
         "Username": "Tine_0711",
         "Info": {
-            "KBL Score": 76,
+            "KBL Score": 101,
             "League": "KWBL - Liga 2",
             "Place": 13
         },
@@ -4603,7 +4603,7 @@
         "2026B": {
             "League": "KWBL - Liga 2",
             "Place": 13,
-            "Points": 3520,
+            "Points": 4279,
             "MdPoints": [
                 0,
                 767,
@@ -4612,7 +4612,7 @@
                 512,
                 881,
                 205,
-                0,
+                759,
                 0,
                 0,
                 0,
@@ -4628,7 +4628,7 @@
                 10,
                 11,
                 13,
-                0,
+                13,
                 0,
                 0,
                 0,
@@ -5053,9 +5053,9 @@
     "1496288": {
         "Username": "Lieven",
         "Info": {
-            "KBL Score": 10,
+            "KBL Score": 50,
             "League": "KWBL - Liga 3B",
-            "Place": 4
+            "Place": 2
         },
         "2024BA": {
             "League": "KWBL - Liga 4A",
@@ -5188,8 +5188,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3B",
-            "Place": 4,
-            "Points": 5427,
+            "Place": 2,
+            "Points": 6780,
             "MdPoints": [
                 0,
                 696,
@@ -5198,7 +5198,7 @@
                 1148,
                 749,
                 1446,
-                0,
+                1353,
                 0,
                 0,
                 0,
@@ -5214,7 +5214,7 @@
                 4,
                 4,
                 4,
-                0,
+                2,
                 0,
                 0,
                 0,
@@ -5364,7 +5364,7 @@
         "2026B": {
             "League": "KWBL - Liga 4A",
             "Place": 2,
-            "Points": 4672,
+            "Points": 5377,
             "MdPoints": [
                 0,
                 768,
@@ -5373,7 +5373,7 @@
                 910,
                 668,
                 546,
-                0,
+                705,
                 0,
                 0,
                 0,
@@ -5389,7 +5389,7 @@
                 2,
                 2,
                 2,
-                0,
+                2,
                 0,
                 0,
                 0,
@@ -5401,7 +5401,7 @@
         }
     },
     "1677028": {
-        "Username": "Kas123",
+        "Username": "Kasper",
         "Info": {
             "KBL Score": 0,
             "League": "KWBL - Liga 4B",
@@ -5539,7 +5539,7 @@
         "2026B": {
             "League": "KWBL - Liga 4B",
             "Place": 2,
-            "Points": 5813,
+            "Points": 6667,
             "MdPoints": [
                 0,
                 840,
@@ -5548,7 +5548,7 @@
                 631,
                 927,
                 1330,
-                0,
+                854,
                 0,
                 0,
                 0,
@@ -5564,7 +5564,7 @@
                 3,
                 3,
                 2,
-                0,
+                2,
                 0,
                 0,
                 0,
@@ -5578,9 +5578,9 @@
     "1732775": {
         "Username": "LUDEL",
         "Info": {
-            "KBL Score": 77,
+            "KBL Score": 104,
             "League": "KWBL - Liga 3A",
-            "Place": 6
+            "Place": 5
         },
         "2024BA": {
             "League": "KWBL - Liga 4A",
@@ -5713,8 +5713,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 6,
-            "Points": 4825,
+            "Place": 5,
+            "Points": 5907,
             "MdPoints": [
                 0,
                 907,
@@ -5723,7 +5723,7 @@
                 725,
                 1143,
                 749,
-                0,
+                1082,
                 0,
                 0,
                 0,
@@ -5739,7 +5739,7 @@
                 9,
                 4,
                 6,
-                0,
+                5,
                 0,
                 0,
                 0,
@@ -5755,7 +5755,7 @@
         "Info": {
             "KBL Score": 5,
             "League": "KWBL - Liga 4A",
-            "Place": 5
+            "Place": 3
         },
         "2024BA": {
             "League": "KWBL - Liga 4A",
@@ -5888,8 +5888,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 4A",
-            "Place": 5,
-            "Points": 3857,
+            "Place": 3,
+            "Points": 4879,
             "MdPoints": [
                 0,
                 -1100,
@@ -5898,7 +5898,7 @@
                 971,
                 714,
                 913,
-                0,
+                1022,
                 0,
                 0,
                 0,
@@ -5914,7 +5914,7 @@
                 8,
                 8,
                 5,
-                0,
+                3,
                 0,
                 0,
                 0,
@@ -6066,7 +6066,7 @@
         "2026B": {
             "League": "KWBL - Liga 4A",
             "Place": 8,
-            "Points": 3552,
+            "Points": 4037,
             "MdPoints": [
                 0,
                 632,
@@ -6075,7 +6075,7 @@
                 433,
                 1019,
                 581,
-                0,
+                485,
                 0,
                 0,
                 0,
@@ -6091,7 +6091,7 @@
                 9,
                 7,
                 8,
-                0,
+                8,
                 0,
                 0,
                 0,
@@ -6546,7 +6546,7 @@
         "Info": {
             "KBL Score": 0,
             "League": "KWBL - Liga 4B",
-            "Place": 8
+            "Place": 7
         },
         "2024BA": {
             "League": "KWBL - Liga 4B",
@@ -6679,8 +6679,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 4B",
-            "Place": 8,
-            "Points": -6600,
+            "Place": 7,
+            "Points": -7700,
             "MdPoints": [
                 0,
                 -1100,
@@ -6689,7 +6689,7 @@
                 -1100,
                 -1100,
                 -1100,
-                0,
+                -1100,
                 0,
                 0,
                 0,
@@ -6705,7 +6705,7 @@
                 8,
                 8,
                 8,
-                0,
+                7,
                 0,
                 0,
                 0,
@@ -6719,7 +6719,7 @@
     "1062745": {
         "Username": "mircodinho",
         "Info": {
-            "KBL Score": 40,
+            "KBL Score": 100,
             "League": "KWBL - Liga 2",
             "Place": 2
         },
@@ -6855,7 +6855,7 @@
         "2026B": {
             "League": "KWBL - Liga 2",
             "Place": 2,
-            "Points": 5606,
+            "Points": 6186,
             "MdPoints": [
                 0,
                 981,
@@ -6864,7 +6864,7 @@
                 909,
                 830,
                 1145,
-                0,
+                580,
                 0,
                 0,
                 0,
@@ -6880,7 +6880,7 @@
                 2,
                 3,
                 2,
-                0,
+                2,
                 0,
                 0,
                 0,
@@ -7168,9 +7168,9 @@
     "1589078": {
         "Username": "Freezy",
         "Info": {
-            "KBL Score": 116,
+            "KBL Score": 185,
             "League": "KWBL - Liga 1",
-            "Place": 5
+            "Place": 7
         },
         "2024BA": {
             "League": "KWBL - Liga 4B",
@@ -7303,8 +7303,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 1",
-            "Place": 5,
-            "Points": 4932,
+            "Place": 7,
+            "Points": 5757,
             "MdPoints": [
                 0,
                 854,
@@ -7313,7 +7313,7 @@
                 961,
                 603,
                 868,
-                0,
+                825,
                 0,
                 0,
                 0,
@@ -7329,7 +7329,7 @@
                 5,
                 5,
                 5,
-                0,
+                7,
                 0,
                 0,
                 0,
@@ -7479,7 +7479,7 @@
         "2026B": {
             "League": "KWBL - Liga 4A",
             "Place": 1,
-            "Points": 6757,
+            "Points": 8340,
             "MdPoints": [
                 0,
                 992,
@@ -7488,7 +7488,7 @@
                 1308,
                 1181,
                 1166,
-                0,
+                1583,
                 0,
                 0,
                 0,
@@ -7504,7 +7504,7 @@
                 1,
                 1,
                 1,
-                0,
+                1,
                 0,
                 0,
                 0,
@@ -7518,7 +7518,7 @@
     "1912214": {
         "Username": "flexx.rar",
         "Info": {
-            "KBL Score": 15,
+            "KBL Score": 21,
             "League": "KWBL - Liga 3B",
             "Place": 12
         },
@@ -7654,7 +7654,7 @@
         "2026B": {
             "League": "KWBL - Liga 3B",
             "Place": 12,
-            "Points": 1779,
+            "Points": 2242,
             "MdPoints": [
                 0,
                 0,
@@ -7663,7 +7663,7 @@
                 0,
                 0,
                 585,
-                0,
+                463,
                 0,
                 0,
                 0,
@@ -7679,7 +7679,7 @@
                 12,
                 12,
                 12,
-                0,
+                12,
                 0,
                 0,
                 0,
@@ -7693,9 +7693,9 @@
     "1912445": {
         "Username": "Bennyphx ",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 30,
             "League": "KWBL - Liga 3B",
-            "Place": 3
+            "Place": 4
         },
         "2024BA": {
             "League": "KWBL - Liga 4B",
@@ -7828,8 +7828,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3B",
-            "Place": 3,
-            "Points": 5465,
+            "Place": 4,
+            "Points": 5928,
             "MdPoints": [
                 0,
                 1049,
@@ -7838,7 +7838,7 @@
                 574,
                 789,
                 1219,
-                0,
+                463,
                 0,
                 0,
                 0,
@@ -7854,7 +7854,7 @@
                 3,
                 3,
                 3,
-                0,
+                4,
                 0,
                 0,
                 0,
@@ -8067,7 +8067,7 @@
         "2026B": {
             "League": "KWBL - Liga 4B",
             "Place": 4,
-            "Points": 4597,
+            "Points": 5839,
             "MdPoints": [
                 0,
                 494,
@@ -8076,7 +8076,7 @@
                 936,
                 866,
                 875,
-                0,
+                1242,
                 0,
                 0,
                 0,
@@ -8092,7 +8092,7 @@
                 5,
                 5,
                 4,
-                0,
+                4,
                 0,
                 0,
                 0,
@@ -8706,9 +8706,9 @@
     "2729462": {
         "Username": "itscalledsoccer",
         "Info": {
-            "KBL Score": 100,
+            "KBL Score": 166,
             "League": "KWBL - Liga 1",
-            "Place": 6
+            "Place": 8
         },
         "2024BA": {
             "League": "KWBL - Liga 4C",
@@ -8841,8 +8841,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 1",
-            "Place": 6,
-            "Points": 4784,
+            "Place": 8,
+            "Points": 5662,
             "MdPoints": [
                 0,
                 574,
@@ -8851,7 +8851,7 @@
                 590,
                 821,
                 953,
-                0,
+                878,
                 0,
                 0,
                 0,
@@ -8867,7 +8867,7 @@
                 6,
                 7,
                 6,
-                0,
+                8,
                 0,
                 0,
                 0,
@@ -9046,9 +9046,9 @@
     "1567969": {
         "Username": "Sportfan13",
         "Info": {
-            "KBL Score": 27,
+            "KBL Score": 67,
             "League": "KWBL - Liga 2",
-            "Place": 10
+            "Place": 8
         },
         "2024BA": {
             "League": "KWBL - Liga 4D",
@@ -9181,8 +9181,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 2",
-            "Place": 10,
-            "Points": 4246,
+            "Place": 8,
+            "Points": 5170,
             "MdPoints": [
                 0,
                 549,
@@ -9191,7 +9191,7 @@
                 544,
                 936,
                 737,
-                0,
+                924,
                 0,
                 0,
                 0,
@@ -9207,7 +9207,7 @@
                 9,
                 8,
                 10,
-                0,
+                8,
                 0,
                 0,
                 0,
@@ -9221,9 +9221,9 @@
     "1929473": {
         "Username": "Mic193",
         "Info": {
-            "KBL Score": 108,
+            "KBL Score": 180,
             "League": "KWBL - Liga 1",
-            "Place": 8
+            "Place": 6
         },
         "2024BA": {
             "League": "KWBL - Liga 4D",
@@ -9356,8 +9356,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 1",
-            "Place": 8,
-            "Points": 4679,
+            "Place": 6,
+            "Points": 5785,
             "MdPoints": [
                 0,
                 707,
@@ -9366,7 +9366,7 @@
                 605,
                 1145,
                 712,
-                0,
+                1106,
                 0,
                 0,
                 0,
@@ -9382,7 +9382,7 @@
                 7,
                 6,
                 8,
-                0,
+                6,
                 0,
                 0,
                 0,
@@ -9813,7 +9813,7 @@
     "307625": {
         "Username": "Rocky M\u00fcller",
         "Info": {
-            "KBL Score": 40,
+            "KBL Score": 71,
             "League": "KWBL - Liga 2",
             "Place": 11
         },
@@ -9949,7 +9949,7 @@
         "2026B": {
             "League": "KWBL - Liga 2",
             "Place": 11,
-            "Points": 4087,
+            "Points": 4826,
             "MdPoints": [
                 0,
                 580,
@@ -9958,7 +9958,7 @@
                 868,
                 737,
                 1261,
-                0,
+                739,
                 0,
                 0,
                 0,
@@ -9974,7 +9974,7 @@
                 12,
                 12,
                 11,
-                0,
+                11,
                 0,
                 0,
                 0,
@@ -10124,7 +10124,7 @@
         "2026B": {
             "League": "KWBL - Liga 4A",
             "Place": 9,
-            "Points": 3103,
+            "Points": 3847,
             "MdPoints": [
                 0,
                 552,
@@ -10133,7 +10133,7 @@
                 528,
                 156,
                 673,
-                0,
+                744,
                 0,
                 0,
                 0,
@@ -10149,7 +10149,7 @@
                 7,
                 9,
                 9,
-                0,
+                9,
                 0,
                 0,
                 0,
@@ -10574,7 +10574,7 @@
     "1900799": {
         "Username": "Sascha",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 9,
             "League": "KWBL - Liga 3B",
             "Place": 11
         },
@@ -10710,7 +10710,7 @@
         "2026B": {
             "League": "KWBL - Liga 3B",
             "Place": 11,
-            "Points": 2874,
+            "Points": 4005,
             "MdPoints": [
                 0,
                 402,
@@ -10719,7 +10719,7 @@
                 570,
                 611,
                 337,
-                0,
+                1131,
                 0,
                 0,
                 0,
@@ -10735,7 +10735,7 @@
                 11,
                 11,
                 11,
-                0,
+                11,
                 0,
                 0,
                 0,
@@ -11364,7 +11364,7 @@
     "1858030": {
         "Username": "Siggi",
         "Info": {
-            "KBL Score": 35,
+            "KBL Score": 100,
             "League": "KWBL - Liga 2",
             "Place": 1
         },
@@ -11500,7 +11500,7 @@
         "2026B": {
             "League": "KWBL - Liga 2",
             "Place": 1,
-            "Points": 5645,
+            "Points": 6805,
             "MdPoints": [
                 0,
                 854,
@@ -11509,7 +11509,7 @@
                 886,
                 911,
                 1131,
-                0,
+                1160,
                 0,
                 0,
                 0,
@@ -11525,7 +11525,7 @@
                 3,
                 2,
                 1,
-                0,
+                1,
                 0,
                 0,
                 0,
@@ -11539,9 +11539,9 @@
     "2083350": {
         "Username": "DaveGaming",
         "Info": {
-            "KBL Score": 18,
+            "KBL Score": 53,
             "League": "KWBL - Liga 3B",
-            "Place": 2
+            "Place": 3
         },
         "2024BA": {
             "League": null,
@@ -11674,8 +11674,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3B",
-            "Place": 2,
-            "Points": 5898,
+            "Place": 3,
+            "Points": 6479,
             "MdPoints": [
                 0,
                 1050,
@@ -11684,7 +11684,7 @@
                 940,
                 1118,
                 1037,
-                0,
+                581,
                 0,
                 0,
                 0,
@@ -11700,7 +11700,7 @@
                 2,
                 2,
                 2,
-                0,
+                3,
                 0,
                 0,
                 0,
@@ -11853,7 +11853,7 @@
         "Info": {
             "KBL Score": 0,
             "League": "KWBL - Liga 4A",
-            "Place": 3
+            "Place": 4
         },
         "2024BA": {
             "League": null,
@@ -11986,8 +11986,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 4A",
-            "Place": 3,
-            "Points": 4467,
+            "Place": 4,
+            "Points": 4845,
             "MdPoints": [
                 0,
                 1012,
@@ -11996,7 +11996,7 @@
                 777,
                 653,
                 600,
-                0,
+                378,
                 0,
                 0,
                 0,
@@ -12012,7 +12012,7 @@
                 3,
                 3,
                 3,
-                0,
+                4,
                 0,
                 0,
                 0,
@@ -12026,7 +12026,7 @@
     "3527925": {
         "Username": "Maria",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 9,
             "League": "KWBL - Liga 3A",
             "Place": 11
         },
@@ -12162,7 +12162,7 @@
         "2026B": {
             "League": "KWBL - Liga 3A",
             "Place": 11,
-            "Points": 3738,
+            "Points": 4410,
             "MdPoints": [
                 0,
                 607,
@@ -12171,7 +12171,7 @@
                 539,
                 723,
                 911,
-                0,
+                672,
                 0,
                 0,
                 0,
@@ -12187,7 +12187,7 @@
                 12,
                 12,
                 11,
-                0,
+                11,
                 0,
                 0,
                 0,
@@ -12201,7 +12201,7 @@
     "973017": {
         "Username": "Andrej",
         "Info": {
-            "KBL Score": 15,
+            "KBL Score": 21,
             "League": "KWBL - Liga 3A",
             "Place": 12
         },
@@ -12337,7 +12337,7 @@
         "2026B": {
             "League": "KWBL - Liga 3A",
             "Place": 12,
-            "Points": 3715,
+            "Points": 4183,
             "MdPoints": [
                 0,
                 656,
@@ -12346,7 +12346,7 @@
                 648,
                 417,
                 552,
-                0,
+                468,
                 0,
                 0,
                 0,
@@ -12362,7 +12362,7 @@
                 10,
                 11,
                 12,
-                0,
+                12,
                 0,
                 0,
                 0,
@@ -12376,9 +12376,9 @@
     "1671137": {
         "Username": "Barcafisch",
         "Info": {
-            "KBL Score": 45,
+            "KBL Score": 91,
             "League": "KWBL - Liga 2",
-            "Place": 9
+            "Place": 6
         },
         "2024BA": {
             "League": null,
@@ -12511,8 +12511,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 2",
-            "Place": 9,
-            "Points": 4294,
+            "Place": 6,
+            "Points": 5306,
             "MdPoints": [
                 0,
                 719,
@@ -12521,7 +12521,7 @@
                 634,
                 225,
                 632,
-                0,
+                1012,
                 0,
                 0,
                 0,
@@ -12537,7 +12537,7 @@
                 4,
                 6,
                 9,
-                0,
+                6,
                 0,
                 0,
                 0,
@@ -12551,9 +12551,9 @@
     "1687302": {
         "Username": "Tom",
         "Info": {
-            "KBL Score": 5,
+            "KBL Score": 23,
             "League": "KWBL - Liga 3B",
-            "Place": 9
+            "Place": 8
         },
         "2024BA": {
             "League": null,
@@ -12686,8 +12686,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3B",
-            "Place": 9,
-            "Points": 3678,
+            "Place": 8,
+            "Points": 4628,
             "MdPoints": [
                 0,
                 464,
@@ -12696,7 +12696,7 @@
                 370,
                 911,
                 808,
-                0,
+                950,
                 0,
                 0,
                 0,
@@ -12712,7 +12712,7 @@
                 10,
                 10,
                 9,
-                0,
+                8,
                 0,
                 0,
                 0,
@@ -13067,7 +13067,7 @@
     "2789934": {
         "Username": "Hansaaufdie1",
         "Info": {
-            "KBL Score": 46,
+            "KBL Score": 73,
             "League": "KWBL - Liga 3B",
             "Place": 5
         },
@@ -13203,7 +13203,7 @@
         "2026B": {
             "League": "KWBL - Liga 3B",
             "Place": 5,
-            "Points": 4639,
+            "Points": 5832,
             "MdPoints": [
                 0,
                 1041,
@@ -13212,7 +13212,7 @@
                 540,
                 755,
                 1068,
-                0,
+                1193,
                 0,
                 0,
                 0,
@@ -13228,7 +13228,7 @@
                 6,
                 7,
                 5,
-                0,
+                5,
                 0,
                 0,
                 0,
@@ -13242,9 +13242,9 @@
     "2825757": {
         "Username": "Benzema",
         "Info": {
-            "KBL Score": 60,
+            "KBL Score": 115,
             "League": "KWBL - Liga 2",
-            "Place": 5
+            "Place": 3
         },
         "2024BA": {
             "League": null,
@@ -13377,8 +13377,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 2",
-            "Place": 5,
-            "Points": 4902,
+            "Place": 3,
+            "Points": 5844,
             "MdPoints": [
                 0,
                 659,
@@ -13387,7 +13387,7 @@
                 600,
                 1037,
                 890,
-                0,
+                942,
                 0,
                 0,
                 0,
@@ -13403,7 +13403,7 @@
                 7,
                 4,
                 5,
-                0,
+                3,
                 0,
                 0,
                 0,
@@ -13417,9 +13417,9 @@
     "2910337": {
         "Username": "Inspektor Frippe",
         "Info": {
-            "KBL Score": 67,
+            "KBL Score": 116,
             "League": "KWBL - Liga 2",
-            "Place": 4
+            "Place": 5
         },
         "2024BA": {
             "League": null,
@@ -13552,8 +13552,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 2",
-            "Place": 4,
-            "Points": 4939,
+            "Place": 5,
+            "Points": 5806,
             "MdPoints": [
                 0,
                 581,
@@ -13562,7 +13562,7 @@
                 538,
                 1130,
                 1489,
-                0,
+                867,
                 0,
                 0,
                 0,
@@ -13578,7 +13578,7 @@
                 11,
                 9,
                 4,
-                0,
+                5,
                 0,
                 0,
                 0,
@@ -13592,9 +13592,9 @@
     "3509987": {
         "Username": "Carli",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 35,
             "League": "KWBL - Liga 3A",
-            "Place": 2
+            "Place": 3
         },
         "2024BA": {
             "League": null,
@@ -13727,8 +13727,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 2,
-            "Points": 5416,
+            "Place": 3,
+            "Points": 6091,
             "MdPoints": [
                 0,
                 1228,
@@ -13737,7 +13737,7 @@
                 791,
                 634,
                 1163,
-                0,
+                675,
                 0,
                 0,
                 0,
@@ -13753,7 +13753,7 @@
                 3,
                 3,
                 2,
-                0,
+                3,
                 0,
                 0,
                 0,
@@ -13767,9 +13767,9 @@
     "83927": {
         "Username": "Maurice",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 15,
             "League": "KWBL - Liga 3A",
-            "Place": 8
+            "Place": 9
         },
         "2024BA": {
             "League": null,
@@ -13902,8 +13902,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 8,
-            "Points": 4670,
+            "Place": 9,
+            "Points": 5401,
             "MdPoints": [
                 0,
                 552,
@@ -13912,7 +13912,7 @@
                 1213,
                 304,
                 899,
-                0,
+                731,
                 0,
                 0,
                 0,
@@ -13928,7 +13928,7 @@
                 4,
                 8,
                 8,
-                0,
+                9,
                 0,
                 0,
                 0,
@@ -14215,7 +14215,7 @@
         "2026B": {
             "League": "KWBL - Liga 4A",
             "Place": 7,
-            "Points": 3610,
+            "Points": 4097,
             "MdPoints": [
                 0,
                 0,
@@ -14224,7 +14224,7 @@
                 614,
                 706,
                 613,
-                0,
+                487,
                 0,
                 0,
                 0,
@@ -14240,7 +14240,7 @@
                 6,
                 6,
                 7,
-                0,
+                7,
                 0,
                 0,
                 0,
@@ -14527,7 +14527,7 @@
         "2026B": {
             "League": "KWBL - Liga 4A",
             "Place": 6,
-            "Points": 3726,
+            "Points": 4500,
             "MdPoints": [
                 0,
                 480,
@@ -14536,7 +14536,7 @@
                 676,
                 633,
                 563,
-                0,
+                774,
                 0,
                 0,
                 0,
@@ -14552,7 +14552,7 @@
                 5,
                 5,
                 6,
-                0,
+                6,
                 0,
                 0,
                 0,
@@ -14566,9 +14566,9 @@
     "3275140": {
         "Username": "Marcelo1848",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 21,
             "League": "KWBL - Liga 3A",
-            "Place": 9
+            "Place": 7
         },
         "2024BA": {
             "League": null,
@@ -14701,8 +14701,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 9,
-            "Points": 4447,
+            "Place": 7,
+            "Points": 5811,
             "MdPoints": [
                 0,
                 817,
@@ -14711,7 +14711,7 @@
                 668,
                 0,
                 791,
-                0,
+                1364,
                 0,
                 0,
                 0,
@@ -14727,7 +14727,7 @@
                 2,
                 9,
                 9,
-                0,
+                7,
                 0,
                 0,
                 0,
@@ -14878,9 +14878,9 @@
     "1470796": {
         "Username": "Robb\u00e9ry107",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 18,
             "League": "KWBL - Liga 3A",
-            "Place": 7
+            "Place": 8
         },
         "2024BA": {
             "League": null,
@@ -15013,8 +15013,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3A",
-            "Place": 7,
-            "Points": 4797,
+            "Place": 8,
+            "Points": 5763,
             "MdPoints": [
                 0,
                 860,
@@ -15023,7 +15023,7 @@
                 690,
                 594,
                 812,
-                0,
+                966,
                 0,
                 0,
                 0,
@@ -15039,7 +15039,7 @@
                 5,
                 6,
                 7,
-                0,
+                8,
                 0,
                 0,
                 0,
@@ -15053,7 +15053,7 @@
     "2603880": {
         "Username": "Upi",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 21,
             "League": "KWBL - Liga 3B",
             "Place": 7
         },
@@ -15189,7 +15189,7 @@
         "2026B": {
             "League": "KWBL - Liga 3B",
             "Place": 7,
-            "Points": 4234,
+            "Points": 4920,
             "MdPoints": [
                 0,
                 0,
@@ -15198,7 +15198,7 @@
                 713,
                 1102,
                 480,
-                0,
+                686,
                 0,
                 0,
                 0,
@@ -15214,7 +15214,7 @@
                 7,
                 6,
                 7,
-                0,
+                7,
                 0,
                 0,
                 0,
@@ -15228,7 +15228,7 @@
     "2803528": {
         "Username": "Raphael Matusiak",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 45,
             "League": "KWBL - Liga 3B",
             "Place": 1
         },
@@ -15364,7 +15364,7 @@
         "2026B": {
             "League": "KWBL - Liga 3B",
             "Place": 1,
-            "Points": 6426,
+            "Points": 7331,
             "MdPoints": [
                 0,
                 722,
@@ -15373,7 +15373,7 @@
                 1215,
                 768,
                 1279,
-                0,
+                905,
                 0,
                 0,
                 0,
@@ -15389,7 +15389,7 @@
                 1,
                 1,
                 1,
-                0,
+                1,
                 0,
                 0,
                 0,
@@ -15540,9 +15540,9 @@
     "2086855": {
         "Username": "Jeff Moschtert",
         "Info": {
-            "KBL Score": 10,
+            "KBL Score": 25,
             "League": "KWBL - Liga 3B",
-            "Place": 8
+            "Place": 9
         },
         "2024BA": {
             "League": null,
@@ -15675,8 +15675,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 3B",
-            "Place": 8,
-            "Points": 3969,
+            "Place": 9,
+            "Points": 4588,
             "MdPoints": [
                 0,
                 0,
@@ -15685,7 +15685,7 @@
                 709,
                 898,
                 693,
-                0,
+                619,
                 0,
                 0,
                 0,
@@ -15701,7 +15701,7 @@
                 8,
                 8,
                 8,
-                0,
+                9,
                 0,
                 0,
                 0,
@@ -15852,7 +15852,7 @@
     "3203815": {
         "Username": "Extra",
         "Info": {
-            "KBL Score": 0,
+            "KBL Score": 12,
             "League": "KWBL - Liga 3B",
             "Place": 10
         },
@@ -15988,7 +15988,7 @@
         "2026B": {
             "League": "KWBL - Liga 3B",
             "Place": 10,
-            "Points": 3619,
+            "Points": 4389,
             "MdPoints": [
                 0,
                 627,
@@ -15997,7 +15997,7 @@
                 650,
                 568,
                 701,
-                0,
+                770,
                 0,
                 0,
                 0,
@@ -16013,7 +16013,7 @@
                 9,
                 9,
                 10,
-                0,
+                10,
                 0,
                 0,
                 0,
@@ -16027,9 +16027,9 @@
     "2038365": {
         "Username": "Fcpkicker",
         "Info": {
-            "KBL Score": null,
+            "KBL Score": 0,
             "League": "KWBL - Liga 4A",
-            "Place": 4
+            "Place": 5
         },
         "2024BA": {
             "League": null,
@@ -16162,8 +16162,8 @@
         },
         "2026B": {
             "League": "KWBL - Liga 4A",
-            "Place": 4,
-            "Points": 4006,
+            "Place": 5,
+            "Points": 4508,
             "MdPoints": [
                 0,
                 723,
@@ -16172,7 +16172,7 @@
                 865,
                 559,
                 548,
-                0,
+                502,
                 0,
                 0,
                 0,
@@ -16188,7 +16188,7 @@
                 4,
                 4,
                 4,
-                0,
+                5,
                 0,
                 0,
                 0,
@@ -16202,7 +16202,7 @@
     "2983996": {
         "Username": "Fabian ",
         "Info": {
-            "KBL Score": null,
+            "KBL Score": 0,
             "League": "KWBL - Liga 4B",
             "Place": 3
         },
@@ -16338,7 +16338,7 @@
         "2026B": {
             "League": "KWBL - Liga 4B",
             "Place": 3,
-            "Points": 5493,
+            "Points": 6044,
             "MdPoints": [
                 0,
                 1020,
@@ -16347,7 +16347,7 @@
                 772,
                 773,
                 965,
-                0,
+                551,
                 0,
                 0,
                 0,
@@ -16363,7 +16363,7 @@
                 2,
                 2,
                 3,
-                0,
+                3,
                 0,
                 0,
                 0,
@@ -16377,7 +16377,7 @@
     "2332684": {
         "Username": "Maxi",
         "Info": {
-            "KBL Score": null,
+            "KBL Score": 0,
             "League": "KWBL - Liga 4B",
             "Place": 6
         },
@@ -16513,7 +16513,7 @@
         "2026B": {
             "League": "KWBL - Liga 4B",
             "Place": 6,
-            "Points": 3782,
+            "Points": 4622,
             "MdPoints": [
                 0,
                 588,
@@ -16522,7 +16522,7 @@
                 633,
                 640,
                 497,
-                0,
+                840,
                 0,
                 0,
                 0,
@@ -16538,7 +16538,7 @@
                 6,
                 6,
                 6,
-                0,
+                6,
                 0,
                 0,
                 0,
@@ -16552,7 +16552,7 @@
     "3533943": {
         "Username": "MrHoberg_2026",
         "Info": {
-            "KBL Score": null,
+            "KBL Score": 0,
             "League": "KWBL - Liga 4B",
             "Place": 7
         },
@@ -16727,7 +16727,7 @@
     "3143624": {
         "Username": "nici",
         "Info": {
-            "KBL Score": null,
+            "KBL Score": 0,
             "League": "KWBL - Liga 4B",
             "Place": 1
         },
@@ -16863,7 +16863,7 @@
         "2026B": {
             "League": "KWBL - Liga 4B",
             "Place": 1,
-            "Points": 6057,
+            "Points": 7116,
             "MdPoints": [
                 0,
                 1314,
@@ -16872,7 +16872,7 @@
                 1037,
                 1158,
                 1084,
-                0,
+                1059,
                 0,
                 0,
                 0,
@@ -16888,7 +16888,7 @@
                 1,
                 1,
                 1,
-                0,
+                1,
                 0,
                 0,
                 0,
