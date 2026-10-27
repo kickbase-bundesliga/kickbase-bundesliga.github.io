@@ -35,6 +35,8 @@ from scripts.spieltag_extras import Api  # noqa: E402
 
 WETTBEWERB = 1
 ORDNER = "aktionen"
+TAG_PARAMETER = "dayNumber"          # wird beim Start automatisch geprueft (siehe parameter_finden)
+KANDIDATEN = ["dayNumber", "day", "matchDay", "md"]
 
 
 def zeit(text):
@@ -123,7 +125,7 @@ def spiel_holen(api, spiel, kader):
     out = {}
     for tid in (spiel["t1"], spiel["t2"]):
         for s in kader.get(tid, []):
-            d = api.get("/competitions/%d/playercenter/%s?day=%d" % (WETTBEWERB, s["i"], spiel["tag"]))
+            d = api.get("/competitions/%d/playercenter/%s?%s=%d" % (WETTBEWERB, s["i"], TAG_PARAMETER, spiel["tag"]))
             if not isinstance(d, dict) or "_fehler" in d:
                 continue
             if str(d.get("mi")) != spiel["mi"]:
@@ -141,6 +143,27 @@ def spiel_holen(api, spiel, kader):
                            "mi": spiel["mi"], "p": d.get("p") or sum(a[1] for a in aktionen.values()),
                            "a": aktionen}
     return out
+
+
+def parameter_finden(api, spiel, kader):
+    """Prueft, mit welchem Parameter Kickbase das Spiel des gewuenschten Spieltags liefert
+    (und nicht einfach das neueste Spiel des Spielers)."""
+    global TAG_PARAMETER
+    bericht = []
+    spieler = (kader.get(spiel["t1"]) or [])[:6] + (kader.get(spiel["t2"]) or [])[:6]
+    for s in spieler:
+        for par in KANDIDATEN:
+            d = api.get("/competitions/%d/playercenter/%s?%s=%d" % (WETTBEWERB, s["i"], par, spiel["tag"]))
+            mi = d.get("mi") if isinstance(d, dict) else None
+            bericht.append("   %-10s Spieler %-8s -> Spiel %s (%s)" % (par, s["i"], mi, (d or {}).get("md") if isinstance(d, dict) else d))
+            if str(mi) == spiel["mi"]:
+                TAG_PARAMETER = par
+                print("Spieltag-Parameter: %s (geprueft an ST %d, %s-%s)" % (par, spiel["tag"], spiel["t1sy"], spiel["t2sy"]))
+                return True
+    print("Kein Parameter liefert das Spiel von ST %d (%s-%s, Spiel %s). Gepruefte Antworten:"
+          % (spiel["tag"], spiel["t1sy"], spiel["t2sy"], spiel["mi"]))
+    print("\n".join(bericht[:24]))
+    return False
 
 
 def csv_schreiben(saison_ordner, arten, vereine):
@@ -211,6 +234,9 @@ def main():
     kader = kader_holen(api, set(vereine), lade(os.path.join(saison_ordner, "kader.json"), {}))
     schreibe(os.path.join(saison_ordner, "kader.json"), kader)
     print("Kader: %d Vereine, %d Spieler" % (len(kader), sum(len(v) for v in kader.values())))
+
+    if not parameter_finden(api, offen[0], kader):
+        sys.exit("Abbruch - bitte die Ausgabe oben an Claude geben.")
 
     for tag in tage:
         d = lade(tagdatei(tag), {"spieltag": tag, "spiele": {}, "spieler": {}})
