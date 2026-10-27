@@ -25,3 +25,11 @@ __pycache__/
 # Altdaten: nur die Abschlusstabellen-Quelle mitnehmen, der Rest bleibt lokal
 altdaten/*
 !altdaten/abschlusstabellen.csv
+
+# Spieler-Aktionen (Kickbase-Punkteverteilung) - nur lokal, NIE hochladen
+aktionen/
+
+# Junkies laufen eigenstaendig in C:\Users\stefa\Junkies2.0 - Altlast hier, nie ins KBL-Repo
+junkies/
+config/junkies.json
+scripts/junkies_*
