@@ -4,6 +4,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&family=Barlow:wght@600;700&family=EB+Garamond:wght@500&family=Source+Serif+4:opsz,wght@8..60,600;8..60,800&family=Great+Vibes&display=swap">
+<!-- Besucherzählung: GoatCounter (anonym, ohne Cookies). Gezählt wird je Ligasystem und Reiter, siehe zaehlen(). -->
+<script>window.goatcounter = { no_onload: true };</script>
+<script data-goatcounter="https://poeti.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <style>
 /* Layout: Stadionheft-Optik – schmale Kopfleiste mit Ligasystem-Schalter, darunter eine Spalte
    mit Tabellen in Anzeigetafel-Typo (schmale Groteske, Tabellenziffern), Zonenstreifen wie im Kickbase-Bild. */
@@ -1325,7 +1328,23 @@ function viewInfo(){
 function on(sel, ev, fn){ const el = app.querySelector(sel); if (el) el.addEventListener(ev, fn); }
 function go(view){ state.view = view; if (location.hash !== '#' + view) history.replaceState(null, '', '#' + view); render(); window.scrollTo(0, 0); }
 
+// Besucherzählung je Ligasystem und Reiter, z. B. /kbl/pokal (Managerprofile zusammengefasst als /kbl/manager)
+let lastCount = '', countTries = 0;
+function zaehlen(){
+  if (!state.sys) return;
+  const path = `/${state.sys}/${state.view || 'tabellen'}`;
+  if (path === lastCount) return;
+  const gc = window.goatcounter;
+  if (!gc || typeof gc.count !== 'function') {           // Skript noch nicht geladen (oder blockiert): kurz nachversuchen
+    if (countTries++ < 20) setTimeout(zaehlen, 500);
+    return;
+  }
+  lastCount = path; countTries = 0;
+  try { gc.count({ path, title: `${state.sys.toUpperCase()} · ${state.view}` }); } catch (e) {}
+}
+
 async function render(){
+  zaehlen();
   document.querySelectorAll('#nav a').forEach(a => a.setAttribute('aria-current', a.dataset.view === state.view ? 'page' : 'false'));
   if (state.view !== 'auslosung' && drawLoop) { clearInterval(drawLoop); drawLoop = null; }
   updateDrawBar();
