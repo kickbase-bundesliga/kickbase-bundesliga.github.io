@@ -47,3 +47,9 @@ Trag im Discord-Kanal **#kwbl-anmeldung** deinen **Kickbase-Usernamen** ein. Ein
 
 ## Wann ist der Ligenreset?
 Die Ligen starten etwa **drei Wochen vor dem 1. Spieltag**.
+
+# Über diese Seite
+Diese Seite wird automatisch aus den Kickbase-Daten erstellt und nach jedem Spieltag aktualisiert.
+
+## Besucherzählung
+Wir zählen die Seitenaufrufe **anonym und ohne Cookies** mit [GoatCounter](https://www.goatcounter.com), um zu sehen, welche Bereiche genutzt werden. Dabei werden **keine persönlichen Daten gespeichert** und keine Besucher wiedererkannt oder seitenübergreifend verfolgt. Wer einen Werbe- oder Trackingblocker nutzt, wird gar nicht gezählt – die Seite funktioniert trotzdem ganz normal.
