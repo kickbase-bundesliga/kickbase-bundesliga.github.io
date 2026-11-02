@@ -606,6 +606,65 @@ def export_extras(system, out_dir):
 _participants_cache = {}
 
 
+# ---------------------------------------------------------------------------
+# Spieler-Marktwerte (Reiter "Spieler-Marktwerte", unabhaengig vom Ligasystem)
+# ---------------------------------------------------------------------------
+MW_ORDNER = "marktwerte"
+MW_LIGEN = [("bundesliga", "Bundesliga"), ("2-bundesliga", "2. Bundesliga"),
+            ("la-liga", "La Liga"), ("frauen-bundesliga", "Frauen-Bundesliga")]
+MW_TAGE = [1, 3, 7, 14]
+MW_POS = {"1": "Tor", "2": "Abwehr", "3": "Mittelfeld", "4": "Sturm"}
+
+
+def _mw_lesen(pfad):
+    import csv
+    with open(pfad, encoding="utf-8") as fp:
+        return {z["Spieler-ID"]: z for z in csv.DictReader(fp, delimiter=";")}
+
+
+def export_marktwerte(out_dir):
+    """Je Liga: neuester Tagesstand + Differenz zu 1/3/7/14 Tagen vorher (nur exakte Tagesdateien)
+    als JSON fuer die Seite und als CSV zum Herunterladen."""
+    import csv
+    from datetime import date, timedelta
+    ziel = os.path.join(out_dir, "data", "marktwerte")
+    index = []
+    for ordner, name in MW_LIGEN:
+        quelle = os.path.join(MW_ORDNER, ordner)
+        tage = sorted(f[:-4] for f in os.listdir(quelle) if f.endswith(".csv")) if os.path.isdir(quelle) else []
+        if not tage:
+            continue
+        stand = tage[-1]
+        heute = _mw_lesen(os.path.join(quelle, stand + ".csv"))
+        vergleich = {}
+        for t in MW_TAGE:
+            d = (date.fromisoformat(stand) - timedelta(days=t)).isoformat()
+            vergleich[t] = (d, _mw_lesen(os.path.join(quelle, d + ".csv"))) if d in tage else (None, {})
+        spieler = []
+        for pid, z in heute.items():
+            mw = int(z["Marktwert"])
+            diffs = [mw - int(vergleich[t][1][pid]["Marktwert"]) if pid in vergleich[t][1] else None for t in MW_TAGE]
+            spieler.append([pid, z["Spieler"], z["Verein"], z["Vereinsname"], MW_POS.get(z["Position"], ""), mw] + diffs)
+        spieler.sort(key=lambda r: -r[5])
+        os.makedirs(ziel, exist_ok=True)
+        with open(os.path.join(ziel, ordner + ".json"), "w", encoding="utf8") as fp:
+            json.dump({"liga": name, "stand": stand, "seit": tage[0],
+                       "vergleich": {str(t): vergleich[t][0] for t in MW_TAGE}, "spieler": spieler},
+                      fp, ensure_ascii=False, separators=(",", ":"))
+        # utf-8-sig + Semikolon: oeffnet sich in Excel direkt richtig
+        with open(os.path.join(ziel, ordner + ".csv"), "w", encoding="utf-8-sig", newline="") as fp:
+            w = csv.writer(fp, delimiter=";")
+            w.writerow(["Spieler", "Verein", "Position", "Marktwert %s" % stand]
+                       + ["Differenz %d Tag%s" % (t, "" if t == 1 else "e") for t in MW_TAGE])
+            for r in spieler:
+                w.writerow([r[1], r[3] or r[2], r[4], r[5]] + ["" if v is None else v for v in r[6:]])
+        index.append({"id": ordner, "name": name, "stand": stand, "spieler": len(spieler)})
+    if index:
+        with open(os.path.join(ziel, "index.json"), "w", encoding="utf8") as fp:
+            json.dump(index, fp, ensure_ascii=False)
+    return index
+
+
 def cups_participants(cup):
     key = id(cup)
     if key not in _participants_cache:
@@ -635,6 +694,9 @@ def main(systems):
     ordered = [by_id[s] for s in SYSTEMS if s in by_id]
     with open(systems_file, "w", encoding="utf8") as fp:
         json.dump(ordered, fp, ensure_ascii=False)
+    mw = export_marktwerte(OUT_DIR)
+    if mw:
+        print("💶 Spieler-Marktwerte: " + ", ".join("%s %s" % (l["name"], l["stand"]) for l in mw))
     shutil.copy(TEMPLATE, os.path.join(OUT_DIR, "index.html"))
     # Trophaeen-Bilder (Meisterschale/Pokal ohne Gravur) mitkopieren
     tro_src = os.path.join(os.path.dirname(TEMPLATE), "trophaeen")

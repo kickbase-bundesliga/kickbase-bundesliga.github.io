@@ -5,21 +5,27 @@ Spieler-Aktionen sammeln (nur lokal, NICHT fuer GitHub)
 
 Holt fuer jeden Bundesliga-Spieler und Spieltag die Kickbase-Punkteverteilung
 (z. B. "Pass ins letzte Drittel", "Ballverlust") und speichert sie pro Spieler
-und Spieltag zusammengefasst: je Aktionsart Anzahl und Punkte (positive wie negative).
-Minuten werden nicht gespeichert.
+und Spieltag: zusammengefasst je Aktionsart Anzahl und Punkte (positive wie negative)
+und zusaetzlich jede einzelne Aktion mit Spielminute und Halbzeit. In den CSV-Dateien
+steht immer der zuletzt eingespielte Marktwert (kader.json); der Marktwert vom Abholtag
+wird nur als Rohwert im Spieltag-JSON mitgespeichert.
 
     python scripts/aktionen_sammeln.py              alle fertigen, noch fehlenden Spiele holen
                                                     (beim ersten Lauf rueckwirkend die ganze Saison)
     python scripts/aktionen_sammeln.py --pruefen    nur anzeigen, was fertig/offen ist
     python scripts/aktionen_sammeln.py --neu 7      Spieltag 7 komplett neu holen
+    python scripts/aktionen_sammeln.py --neu 1-7    Spieltage 1 bis 7 komplett neu holen
+    python scripts/aktionen_sammeln.py --kader      nur Kader inkl. aktueller Marktwerte holen
+    python scripts/aktionen_sammeln.py --csv        nur die beiden CSV-Dateien neu schreiben
 
 Ein Spiel wird erst geholt, wenn der Spieltag abgeschlossen ist:
   - regulaere Spiele: "wartezeit" Stunden (Standard 30) nach dem Anstoss des letzten
     regulaeren Spiels des Spieltags (Sonntagsspiel -> Montagabend, nach dem Kickbase-Abschluss)
   - Nachholspiele: "wartezeit" Stunden nach ihrem eigenen Anstoss
 
-Ablage: aktionen/<Saison>/spieltag_NN.json, aktionen/<Saison>/aktionen_gesamt.csv (fuer Excel),
-        aktionen/aktionsarten.json
+Ablage: aktionen/<Saison>/spieltag_NN.json, aktionen/aktionsarten.json und fuer Excel:
+        aktionen/<Saison>/aktionen_gesamt.csv   (je Spieler, Spieltag und Aktionsart: Anzahl, Punkte)
+        aktionen/<Saison>/aktionen_einzeln.csv  (jede Aktion mit Minute und Halbzeit)
 Der Ordner aktionen/ steht in .gitignore und wird nie hochgeladen.
 Zugang: der KBL-Admin (config/kbl.txt).
 """
@@ -106,7 +112,7 @@ def fertig_ab(spiele, wartezeit):
 
 
 def kader_holen(api, team_ids, kader_alt):
-    kader = dict(kader_alt)
+    kader = {k: v for k, v in kader_alt.items() if k != "_stand"}
     for tid in sorted(team_ids, key=int):
         d = api.get("/competitions/%d/teams/%s/teamprofile" % (WETTBEWERB, tid))
         listen = list(spieler_listen(d)) if isinstance(d, dict) and "_fehler" not in d else []
@@ -115,7 +121,8 @@ def kader_holen(api, team_ids, kader_alt):
             continue
         alt = {s["i"]: s for s in kader.get(tid, [])}
         for s in listen[0]:
-            alt[str(s["i"])] = {"i": str(s["i"]), "n": s.get("n") or s.get("ln") or str(s["i"]), "pos": s.get("pos")}
+            alt[str(s["i"])] = {"i": str(s["i"]), "n": s.get("n") or s.get("ln") or str(s["i"]), "pos": s.get("pos"),
+                                "mv": s.get("mv"), "st": s.get("st")}
         kader[tid] = sorted(alt.values(), key=lambda x: x["i"])
     return kader
 
@@ -130,18 +137,28 @@ def spiel_holen(api, spiel, kader):
                 continue
             if str(d.get("mi")) != spiel["mi"]:
                 continue        # Spieler hat an diesem Spieltag nicht fuer diesen Verein gespielt
-            aktionen = {}
-            for e in d.get("events") or []:
+            events = d.get("events") or []
+            # Halbzeit: Kickbase-Ereignis -10 = "Erste Halbzeit beendet"; Event-IDs steigen zeitlich
+            pause = [int(e["ei"]) for e in events if e.get("eti") == -10 and str(e.get("ei", "")).isdigit()]
+            aktionen, einzeln = {}, []
+            for e in sorted(events, key=lambda x: int(x["ei"]) if str(x.get("ei", "")).isdigit() else 0):
                 eti = str(e.get("eti"))
                 a = aktionen.setdefault(eti, [0, 0])
                 a[0] += 1
                 a[1] += e.get("p") or 0
+                mt = e.get("mt")
+                if pause and str(e.get("ei", "")).isdigit():
+                    hz = 1 if int(e["ei"]) <= pause[0] else 2
+                else:
+                    hz = 1 if (mt or 0) <= 45 else 2
+                einzeln.append([int(e.get("eti") or 0), mt, e.get("p") or 0, hz])
             dabei = any(int(k) >= 0 for k in aktionen) or d.get("p")
             if not dabei:
                 continue        # nur auf der Bank oder nicht im Kader
             out[s["i"]] = {"n": d.get("n") or s["n"], "tid": str(d.get("tid") or tid), "pos": s.get("pos"),
+                           "mv": s.get("mv"),     # Marktwert beim Abholen (Kader wird bei jedem Lauf neu geholt)
                            "mi": spiel["mi"], "p": d.get("p") or sum(a[1] for a in aktionen.values()),
-                           "a": aktionen}
+                           "a": aktionen, "e": einzeln}
     return out
 
 
@@ -166,28 +183,70 @@ def parameter_finden(api, spiel, kader):
     return False
 
 
-def csv_schreiben(saison_ordner, arten, vereine):
-    zeilen = []
+POSITION = {1: "Tor", 2: "Abwehr", 3: "Mittelfeld", 4: "Sturm"}
+
+
+def ohne_stornos(events):
+    """Kickbase korrigiert eine falsch erfasste Aktion mit einer Gegenbuchung: gleiche Aktion,
+    gleiche Minute, entgegengesetzte Punkte. Beide Buchungen fallen heraus (die Rohdaten im
+    JSON bleiben unveraendert). Liefert die bereinigte Liste und die Zahl der Stornopaare."""
+    weg = set()
+    for i, (eti, mt, p, hz) in enumerate(events):
+        if not p or eti <= 0:
+            continue
+        for j in range(i):
+            e = events[j]
+            if j not in weg and e[0] == eti and e[1] == mt and e[2] == -p:
+                weg |= {i, j}
+                break
+    return [e for i, e in enumerate(events) if i not in weg], len(weg) // 2
+
+
+def csv_schreiben(saison_ordner, arten, vereine, kader):
+    gesamt, einzeln, stornos = [], [], 0
+    kader_mv = {str(x["i"]): x.get("mv") for k, v in kader.items() if k != "_stand" for x in v}
+    kader_stand = str(kader.get("_stand") or "")[:10]
     for datei in sorted(os.listdir(saison_ordner)):
         if not (datei.startswith("spieltag_") and datei.endswith(".json")):
             continue
         d = lade(os.path.join(saison_ordner, datei), {})
         for pid, s in d.get("spieler", {}).items():
-            for eti, (anz, pkt) in s["a"].items():
-                zeilen.append([d["spieltag"], pid, s["n"], vereine.get(s["tid"], s["tid"]), eti,
-                               arten.get(eti, ""), anz, pkt])
-    with open(os.path.join(saison_ordner, "aktionen_gesamt.csv"), "w", encoding="utf-8-sig", newline="") as f:
-        w = csv.writer(f, delimiter=";")
-        w.writerow(["Spieltag", "Spieler-ID", "Spieler", "Verein", "Aktion-ID", "Aktion", "Anzahl", "Punkte"])
-        w.writerows(zeilen)
-    return len(zeilen)
+            sp = d.get("spiele", {}).get(s["mi"], {})
+            verein = vereine.get(s["tid"], s["tid"])
+            gegner = sp.get("t2sy") if s["tid"] == str(sp.get("t1")) else sp.get("t1sy")
+            heim = "Heim" if s["tid"] == str(sp.get("t1")) else "Auswaerts"
+            pos = POSITION.get(s.get("pos"), s.get("pos") or "")
+            # Marktwert immer der zuletzt eingespielte (kader.json), nie der vom Spieltag
+            mv, stand = kader_mv.get(pid), kader_stand
+            basis = [d["spieltag"], pid, s["n"], verein, gegner or "", heim, pos, mv if mv is not None else "", stand]
+            events, n = ohne_stornos([e for e in s.get("e", []) if e[0] >= 0])   # nur Spieleraktionen
+            stornos += n
+            summe = {}
+            for eti, mt, pkt, hz in events:
+                a = summe.setdefault(eti, [0, 0])
+                a[0] += 1
+                a[1] += pkt
+                einzeln.append(basis + [eti, arten.get(str(eti), ""), mt, hz, pkt])
+            for eti, (anz, pkt) in sorted(summe.items()):
+                gesamt.append(basis + [eti, arten.get(str(eti), ""), anz, pkt])
+    kopf = ["Spieltag", "Spieler-ID", "Spieler", "Verein", "Gegner", "Heim/Auswaerts", "Position",
+            "Marktwert", "Marktwert-Stand", "Aktion-ID", "Aktion"]
+    for name, zeilen, rest in (("aktionen_gesamt.csv", gesamt, ["Anzahl", "Punkte"]),
+                               ("aktionen_einzeln.csv", einzeln, ["Minute", "Halbzeit", "Punkte"])):
+        with open(os.path.join(saison_ordner, name), "w", encoding="utf-8-sig", newline="") as f:
+            w = csv.writer(f, delimiter=";")
+            w.writerow(kopf + rest)
+            w.writerows(zeilen)
+    return len(gesamt), len(einzeln), stornos
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pruefen", action="store_true")
-    ap.add_argument("--neu", type=int, action="append", default=[])
+    ap.add_argument("--neu", action="append", default=[], help="Spieltag oder Bereich, z. B. 7 oder 1-7")
     ap.add_argument("--wartezeit", type=float, default=30)
+    ap.add_argument("--kader", action="store_true", help="nur Kader inkl. Marktwerte aktualisieren")
+    ap.add_argument("--csv", action="store_true", help="nur die CSV-Dateien aus den gespeicherten Spieltagen neu schreiben")
     a = ap.parse_args()
 
     api = Api("kbl")
@@ -207,7 +266,11 @@ def main():
     def tagdatei(tag):
         return os.path.join(saison_ordner, "spieltag_%02d.json" % tag)
 
-    for tag in a.neu:
+    neu = []
+    for x in a.neu:
+        von, _, bis = str(x).partition("-")
+        neu += list(range(int(von), int(bis or von) + 1))
+    for tag in neu:
         if os.path.exists(tagdatei(tag)):
             os.remove(tagdatei(tag))
             print("Spieltag %d wird neu geholt." % tag)
@@ -221,6 +284,18 @@ def main():
     tage = sorted(set(m["tag"] for m in offen))
     print("Saison %s: %d Spiele fertig und noch nicht geholt (Spieltage %s)" % (
         saison, len(offen), ", ".join(map(str, tage)) or "-"))
+    if a.kader:
+        kader = kader_holen(api, set(vereine), lade(os.path.join(saison_ordner, "kader.json"), {}))
+        kader["_stand"] = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+        schreibe(os.path.join(saison_ordner, "kader.json"), kader)
+        mit = sum(1 for k, v in kader.items() if k != "_stand" for s in v if s.get("mv"))
+        print("Kader aktualisiert: %d Spieler mit Marktwert." % mit)
+        return
+    if a.csv:
+        arten = lade(os.path.join(ORDNER, "aktionsarten.json"), {})
+        n, m, st = csv_schreiben(saison_ordner, arten, vereine, lade(os.path.join(saison_ordner, "kader.json"), {}))
+        print("CSV neu geschrieben: %d / %d Zeilen, %d stornierte Aktionen herausgerechnet." % (n, m, st))
+        return
     if a.pruefen or not offen:
         return
 
@@ -232,8 +307,9 @@ def main():
         arten = lade(os.path.join(ORDNER, "aktionsarten.json"), {})
 
     kader = kader_holen(api, set(vereine), lade(os.path.join(saison_ordner, "kader.json"), {}))
+    kader["_stand"] = now.strftime("%Y-%m-%dT%H:%M:%SZ")
     schreibe(os.path.join(saison_ordner, "kader.json"), kader)
-    print("Kader: %d Vereine, %d Spieler" % (len(kader), sum(len(v) for v in kader.values())))
+    print("Kader: %d Vereine, %d Spieler" % (len(kader) - 1, sum(len(v) for k, v in kader.items() if k != "_stand")))
 
     if not parameter_finden(api, offen[0], kader):
         sys.exit("Abbruch - bitte die Ausgabe oben an Claude geben.")
@@ -255,8 +331,9 @@ def main():
             d["spiele"][m["mi"]]["spieler"] = len(spieler)
             schreibe(tagdatei(tag), d)          # nach jedem Spiel sichern
             print("   ST %2d  %s-%s  %d Spieler" % (tag, m["t1sy"], m["t2sy"], len(spieler)))
-    n = csv_schreiben(saison_ordner, arten, vereine)
-    print("Fertig. %d API-Anfragen. aktionen_gesamt.csv mit %d Zeilen." % (api.anfragen, n))
+    n, m, st = csv_schreiben(saison_ordner, arten, vereine, kader)
+    print("Fertig. %d API-Anfragen. aktionen_gesamt.csv: %d Zeilen, aktionen_einzeln.csv: %d Zeilen "
+          "(%d stornierte Aktionen herausgerechnet)." % (api.anfragen, n, m, st))
 
 
 if __name__ == "__main__":

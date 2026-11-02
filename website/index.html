@@ -138,6 +138,17 @@ td.pl::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:5px;b
 td.pts{font:700 19px/1 var(--display);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 td.md{font:600 17px/1 var(--display);font-variant-numeric:tabular-nums;text-align:right;color:var(--muted);white-space:nowrap}
 td.corr{font:700 15px/1 var(--display);text-align:right;color:var(--good);white-space:nowrap}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable[aria-sort="descending"]::after{content:" ↓"}th.sortable[aria-sort="ascending"]::after{content:" ↑"}
+td.mwd{font:700 16px/1 var(--display);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+a.chip{text-decoration:none;color:inherit;display:inline-block}
+.mwt .kurz{display:none}
+@media (max-width:640px){
+  .mwt .mw-pos,.mwt .mw-nr{display:none}
+  .mwt td,.mwt th{padding-left:4px;padding-right:4px}
+  .mwt td.pts{font-size:15px}.mwt td.mwd{font-size:14px}.mwt td b{font-size:14px}
+  .mwt .lang{display:none}.mwt .kurz{display:inline}
+}
 td.corr.neg{color:var(--bad)}
 td.trend{font:600 14px/1 var(--display);white-space:nowrap;width:48px;color:var(--muted)}
 .up{color:var(--good)}.down{color:var(--bad)}
@@ -394,6 +405,7 @@ footer{max-width:1080px;margin:0 auto;padding:0 16px 32px;color:var(--muted);fon
     <a href="#score" data-view="score">KBL-Score</a>
     <a href="#ewig" data-view="ewig">Ewige Tabelle</a>
     <a href="#manager" data-view="manager">Manager</a>
+    <a href="#marktwerte" data-view="marktwerte">Spieler-Marktwerte</a>
     <a href="#info" data-view="info">Info</a>
   </nav>
 </header>
@@ -413,7 +425,8 @@ async function getJSON(path){ if(!cache[path]) cache[path] = fetch(path).then(r 
 
 const state = { systems: [], sys: null, idx: null, view: 'tabellen', season: null, league: null, md: null,
   cupSeason: null, cupRound: null, manager: null, scoreFilter: '', ewigLevel: 1, query: '', hofSeason: null,
-  xSeason: null, xMd: null, mgrXSeason: null, mgrMd: null };
+  xSeason: null, xMd: null, mgrXSeason: null, mgrMd: null,
+  mwLiga: null, mwTage: 1, mwPos: '', mwVerein: '', mwQ: '', mwSort: { key: 5, dir: 'descending' } };
 const app = document.getElementById('app');
 
 function roundName(n){ return ({2:'Finale',4:'Halbfinale',8:'Viertelfinale',16:'Achtelfinale'})[n] || `Runde der letzten ${n}`; }
@@ -1329,6 +1342,91 @@ function viewInfo(){
   });
 }
 
+/* ---------- Spieler-Marktwerte ---------- */
+// Daten: data/marktwerte/<liga>.json, je Spieler [id, Name, Verein, Vereinsname, Position, MW, Diff 1, 3, 7, 14 Tage]
+const MW_TAGE = [1, 3, 7, 14];
+const euro = n => n == null ? '–' : `${Number(n).toLocaleString('de-DE')} €`;
+// kurz fürs Handy: 65,4 Mio. / 235 Tsd.
+const kurz = n => n >= 1e6 ? `${(n / 1e6).toLocaleString('de-DE', { maximumFractionDigits: 1 })} Mio.` : n >= 1e3 ? `${Math.round(n / 1e3).toLocaleString('de-DE')} Tsd.` : `${n} €`;
+const zweiFormen = (lang, k) => `<span class="lang">${lang}</span><span class="kurz">${k}</span>`;
+const diffHTML = d => d == null ? '<span class="lg">–</span>' : d > 0 ? `<span class="up">${zweiFormen('+' + euro(d), '+' + kurz(d))}</span>` : d < 0 ? `<span class="down">${zweiFormen('−' + euro(-d), '−' + kurz(-d))}</span>` : '<span>±0</span>';
+const datumDE = t => t ? `${t.slice(8, 10)}.${t.slice(5, 7)}.${t.slice(0, 4)}` : '';
+async function viewMarktwerte(){
+  let ligen;
+  try { ligen = await getJSON('data/marktwerte/index.json'); } catch (e) { ligen = []; }
+  if (!ligen.length) {
+    app.innerHTML = `<section><div class="eyebrow">Bundesliga · 2. Bundesliga · La Liga · Frauen-Bundesliga</div><h1>Spieler-Marktwerte</h1></section>
+      <div class="empty">Noch keine Marktwerte vorhanden. Sie werden einmal am Tag abgeholt.</div>`;
+    return;
+  }
+  if (!ligen.find(l => l.id === state.mwLiga)) {
+    const wunsch = state.sys === 'kwbl' ? 'frauen-bundesliga' : 'bundesliga';
+    state.mwLiga = (ligen.find(l => l.id === wunsch) || ligen[0]).id;
+  }
+  const d = await getJSON(`data/marktwerte/${state.mwLiga}.json`);
+  const ti = MW_TAGE.indexOf(state.mwTage) < 0 ? 0 : MW_TAGE.indexOf(state.mwTage);
+  const DI = 6 + ti;                                    // Spalte der gewählten Differenz
+  const vgl = d.vergleich[String(MW_TAGE[ti])];
+  const vereine = [...new Map(d.spieler.map(r => [r[2], r[3] || r[2]])).entries()].sort((a, b) => a[1].localeCompare(b[1], 'de'));
+  const q = state.mwQ.trim().toLowerCase();
+  const rows = d.spieler.filter(r => (!state.mwPos || r[4] === state.mwPos) && (!state.mwVerein || r[2] === state.mwVerein)
+    && (!q || `${r[1]} ${r[2]} ${r[3]}`.toLowerCase().includes(q)));
+  const key = state.mwSort.key === 'diff' ? DI : state.mwSort.key, f = state.mwSort.dir === 'ascending' ? 1 : -1;
+  rows.sort((a, b) => {
+    const x = a[key], y = b[key];
+    if (typeof x === 'string' || typeof y === 'string') return f * String(x ?? '').localeCompare(String(y ?? ''), 'de');
+    return f * ((x ?? -Infinity) - (y ?? -Infinity)) || b[5] - a[5];
+  });
+  const mitDiff = d.spieler.filter(r => r[DI] != null);
+  const top = mitDiff.length ? mitDiff.reduce((a, b) => (b[DI] > a[DI] ? b : a)) : null;
+  const flop = mitDiff.length ? mitDiff.reduce((a, b) => (b[DI] < a[DI] ? b : a)) : null;
+  const zeitraum = t => `${t} Tag${t === 1 ? '' : 'e'}`;
+  const sortAttr = k => `class="sortable${typeof k === 'number' && k !== 1 && k !== 2 && k !== 4 || k === 'diff' ? ' r' : ''}" data-sort="${k}" aria-sort="${state.mwSort.key === k ? state.mwSort.dir : 'none'}"`;
+  app.innerHTML = `
+  <section class="headline">
+    <div><div class="eyebrow">Stand ${datumDE(d.stand)} · ${fmt(d.spieler.length)} Spieler</div><h1>Spieler-Marktwerte</h1>
+      <p class="lede">Kickbase-Marktwerte, einmal am Tag abgeholt. Die Differenz vergleicht mit dem Stand ${MW_TAGE[ti] === 1 ? 'vom Vortag' : `vor ${MW_TAGE[ti]} Tagen`}${vgl ? ` (${datumDE(vgl)})` : ''}. Gesammelt wird seit ${datumDE(d.seit)}, frühere Werte gibt es nicht.</p></div>
+    <div class="facts">
+      ${top && top[DI] > 0 ? `<div class="fact"><b>${esc(top[1])}</b><span>Größter Gewinn: +${euro(top[DI])}</span></div>` : ''}
+      ${flop && flop[DI] < 0 ? `<div class="fact"><b>${esc(flop[1])}</b><span>Größter Verlust: −${euro(-flop[DI])}</span></div>` : ''}
+    </div>
+  </section>
+  <section class="controls">
+    <div class="field"><label for="mwLiga">Liga</label>
+      <select id="mwLiga">${ligen.map(l => `<option value="${esc(l.id)}" ${l.id === state.mwLiga ? 'selected' : ''}>${esc(l.name)}</option>`).join('')}</select></div>
+    <div class="field"><label for="mwVerein">Verein</label>
+      <select id="mwVerein"><option value="">Alle Vereine</option>${vereine.map(([k, n]) => `<option value="${esc(k)}" ${k === state.mwVerein ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select></div>
+    <div class="field"><label for="mwPos">Position</label>
+      <select id="mwPos"><option value="">Alle Positionen</option>${['Tor', 'Abwehr', 'Mittelfeld', 'Sturm'].map(p => `<option ${p === state.mwPos ? 'selected' : ''}>${p}</option>`).join('')}</select></div>
+    <div class="field"><label for="mwQ">Suche</label><input type="search" id="mwQ" placeholder="Spieler oder Verein" value="${esc(state.mwQ)}"></div>
+  </section>
+  <section class="chip-group" aria-label="Zeitraum der Differenz">
+    ${MW_TAGE.map(t => `<button type="button" class="chip" data-tage="${t}" aria-pressed="${t === MW_TAGE[ti]}">${zeitraum(t)}</button>`).join('')}
+    <a class="chip" style="margin-left:auto" href="data/marktwerte/${esc(state.mwLiga)}.csv" download="marktwerte_${esc(state.mwLiga)}_${esc(d.stand)}.csv">⤓ Liste herunterladen (CSV)</a>
+  </section>
+  <section class="panel">
+    <div class="scroll"><table class="mwt">
+      <thead><tr><th class="c mw-nr">#</th><th ${sortAttr(1)}>Spieler</th><th ${sortAttr(2)}>Verein</th><th class="sortable mw-pos" data-sort="4" aria-sort="${state.mwSort.key === 4 ? state.mwSort.dir : 'none'}">Position</th>
+        <th ${sortAttr(5)}>${zweiFormen('Marktwert', 'MW')}</th><th ${sortAttr('diff')}>${zweiFormen('Differenz ' + zeitraum(MW_TAGE[ti]), '+/−')}</th></tr></thead>
+      <tbody>${rows.map((r, i) => `<tr><td class="c lg mw-nr">${i + 1}</td><td><b>${esc(r[1])}</b></td><td class="lg" title="${esc(r[3])}">${esc(r[2])}</td><td class="lg mw-pos">${esc(r[4])}</td>
+        <td class="pts">${zweiFormen(euro(r[5]), kurz(r[5]))}</td><td class="mwd">${diffHTML(r[DI])}</td></tr>`).join('')}</tbody>
+    </table>${rows.length ? '' : '<div class="empty">Kein Spieler gefunden.</div>'}</div>
+    ${vgl ? '' : `<div class="note">Für den Vergleich ${MW_TAGE[ti] === 1 ? 'mit dem Vortag' : `vor ${MW_TAGE[ti]} Tagen`} liegt noch kein Tagesstand vor – die Differenz erscheint, sobald so lange gesammelt wurde.</div>`}
+    <div class="note">Die Liste zum Herunterladen enthält alle Spieler der Liga mit Marktwert und allen vier Differenzen (für Excel: Semikolon-getrennt).</div>
+  </section>`;
+  on('#mwLiga', 'change', e => { state.mwLiga = e.target.value; state.mwVerein = ''; render(); });
+  on('#mwVerein', 'change', e => { state.mwVerein = e.target.value; render(); });
+  on('#mwPos', 'change', e => { state.mwPos = e.target.value; render(); });
+  on('#mwQ', 'input', e => { state.mwQ = e.target.value; const pos = e.target.selectionStart; viewMarktwerte().then(() => { const n = document.getElementById('mwQ'); if (n) { n.focus(); n.setSelectionRange(pos, pos); } }); });
+  app.querySelectorAll('[data-tage]').forEach(b => b.addEventListener('click', () => { state.mwTage = +b.dataset.tage; render(); }));
+  app.querySelectorAll('th[data-sort]').forEach(th => th.addEventListener('click', () => {
+    const k = th.dataset.sort === 'diff' ? 'diff' : +th.dataset.sort;
+    const text = k === 1 || k === 2 || k === 4;
+    state.mwSort = state.mwSort.key === k ? { key: k, dir: state.mwSort.dir === 'descending' ? 'ascending' : 'descending' } : { key: k, dir: text ? 'ascending' : 'descending' };
+    render();
+  }));
+}
+
 /* ---------- Gerüst ---------- */
 function on(sel, ev, fn){ const el = app.querySelector(sel); if (el) el.addEventListener(ev, fn); }
 function go(view){ state.view = view; if (location.hash !== '#' + view) history.replaceState(null, '', '#' + view); render(); window.scrollTo(0, 0); }
@@ -1353,7 +1451,7 @@ async function render(){
   document.querySelectorAll('#nav a').forEach(a => a.setAttribute('aria-current', a.dataset.view === state.view ? 'page' : 'false'));
   if (state.view !== 'auslosung' && drawLoop) { clearInterval(drawLoop); drawLoop = null; }
   updateDrawBar();
-  const views = { auslosung: viewDraw, tabellen: viewTables, spieltag: viewMatchday, pokal: viewCup, ruhmeshalle: viewHall, score: viewScore, ewig: viewEwig, manager: viewManager, info: viewInfo };
+  const views = { auslosung: viewDraw, tabellen: viewTables, spieltag: viewMatchday, pokal: viewCup, ruhmeshalle: viewHall, score: viewScore, ewig: viewEwig, manager: viewManager, marktwerte: viewMarktwerte, info: viewInfo };
   try { await (views[state.view] || viewTables)(); }
   catch (e) { console.error(e); app.innerHTML = `<div class="empty">Diese Ansicht konnte nicht geladen werden (${esc(e.message)}). Lade die Seite neu.</div>`; }
 }

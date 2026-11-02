@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - "league_systems/**"
+      - "marktwerte/**"
       - "config/**"
       - "website/**"
       - "scripts/build_site.py"

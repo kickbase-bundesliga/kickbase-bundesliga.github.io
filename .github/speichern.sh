@@ -4,7 +4,7 @@
 set -u
 git config user.name  "kbl-automatik"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-for d in league_systems config; do [ -e "$d" ] && git add -A "$d"; done
+for d in league_systems config marktwerte; do [ -e "$d" ] && git add -A "$d"; done
 if git diff --cached --quiet; then
   echo "Keine neuen Daten."
   echo "geaendert=false" >> "$GITHUB_OUTPUT"

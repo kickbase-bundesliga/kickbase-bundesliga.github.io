@@ -1,0 +1,58 @@
+# Spieler-Marktwerte: einmal am Tag fuer Bundesliga, 2. Bundesliga, La Liga und Frauen-Bundesliga
+# abholen (rund 70 Abfragen, Login wie KBL) und danach die Webseite neu bauen.
+# Manuell: Reiter "Actions" -> "Spieler-Marktwerte" -> "Run workflow".
+name: Spieler-Marktwerte
+
+on:
+  schedule:
+    - cron: "41 4 * * *"     # taeglich ca. 5:41 Uhr Winterzeit / 6:41 Uhr Sommerzeit (nach dem Kickbase-Marktwert-Update in der Nacht)
+  workflow_dispatch:
+    inputs:
+      neu:
+        description: "Heutigen Stand neu holen und ueberschreiben"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Gleiche Warteschlange wie die Spieltags-Updates, damit nie zwei gleichzeitig speichern
+concurrency:
+  group: daten-update
+  cancel-in-progress: false
+
+jobs:
+  sammeln:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      geaendert: ${{ steps.speichern.outputs.geaendert }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Marktwerte abholen
+        env:
+          KBL_EMAIL: ${{ secrets.KBL_EMAIL }}
+          KBL_PASSWORT: ${{ secrets.KBL_PASSWORT }}
+          NEU: ${{ inputs.neu }}
+          PYTHONUNBUFFERED: "1"
+          PYTHONIOENCODING: utf-8
+        run: |
+          if [ "$NEU" = "true" ]; then python scripts/marktwerte_sammeln.py --neu; else python scripts/marktwerte_sammeln.py; fi
+
+      - name: Neue Daten speichern
+        id: speichern
+        run: bash .github/speichern.sh "Spieler-Marktwerte $(date -u +%F)"
+
+  webseite:
+    needs: sammeln
+    if: needs.sammeln.outputs.geaendert == 'true'
+    uses: ./.github/workflows/webseite.yml
