@@ -22,7 +22,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from api_erkunden import Api, zugangsdaten, ligen_finden  # noqa: E402
+from api_erkunden import systeme, Api, zugangsdaten, ligen_finden  # noqa: E402
 
 ZIEL = os.path.join("api_dump", "status")
 FELDER = ("st", "t", "nd", "adm", "pl")
@@ -30,7 +30,7 @@ FELDER = ("st", "t", "nd", "adm", "pl")
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("system", choices=["kbl", "kwbl"])
+    ap.add_argument("system", choices=systeme())
     ap.add_argument("--bekannt", action="append", default=[])
     a = ap.parse_args()
     os.makedirs(ZIEL, exist_ok=True)

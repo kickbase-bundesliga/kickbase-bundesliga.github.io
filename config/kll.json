@@ -1,0 +1,50 @@
+{
+    "league_system_name": "KickBase La Liga",
+    "league_system_shortcut": "KLL",
+    "levels_in_database": 3,
+    "admin_id": 3607833,
+    "automatik": {
+        "wettbewerb": 3,
+        "wartezeit_stunden": 12
+    },
+    "wettbewerb_name": "La-Liga",
+    "marktwerte": "la-liga",
+    "cup_scores": [50, 30, 20, 10, 5, 0],
+    "leagues": [
+        {
+            "names": ["KLL - Liga 1"],
+            "ids": ["9299940"],
+            "level": "1",
+            "distribution": [1, 1, 1, 11, 3, 0],
+            "kbl_score": [100, 95, 90, 85, 82, 79, 76, 73, 70, 67, 64, 61, 58, 55, 52, 49, 46],
+            "cup_factor": 1
+        },
+        {
+            "names": ["KLL - Liga 2"],
+            "ids": ["9321959"],
+            "level": "2",
+            "distribution": [0, 3, 0, 10, 4, 0],
+            "kbl_score": [60, 55, 50, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20],
+            "cup_factor": 0.95
+        },
+        {
+            "names": ["KLL - Liga 3"],
+            "ids": ["9321960"],
+            "level": "3",
+            "distribution": [0, 4, 0, 13, 0, 0],
+            "kbl_score": [30, 25, 21, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5],
+            "cup_factor": 0.9
+        }
+    ],
+    "seasons": [
+        {
+            "name": "2026B",
+            "matchday_number": "19",
+            "first_matchday": "1",
+            "last_matchday": "19",
+            "leagues": [
+                {}
+            ]
+        }
+    ]
+}

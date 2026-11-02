@@ -193,6 +193,6 @@ def main(system, neu=False):
 
 if __name__ == "__main__":
     args = [a.lower() for a in sys.argv[1:]]
-    if not args or args[0] not in ("kbl", "kwbl"):
+    if not args or args[0] not in utils.alle_systeme():
         sys.exit("Aufruf: python scripts/historie_pruefen.py kbl   [--neu]")
     main(args[0], neu="--neu" in args)

@@ -157,17 +157,17 @@ def generate_all_time_table(system, league):
 
 
 def main():
-    valid_systems = {"kbl", "k2bl", "kwbl"}
+    valid_systems = set(utils.alle_systeme())
     valid_table_types = {"matchday", "all time", "kbl score"}
 
     # Step 1: Choose league system
     while True:
-        system = input("❓ Which league system do you want tables for? (kbl/k2bl/kwbl): ").strip().lower()
+        system = input("❓ Which league system do you want tables for? (" + "/".join(utils.alle_systeme()) + "): ").strip().lower()
         if system in valid_systems:
             print(f"✅ Selected system: {system.upper()}")
             break
         else:
-            print("❌ Invalid input. Please enter 'kbl', 'k2bl', or 'kwbl'.")
+            print("❌ Invalid input. Please enter one of: " + ", ".join(utils.alle_systeme()) + "")
 
     # Step 2: Choose table type
     while True:

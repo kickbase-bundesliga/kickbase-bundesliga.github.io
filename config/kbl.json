@@ -4,6 +4,8 @@
     "levels_in_database": 6,
     "admin_id": 1441550,
     "automatik": {"wettbewerb": 1, "wartezeit_stunden": 12},
+    "wettbewerb_name": "Bundesliga",
+    "marktwerte": "bundesliga",
     "cup_scores": [
         50,
         30,

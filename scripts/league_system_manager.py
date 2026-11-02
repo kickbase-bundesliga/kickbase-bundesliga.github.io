@@ -123,17 +123,17 @@ def remove_players_who_left(id_list, database):
 
 
 def main():
-    valid_systems = {"kbl", "k2bl", "kwbl"}
+    valid_systems = set(utils.alle_systeme())
     valid_responses = {"create system", "new season"}
 
     # Prompt for league system
     while True:
-        system = input("❓ Which league system do you want to manage? (kbl/k2bl/kwbl): ").strip().lower()
+        system = input("❓ Which league system do you want to manage? (" + "/".join(utils.alle_systeme()) + "): ").strip().lower()
         if system in valid_systems:
             print(f"✅ Managing {system.upper()}.")
             break
         else:
-            print("❌ Invalid selection. Please enter 'kbl', 'k2bl', or 'kwbl'.")
+            print("❌ Invalid selection. Please enter one of: " + ", ".join(utils.alle_systeme()) + "")
 
     # Prompt for action
     while True:

@@ -51,6 +51,15 @@ def fill_database(system, matchday_real, season):
                         manager_mdPlace = 17
                         print("   Exception, no data found, adding 0 points and last place")
 
+                    if manager_id not in database or season["name"] not in database[manager_id]:
+                        # Nachruecker waehrend der Saison: Eintrag wie beim Saisonstart anlegen
+                        from scripts import league_system_manager
+                        league_system_manager.change_database(
+                            [manager_id], database, utils.read_json("config/" + system))
+                        if int(manager_id) in database:
+                            database[manager_id] = database.pop(int(manager_id))
+                        print(f"   ➕ Neu in der Datenbank: {manager.n} ({manager_id})")
+
                     update_database_in_memory(
                         database, matchday_kbl, season["name"], league.name,
                         manager_id, manager.n, managerProfile.pl,
@@ -118,6 +127,15 @@ def pre_season(system, season):
                     manager_mdPoints = 0
                     manager_mdPlace = 0
 
+                    if manager_id not in database or season["name"] not in database[manager_id]:
+                        # Nachruecker waehrend der Saison: Eintrag wie beim Saisonstart anlegen
+                        from scripts import league_system_manager
+                        league_system_manager.change_database(
+                            [manager_id], database, utils.read_json("config/" + system))
+                        if int(manager_id) in database:
+                            database[manager_id] = database.pop(int(manager_id))
+                        print(f"   ➕ Neu in der Datenbank: {manager.n} ({manager_id})")
+
                     update_database_in_memory(
                         database, matchday_kbl, season["name"], league.name,
                         manager_id, manager.n, manager_place,
@@ -139,14 +157,14 @@ def update_database_in_memory(database, matchday_kbl, season, l_name, m_id, m_na
 
 
 def main():
-    valid_systems = {"kbl", "k2bl", "kwbl"}
+    valid_systems = set(utils.alle_systeme())
     while True:
-        system = input("❓ Which league system data do you want to update? (kbl/k2bl/kwbl): ").strip().lower()       
+        system = input("❓ Which league system data do you want to update? (" + "/".join(utils.alle_systeme()) + "): ").strip().lower()       
         if system in valid_systems:
             print(f"✅ Selected {system.upper()}.")
             break
         else:
-            print("❌ Invalid selection. Please enter 'kbl', 'k2bl', or 'kwbl'.")
+            print("❌ Invalid selection. Please enter one of: " + ", ".join(utils.alle_systeme()) + "")
 
     season = utils.get_current_season(system)
     print("    Current season: " + season["name"])

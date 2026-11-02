@@ -43,7 +43,7 @@ from scripts import utils  # noqa: E402
 
 MAX_SPIELTAGE_PRO_LAUF = 5
 # Kickbase-Wettbewerbe: 1 Bundesliga, 2 2. Bundesliga, 3 La Liga, 4 Frauen-Bundesliga
-STANDARD_WETTBEWERB = {"kbl": 1, "k2bl": 2, "laliga": 3, "kwbl": 4}
+STANDARD_WETTBEWERB = {"kbl": 1, "k2bl": 2, "kll": 3, "kwbl": 4}
 
 
 # ---------------------------------------------------------------- Ausgabe
@@ -232,6 +232,60 @@ def daten_fingerabdruck(system):
     return h.hexdigest()
 
 
+# ---------------------------------------------------------------- Neues Ligasystem
+
+def datenbank_pfad(system):
+    return os.path.join("league_systems", system, "databases", system + "_database.json")
+
+
+def system_anlegen(system, config, nur_pruefen, log):
+    """Erster Lauf eines neuen Ligasystems: zeigt, welche Ligen der Admin-Account sieht, prueft sie
+    gegen config/<system>.json und legt die Datenbank an. -> True, wenn es weitergehen kann."""
+    from kb4_api.kickbase import Kickbase
+    log("🆕 Noch keine Datenbank fuer %s - neues Ligasystem." % system.upper())
+    email, passwort, admin = utils.zugangsdaten(system)
+    kickbase = Kickbase()
+    _, alle = kickbase.login(email, passwort)
+    nach_id = utils.liga_namen_nach_id(system)
+    gesucht = {n: lc for lc in config.get("leagues", []) for n in lc.get("names", [])}
+
+    gefunden, fehler = {}, False
+    log("Ligen des Admin-Accounts:")
+    for liga in alle:
+        lid = str(getattr(liga, "id", None) or getattr(liga, "i", "") or "")
+        name = nach_id.get(lid, liga.name)
+        if name not in gesucht:
+            log("   ·  %s (ID %s) - gehoert nicht zu %s" % (liga.name, lid, system.upper()))
+            continue
+        try:
+            anzahl = len([m for m in kickbase.league_users(liga) if str(m.i) != str(admin)])
+        except Exception:
+            anzahl = None
+        soll = sum(gesucht[name].get("distribution") or [])
+        hinweis = ""
+        if anzahl is not None and soll and anzahl != soll:
+            hinweis = "  ⚠️ Zonen in der Config sind fuer %d Manager ausgelegt" % soll
+        log("   ✔️  %s = Kickbase \"%s\" (ID %s): %s Manager%s"
+            % (name, liga.name, lid, "?" if anzahl is None else anzahl, hinweis))
+        gefunden[name] = anzahl
+
+    for name in gesucht:
+        if name not in gefunden:
+            fehler = True
+            log("   ❌ %s: nicht im Admin-Account gefunden (ID in config/%s.json pruefen)" % (name, system))
+    if not gefunden or fehler:
+        raise SystemExit("❌ Nicht alle Ligen gefunden - Datenbank wird nicht angelegt.")
+    if nur_pruefen:
+        log("(nur Pruefung - Datenbank wuerde jetzt angelegt, danach alle fertigen Spieltage nachgeholt)")
+        return False
+
+    from scripts import league_system_manager
+    league_system_manager.create_system(system)
+    log("✅ Datenbank angelegt: %d Manager in %d Ligen."
+        % (len(utils.read_json(datenbank_pfad(system)[:-5])), len(gefunden)))
+    return True
+
+
 # ---------------------------------------------------------------- Kickbase
 
 def wettbewerb_ermitteln(system, config, api):
@@ -298,6 +352,13 @@ def ablauf(system, a, log):
     fenster = timedelta(hours=float(einst.get("nachkontrolle_stunden", 50)))
 
     log("Saison %s, Bundesliga-Spieltage %d-%d" % (saison["name"], erster, letzter))
+
+    # Neues Ligasystem: Datenbank gibt es noch nicht -> Ligen pruefen und Datenbank anlegen.
+    # Danach holt der normale Ablauf alle fertigen Spieltage der Saison nach (je Lauf hoechstens
+    # MAX_SPIELTAGE_PRO_LAUF).
+    if not os.path.exists(datenbank_pfad(system)):
+        if not system_anlegen(system, config, a.pruefen, log):
+            return 0
 
     # --- Manuell: genau ein Spieltag
     if a.spieltag is not None:

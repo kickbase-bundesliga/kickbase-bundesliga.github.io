@@ -68,6 +68,42 @@
   --top-bg:#062636; --top-ink:#e6f7ff; --top-muted:#8fc9e3; --top-line:#0e3a50;
   --top-active:#00c1ff; --switch-on:#00c1ff; --switch-on-ink:#04263a; --switch-line:#1d4d63}
 
+/* K2BL: Gruen (vorlaeufig, bis es ein Logo gibt) – weisse Schrift auf #15803d hat Kontrast >= 4.5 */
+:root[data-sys="k2bl"]{
+  --bg:#f3f6f4; --surface-2:#e9f0eb; --line:#d7e2da; --muted:#56635a;
+  --accent:#15803d; --accent-soft:#dcf2e3; --brand:#16a34a;
+  --top-bg:#15803d; --top-ink:#ffffff; --top-muted:#cdeed8; --top-line:#126b33;
+  --top-active:#ffffff; --switch-on:#ffffff; --switch-on-ink:#15803d; --switch-line:rgba(255,255,255,.45);
+}
+@media (prefers-color-scheme: dark){:root[data-sys="k2bl"]:not([data-theme="light"]){
+  --bg:#0c110e; --surface:#131a15; --surface-2:#19231c; --line:#26332a; --muted:#9aaa9f;
+  --accent:#4ade80; --accent-soft:#12301c; --brand:#22c55e;
+  --top-bg:#0d2616; --top-ink:#ecfdf2; --top-muted:#94d3a9; --top-line:#143a22;
+  --top-active:#22c55e; --switch-on:#22c55e; --switch-on-ink:#06200f; --switch-line:#1f5232}}
+:root[data-sys="k2bl"][data-theme="dark"]{
+  --bg:#0c110e; --surface:#131a15; --surface-2:#19231c; --line:#26332a; --muted:#9aaa9f;
+  --accent:#4ade80; --accent-soft:#12301c; --brand:#22c55e;
+  --top-bg:#0d2616; --top-ink:#ecfdf2; --top-muted:#94d3a9; --top-line:#143a22;
+  --top-active:#22c55e; --switch-on:#22c55e; --switch-on-ink:#06200f; --switch-line:#1f5232}
+
+/* KLL: Orange (vorlaeufig, bis es ein Logo gibt) – weisse Schrift auf #c2410c hat Kontrast >= 4.5 */
+:root[data-sys="kll"]{
+  --bg:#f8f5f2; --surface-2:#f3ebe4; --line:#e7dbd1; --muted:#655a52;
+  --accent:#c2410c; --accent-soft:#fde7d9; --brand:#ea580c;
+  --top-bg:#c2410c; --top-ink:#ffffff; --top-muted:#fed7c0; --top-line:#a8380a;
+  --top-active:#ffffff; --switch-on:#ffffff; --switch-on-ink:#c2410c; --switch-line:rgba(255,255,255,.45);
+}
+@media (prefers-color-scheme: dark){:root[data-sys="kll"]:not([data-theme="light"]){
+  --bg:#120e0b; --surface:#1b1512; --surface-2:#241c17; --line:#362a22; --muted:#b0a197;
+  --accent:#fb923c; --accent-soft:#3a1d0d; --brand:#f97316;
+  --top-bg:#2c140a; --top-ink:#fff4ec; --top-muted:#f5b48c; --top-line:#47200f;
+  --top-active:#f97316; --switch-on:#f97316; --switch-on-ink:#2c140a; --switch-line:#5c2a12}}
+:root[data-sys="kll"][data-theme="dark"]{
+  --bg:#120e0b; --surface:#1b1512; --surface-2:#241c17; --line:#362a22; --muted:#b0a197;
+  --accent:#fb923c; --accent-soft:#3a1d0d; --brand:#f97316;
+  --top-bg:#2c140a; --top-ink:#fff4ec; --top-muted:#f5b48c; --top-line:#47200f;
+  --top-active:#f97316; --switch-on:#f97316; --switch-on-ink:#2c140a; --switch-line:#5c2a12}
+
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);margin:0}
 button,select,input{font:inherit;color:inherit}
@@ -533,7 +569,7 @@ async function viewTables(){
   <section class="headline">
     <div><div class="eyebrow">Saison ${esc(meta.name)}${meta.current ? ' · läuft' : ''}${meta.quali ? ' · Qualifikation' : ''}</div>
       <h1>${esc(league.short)}</h1>
-      <p class="lede">${final ? 'Abschlusstabelle' : x === 0 ? 'Vor dem ersten Spieltag' : `Stand nach ${idx.short}-Spieltag ${x} (Bundesliga-Spieltag ${realMd})`} · ${rows.length} Manager</p></div>
+      <p class="lede">${final ? 'Abschlusstabelle' : x === 0 ? 'Vor dem ersten Spieltag' : `Stand nach ${idx.short}-Spieltag ${x} (${state.idx.wettbewerb || 'Bundesliga'}-Spieltag ${realMd})`} · ${rows.length} Manager</p></div>
     <div class="facts">
       ${leader && x > 0 ? `<div class="fact"><b>${esc(mgr(leader.id).n)}</b><span>${meta.quali ? (final ? 'Gruppensieger' : 'Gruppenerster') : final ? 'Meister' : 'Tabellenführer'}</span></div>` : ''}
     </div>
@@ -1187,7 +1223,7 @@ async function viewMatchday(){
   app.innerHTML = `
   <section class="headline">
     <div><div class="eyebrow">Saison ${esc(x.season)} · alle ${nLeagues} Ligen</div><h1>${idx.short}-Spieltag ${state.xMd}</h1>
-      <p class="lede">Bundesliga-Spieltag ${esc(day.bl)} · ${nMgr} Manager. Unter jedem Spieler stehen seine Punkte; die Zahl in Klammern zeigt, in wie vielen Ligen er aufgestellt war (maximal ${nLeagues}).</p></div>
+      <p class="lede">${esc(state.idx.wettbewerb || 'Bundesliga')}-Spieltag ${esc(day.bl)} · ${nMgr} Manager. Unter jedem Spieler stehen seine Punkte; die Zahl in Klammern zeigt, in wie vielen Ligen er aufgestellt war (maximal ${nLeagues}).</p></div>
   </section>
   <section class="controls">
     ${seasons.length > 1 ? `<div class="field"><label for="xSeasonSel">Saison</label>
@@ -1360,7 +1396,7 @@ async function viewMarktwerte(){
     return;
   }
   if (!ligen.find(l => l.id === state.mwLiga)) {
-    const wunsch = state.sys === 'kwbl' ? 'frauen-bundesliga' : 'bundesliga';
+    const wunsch = (state.idx && state.idx.marktwerte) || 'bundesliga';
     state.mwLiga = (ligen.find(l => l.id === wunsch) || ligen[0]).id;
   }
   const d = await getJSON(`data/marktwerte/${state.mwLiga}.json`);

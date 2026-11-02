@@ -1,0 +1,53 @@
+# K2BL: taeglich pruefen, ob ein Spieltag fertig ist, und ihn dann einspielen.
+# Manuell: Reiter "Actions" -> "K2BL Spieltag" -> "Run workflow".
+name: K2BL Spieltag
+
+on:
+  schedule:
+    - cron: "3 6 * * *"      # taeglich ca. 7:03 Uhr Winterzeit / 8:03 Uhr Sommerzeit
+  workflow_dispatch:
+    inputs:
+      spieltag:
+        description: "Spieltag der 2. Bundesliga (leer lassen = automatisch erkennen)"
+        required: false
+        default: ""
+      pokal:
+        description: "Pokalrunde auswerten (nur mit Spieltagsnummer, erst wenn Kickbase den Spieltag abgeschlossen hat)"
+        type: boolean
+        default: false
+      ohne_bilder:
+        description: "Keine Tabellenbilder erzeugen"
+        type: boolean
+        default: false
+      nur_pruefen:
+        description: "Nur pruefen, nichts aendern"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Alle Ligasysteme teilen sich diese Warteschlange, damit nie zwei gleichzeitig speichern
+concurrency:
+  group: daten-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    uses: ./.github/workflows/_spieltag.yml
+    with:
+      system: k2bl
+      spieltag: ${{ inputs.spieltag || '' }}
+      pokal: ${{ inputs.pokal == true }}
+      ohne_bilder: ${{ inputs.ohne_bilder == true }}
+      nur_pruefen: ${{ inputs.nur_pruefen == true }}
+    secrets:
+      EMAIL: ${{ secrets.K2BL_EMAIL }}
+      PASSWORT: ${{ secrets.K2BL_PASSWORT }}
+
+  webseite:
+    needs: update
+    if: needs.update.outputs.geaendert == 'true'
+    uses: ./.github/workflows/webseite.yml

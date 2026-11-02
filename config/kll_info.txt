@@ -1,0 +1,20 @@
+// Texte fuer den Reiter "Info" der KLL. Format wie in kbl_info.txt beschrieben:
+//   # Abschnitt  |  ## Zwischenueberschrift  |  - Aufzaehlung  |  **fett**  |  [Linktext](https://...)
+//   {{auf-abstieg}} = Schaubild aus config/kll.json  |  // Kommentar
+// VORLAEUFIG: Regeln und weitere Infos mit den KLL-Admins abstimmen und hier ergaenzen.
+
+# Das Wichtigste in Kürze
+Die KickBase La Liga ist das Ligasystem auf Basis der spanischen La Liga, mit drei Ebenen und Auf- und Abstieg. Die Spieltage richten sich nach der spanischen La Liga.
+
+- Eine KLL-Saison ist eine **Halbserie**: vom Saisonstart bis zur Winterpause (B) oder von der Winterpause bis zum Saisonende (A).
+
+# Auf- und Abstieg
+Die Farben zeigen, was am Saisonende mit den Plätzen passiert.
+
+{{auf-abstieg}}
+
+# Über diese Seite
+Die Seite wird automatisch aus den Kickbase-Daten erstellt. Fragen und Ideen gerne auf dem [Discord-Server](https://discord.gg/JderBpWf33).
+
+## Besucherzählung
+Wir zählen die Seitenaufrufe **anonym und ohne Cookies** mit [GoatCounter](https://www.goatcounter.com), um zu sehen, welche Bereiche genutzt werden. Dabei werden **keine persönlichen Daten gespeichert** und keine Besucher wiedererkannt oder seitenübergreifend verfolgt. Wer einen Werbe- oder Trackingblocker nutzt, wird gar nicht gezählt – die Seite funktioniert trotzdem ganz normal.

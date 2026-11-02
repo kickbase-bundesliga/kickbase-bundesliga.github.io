@@ -72,6 +72,6 @@ def main(system):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2 or sys.argv[1].lower() not in ("kbl", "kwbl"):
+    if len(sys.argv) < 2 or sys.argv[1].lower() not in utils.alle_systeme():
         sys.exit("Aufruf: python scripts/extras_pruefen.py kbl")
     main(sys.argv[1].lower())

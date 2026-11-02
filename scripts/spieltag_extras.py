@@ -152,6 +152,7 @@ def ligen_des_systems(api, system, config):
             gueltig.update(lc["names"])
     auswahl = api.get("/leagues/selection")
     ligen = []
+    nach_id = utils.liga_namen_nach_id(system)   # Ligen mit "ids" in der Config: Erkennung per ID
 
     def suchen(obj):
         if isinstance(obj, list):
@@ -159,6 +160,8 @@ def ligen_des_systems(api, system, config):
                 suchen(x)
         elif isinstance(obj, dict):
             name = obj.get("n") or obj.get("lnm") or obj.get("name")
+            if "i" in obj and str(obj["i"]) in nach_id:
+                name = nach_id[str(obj["i"])]
             if "i" in obj and name in gueltig:
                 ligen.append((str(obj["i"]), name))
             for v in obj.values():

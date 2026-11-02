@@ -1,0 +1,66 @@
+{
+    "league_system_name": "KickBase 2. BundesLiga",
+    "league_system_shortcut": "K2BL",
+    "levels_in_database": 5,
+    "admin_id": 2155370,
+    "automatik": {
+        "wettbewerb": 2,
+        "wartezeit_stunden": 12
+    },
+    "wettbewerb_name": "2. Bundesliga",
+    "marktwerte": "2-bundesliga",
+    "cup_scores": [50, 30, 20, 10, 5, 0],
+    "leagues": [
+        {
+            "names": ["K2BL - Liga 1"],
+            "ids": ["2430449"],
+            "level": "1",
+            "distribution": [1, 1, 1, 11, 3, 0],
+            "kbl_score": [100, 95, 90, 85, 82, 79, 76, 73, 70, 67, 64, 61, 58, 55, 52, 49, 46],
+            "cup_factor": 1
+        },
+        {
+            "names": ["K2BL - Liga 2"],
+            "ids": ["2418061"],
+            "level": "2",
+            "distribution": [0, 3, 0, 10, 4, 0],
+            "kbl_score": [60, 55, 50, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20],
+            "cup_factor": 0.95
+        },
+        {
+            "names": ["K2BL - Liga 3A", "K2BL - Liga 3B"],
+            "ids": ["4643455", "6428228"],
+            "level": "3",
+            "distribution": [0, 2, 0, 10, 5, 0],
+            "kbl_score": [30, 25, 21, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5],
+            "cup_factor": 0.9
+        },
+        {
+            "names": ["K2BL - Liga 4A", "K2BL - Liga 4B", "K2BL - Liga 4C", "K2BL - Liga 4D", "K2BL - Liga 4E"],
+            "ids": ["5310584", "5310592", "6428230", "5331253", "6988089"],
+            "level": "4",
+            "distribution": [0, 2, 0, 11, 4, 0],
+            "kbl_score": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            "cup_factor": 0.8
+        },
+        {
+            "names": ["K2BL - Liga 5A", "K2BL - Liga 5B", "K2BL - Liga 5C", "K2BL - Liga 5D", "K2BL - Liga 5E", "K2BL - Liga 5F", "K2BL - Liga 5G", "K2BL - Liga 5H", "K2BL - Liga 5I"],
+            "ids": ["2430454", "2430506", "2430510", "2430511", "4643386", "4753175", "5340323", "6926165", "6932003"],
+            "level": "5",
+            "distribution": [0, 2, 1, 14, 0, 0],
+            "kbl_score": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            "cup_factor": 0.7
+        }
+    ],
+    "seasons": [
+        {
+            "name": "2026B",
+            "matchday_number": "17",
+            "first_matchday": "1",
+            "last_matchday": "17",
+            "leagues": [
+                {}
+            ]
+        }
+    ]
+}

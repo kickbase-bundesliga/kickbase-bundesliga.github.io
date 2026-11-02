@@ -85,6 +85,13 @@ class Api:
 
 # ---------------------------------------------------------------- Hilfen
 
+def systeme():
+    """Alle eingerichteten Ligasysteme (config/<kuerzel>.json)."""
+    sys.path.insert(0, os.path.abspath("."))
+    from scripts import utils
+    return utils.alle_systeme()
+
+
 def zugangsdaten(system):
     # Zugangsdaten aus config/<system>.txt oder aus GitHub Secrets (siehe utils.zugangsdaten)
     sys.path.insert(0, os.path.abspath("."))
@@ -210,7 +217,7 @@ def uebersicht_schreiben(ordner):
 
 def main():
     p = argparse.ArgumentParser(description="Kickbase-API erkunden (nur lesen)")
-    p.add_argument("system", choices=["kbl", "kwbl"])
+    p.add_argument("system", choices=systeme())
     p.add_argument("--liga", help="Liga-ID oder Teil des Liganamens")
     p.add_argument("--manager", help="nur diesen Manager (Teil des Namens)")
     p.add_argument("--spieltag", type=int, help="Spieltag fuers Team Center (Standard: aktueller)")

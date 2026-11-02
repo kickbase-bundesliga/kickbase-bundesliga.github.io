@@ -420,6 +420,8 @@ def build_system(system):
             "zones": lc.get("distribution", []),
         } for lc in sorted(config["leagues"], key=lambda l: int(l["level"]))],
         "info": info_html(system),
+        "wettbewerb": config.get("wettbewerb_name") or "Bundesliga",   # fuer "...-Spieltag 5"
+        "marktwerte": config.get("marktwerte") or "bundesliga",        # Liga der Marktwert-Uebersicht
         "gaps": [{"s": s, "levels": lv} for s, lv in sorted(gaps.items())],
     }
     with open(os.path.join(out_dir, "index.json"), "w", encoding="utf8") as fp:

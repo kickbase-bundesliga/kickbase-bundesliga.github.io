@@ -55,6 +55,13 @@ def login_account(system):
             namen.update(lc.get("names", []))
     except Exception:
         pass
+    # Ligen mit "ids" in der Config werden ueber die Kickbase-Liga-ID erkannt und bekommen den
+    # Namen aus der Config - dann ist egal, wie die Liga bei Kickbase gerade heisst.
+    nach_id = liga_namen_nach_id(system)
+    for league in leagues:
+        lid = str(getattr(league, "id", None) or getattr(league, "i", "") or "")
+        if lid in nach_id:
+            league.name = nach_id[lid]
     leagues = [league for league in leagues
                if league.name in namen or (not namen and league.name.startswith(("KBL", "K2BL", "KWBL")))]
 
@@ -62,7 +69,20 @@ def login_account(system):
 
 
 # Bevorzugte Reihenfolge auf der Webseite; weitere Systeme werden alphabetisch angehaengt
-SYSTEM_REIHENFOLGE = ["kbl", "kwbl", "k2bl", "laliga"]
+SYSTEM_REIHENFOLGE = ["kbl", "k2bl", "kwbl", "kll"]
+
+
+def liga_namen_nach_id(system):
+    """{Kickbase-Liga-ID: Name aus der Config} fuer alle Ligen mit "ids" in config/<system>.json.
+    "ids" steht parallel zu "names" (gleiche Reihenfolge)."""
+    zuordnung = {}
+    try:
+        for lc in read_json("config/" + system).get("leagues", []):
+            for lid, name in zip(lc.get("ids") or [], lc.get("names") or []):
+                zuordnung[str(lid)] = name
+    except Exception:
+        pass
+    return zuordnung
 
 
 def alle_systeme():

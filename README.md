@@ -1,6 +1,6 @@
 # KickBase BundesLiga – Liga-Tools und Webseite
 
-Daten, Auswertungen und Webseite für die Ligasysteme **KBL**, **KWBL** (und später weitere).
+Daten, Auswertungen und Webseite für die Ligasysteme **KBL**, **K2BL**, **KWBL** und **KLL**.
 Die Spieltage laufen automatisch auf GitHub, können aber auch lokal eingespielt werden.
 
 ---
@@ -11,7 +11,7 @@ Alles im Reiter **Actions** des Repositorys.
 
 | Workflow | Was er tut |
 |---|---|
-| **KBL Spieltag** / **KWBL Spieltag** | Läuft jeden Morgen von selbst. Prüft, ob ein Bundesliga-Spieltag fertig ist, und spielt ihn ein (Daten, Pokal, KBL-Score, Webseite). |
+| **KBL / K2BL / KWBL / KLL Spieltag** | Läuft jeden Morgen von selbst. Prüft, ob ein Bundesliga-Spieltag fertig ist, und spielt ihn ein (Daten, Pokal, KBL-Score, Webseite). |
 | **Webseite** | Baut die Webseite neu und veröffentlicht sie. Läuft automatisch nach jeder Änderung. |
 | **Pokal** | Pokal anlegen, Runden auslosen – auch als Live-Auslosung auf der Webseite. Nur per Knopf. |
 
@@ -118,6 +118,8 @@ In `config/<system>.json`:
    *New repository secret*:
    - `KBL_EMAIL`, `KBL_PASSWORT`
    - `KWBL_EMAIL`, `KWBL_PASSWORT`
+   - `K2BL_EMAIL`, `K2BL_PASSWORT`
+   - `KLL_EMAIL`, `KLL_PASSWORT`
 
    Secrets sind verschlüsselt; niemand kann sie wieder ansehen, auch Mit-Admins nicht.
 2. **Pages**: *Settings* → *Pages* → *Source*: **GitHub Actions**.
@@ -126,14 +128,31 @@ In `config/<system>.json`:
 
 ---
 
-## Neues Ligasystem hinzufügen (z. B. K2BL, La Liga)
+## Ligasysteme
 
-1. `config/<kuerzel>.json` anlegen (wie `kwbl.json`), mit `"automatik": {"wettbewerb": <Nr>}`.
-   Ab dann erscheint das System automatisch auf der Webseite und in `update.py`.
-2. `.github/workflows/kwbl.yml` kopieren als `<kuerzel>.yml` und darin `KWBL`/`kwbl` ersetzen
+| Kürzel | System | Wettbewerb | Workflow |
+|---|---|---|---|
+| KBL | KickBase BundesLiga | 1 Bundesliga | KBL Spieltag |
+| K2BL | KickBase 2. BundesLiga | 2 2. Bundesliga | K2BL Spieltag |
+| KWBL | KickBase Women BundesLiga | 4 Frauen-Bundesliga | KWBL Spieltag |
+| KLL | KickBase La Liga | 3 La Liga | KLL Spieltag |
+
+## Neues Ligasystem hinzufügen
+
+1. `config/<kuerzel>.json` anlegen (wie `k2bl.json`), mit `"automatik": {"wettbewerb": <Nr>}`.
+   Je Liga `names` (so heißt die Liga bei uns) und parallel dazu `ids` (Kickbase-Liga-IDs) – dann
+   ist egal, wie die Liga bei Kickbase gerade heißt. Ab dann erscheint das System auf der Webseite
+   und in `update.py`. Optional `config/<kuerzel>_info.txt` für den Reiter „Info“.
+2. `.github/workflows/k2bl.yml` kopieren als `<kuerzel>.yml` und darin `K2BL`/`k2bl` ersetzen
    (Name, `system:`, Secret-Namen) und die Uhrzeit beim `cron` um ein paar Minuten verschieben.
 3. Secrets `<KUERZEL>_EMAIL` und `<KUERZEL>_PASSWORT` anlegen.
-4. Lokal: `config/<kuerzel>.txt` mit den Zugangsdaten.
+4. Workflow einmal von Hand starten. Gibt es noch keine Datenbank, prüft der erste Lauf die Ligen
+   (Zusammenfassung: welche Liga gefunden wurde, wie viele Manager), legt die Datenbank an und
+   holt danach die fertigen Spieltage der laufenden Saison nach (höchstens 5 je Lauf – also ggf.
+   mehrmals starten). Mit *Nur prüfen* wird nur die Ligenliste gezeigt.
+5. Lokal: `config/<kuerzel>.txt` mit den Zugangsdaten. Logo als `league_systems/<kuerzel>/logo.png`
+   (Tabellenbilder) und `logo_icon.png` (Kopfleiste der Webseite); Farben in `website/index.html`
+   unter `data-sys="<kuerzel>"`.
 
 ---
 

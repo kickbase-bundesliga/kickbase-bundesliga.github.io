@@ -73,7 +73,7 @@ def update_kbl_score(system):
             database[manager_id]["Info"]["KBL Score"] = score_ges
             username = database[manager_id]["Username"]
             try:
-                current_league = database[manager_id]["Info"]["League"][6:]
+                current_league = database[manager_id]["Info"]["League"].split(" - ", 1)[-1]
             except:
                 current_league = ' - '
             column = [username, current_league] + score_array + [score_ges]
@@ -131,7 +131,6 @@ def opendatabase_cup(system, season):
     # Opens cup database of given season.
     path = "league_systems/" + system + "/cup/"
     jsonname = path + system.upper() + 'Cup_Database_' + season + '.json'  # Gross-/Kleinschreibung wie beim Anlegen
-    print(jsonname)
     with open(jsonname,'r', encoding="utf8") as fp:
         database = json.load(fp)
     return database
