@@ -103,11 +103,12 @@ Oder `update.bat` doppelklicken, dann wird alles abgefragt.
 In `config/<system>.json`:
 
 ```json
-"automatik": {"wettbewerb": 1, "wartezeit_stunden": 12, "nachkontrolle_stunden": 50}
+"automatik": {"wettbewerb": 1, "abrechnung_uhr": 18, "nach_abrechnung_minuten": 60, "nachkontrolle_stunden": 50}
 ```
 
 - `wettbewerb`: Kickbase-Wettbewerb (1 = Bundesliga). Fehlt die Angabe, wird er aus den Ligadaten gelesen.
-- `wartezeit_stunden`: so lange nach dem Anstoß des letzten Spiels wird gewartet.
+- `abrechnung_uhr` / `nach_abrechnung_minuten`: Ein Spieltag gilt als fertig ab der Kickbase-Abrechnung am Tag nach dem letzten Spiel (18 Uhr deutsche Zeit) plus 60 Minuten, normal also Montag 19 Uhr. Die Workflows laufen dafür zusätzlich täglich gegen 19 Uhr (KBL 19:03, KWBL 19:13, K2BL 19:23, KLL 19:33; im Sommer jeweils 1 h später).
+- `wartezeit_stunden`: alte Regel (nur wenn `abrechnung_uhr` fehlt): so lange nach dem Anstoß des letzten Spiels wird gewartet.
 - `nachkontrolle_stunden`: so lange nach dem Einspielen wird täglich erneut geholt (0 = aus, Standard 50).
 
 ---
