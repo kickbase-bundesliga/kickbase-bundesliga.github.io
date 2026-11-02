@@ -642,22 +642,34 @@ def export_marktwerte(out_dir):
         for t in MW_TAGE:
             d = (date.fromisoformat(stand) - timedelta(days=t)).isoformat()
             vergleich[t] = (d, _mw_lesen(os.path.join(quelle, d + ".csv"))) if d in tage else (None, {})
+        # Saisonstatistik (von scripts/marktwerte_sammeln.py, je Spieler einmal pro Spieltag geholt)
+        stat, stat_md = {}, None
+        stat_pfad = os.path.join(quelle, "statistik.json")
+        if os.path.exists(stat_pfad):
+            with open(stat_pfad, encoding="utf8") as fp:
+                sd = json.load(fp)
+            stat, stat_md = sd.get("spieler", {}), sd.get("spieltag")
         spieler = []
         for pid, z in heute.items():
             mw = int(z["Marktwert"])
             diffs = [mw - int(vergleich[t][1][pid]["Marktwert"]) if pid in vergleich[t][1] else None for t in MW_TAGE]
-            spieler.append([pid, z["Spieler"], z["Verein"], z["Vereinsname"], MW_POS.get(z["Position"], ""), mw] + diffs)
+            st = stat.get(pid) or {}
+            # Spalten 10-13: Gesamtpunkte, Durchschnitt, Einsaetze, Startelf (None = noch nicht geholt)
+            spieler.append([pid, z["Spieler"], z["Verein"], z["Vereinsname"], MW_POS.get(z["Position"], ""), mw] + diffs
+                           + [st.get("tp"), st.get("ap"), st.get("e"), st.get("s")])
         spieler.sort(key=lambda r: -r[5])
         os.makedirs(ziel, exist_ok=True)
         with open(os.path.join(ziel, ordner + ".json"), "w", encoding="utf8") as fp:
             json.dump({"liga": name, "stand": stand, "seit": tage[0],
-                       "vergleich": {str(t): vergleich[t][0] for t in MW_TAGE}, "spieler": spieler},
+                       "vergleich": {str(t): vergleich[t][0] for t in MW_TAGE}, "spieler": spieler,
+                       "statistik": stat_md},
                       fp, ensure_ascii=False, separators=(",", ":"))
         # utf-8-sig + Semikolon: oeffnet sich in Excel direkt richtig
         with open(os.path.join(ziel, ordner + ".csv"), "w", encoding="utf-8-sig", newline="") as fp:
             w = csv.writer(fp, delimiter=";")
             w.writerow(["Spieler", "Verein", "Position", "Marktwert %s" % stand]
-                       + ["Differenz %d Tag%s" % (t, "" if t == 1 else "e") for t in MW_TAGE])
+                       + ["Differenz %d Tag%s" % (t, "" if t == 1 else "e") for t in MW_TAGE]
+                       + ["Punkte", "Punkte-Schnitt", "Einsaetze", "Startelf"])
             for r in spieler:
                 w.writerow([r[1], r[3] or r[2], r[4], r[5]] + ["" if v is None else v for v in r[6:]])
         index.append({"id": ordner, "name": name, "stand": stand, "spieler": len(spieler)})

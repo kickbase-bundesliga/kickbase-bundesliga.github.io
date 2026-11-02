@@ -16,6 +16,15 @@ Die Webseite (Reiter "Spieler-Marktwerte") rechnet daraus die Differenzen zu
     python scripts/marktwerte_sammeln.py            heutigen Stand holen (falls noch nicht da)
     python scripts/marktwerte_sammeln.py --neu      heutigen Stand neu holen und ueberschreiben
 
+Zusaetzlich je Liga marktwerte/<liga>/statistik.json mit Saisonstatistik je Spieler
+(Gesamtpunkte, Durchschnitt, Einsaetze, Startelf). Die gibt es nur im Spieler-Detail
+(/competitions/<c>/players/<id>), also eine Abfrage je Spieler. Damit das klein bleibt, wird
+jeder Spieler nur einmal je fertigem Spieltag abgefragt (nicht taeglich) und je Lauf und Liga
+hoechstens STATISTIK_MAX Spieler (die wertvollsten zuerst). Beim ersten Mal dauert es also ein
+paar Tage, bis alle Spieler Werte haben.
+
+    python scripts/marktwerte_sammeln.py --ohne-statistik   nur Marktwerte
+
 Online laeuft das taeglich ueber den Workflow "Spieler-Marktwerte" (Login wie KBL).
 Nur lesende API-Abfragen. Python 3.7, nur Standardbibliothek.
 """
@@ -41,6 +50,8 @@ LIGEN = [
     (4, "frauen-bundesliga", "Frauen-Bundesliga"),
 ]
 KOPF = ["Spieler-ID", "Spieler", "Verein", "Vereinsname", "Position", "Marktwert"]
+STATISTIK_MAX = 350          # Spieler-Detailabfragen je Liga und Lauf
+WARTEZEIT_STUNDEN = 12       # Spieltag gilt als fertig: letzter Anstoss + 12 Std.
 
 
 def zugangsdaten():
@@ -123,20 +134,42 @@ def spieler_listen(obj):
                 yield t
 
 
+def zeit_lesen(text):
+    """'2026-10-17T13:30:00Z' -> datetime (UTC) oder None."""
+    try:
+        return datetime.strptime(str(text)[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
 def vereine(api, wettbewerb):
-    """Vereine des Wettbewerbs aus dem Spielplan: {tid: Kuerzel}."""
+    """Vereine des Wettbewerbs aus dem Spielplan: ({tid: Kuerzel}, letzter fertiger Spieltag)."""
     d = api.get("/competitions/%d/matchdays" % wettbewerb)
-    out = {}
+    out, anstoss = {}, {}
     for tag in d.get("it", []) if isinstance(d, dict) else []:
         for m in tag.get("it", []):
             for t, sy in (("t1", "t1sy"), ("t2", "t2sy")):
                 if m.get(t):
                     out[str(m[t])] = m.get(sy) or str(m[t])
-    return out
+            nr, z = m.get("day") or tag.get("day"), zeit_lesen(m.get("dt"))
+            if isinstance(nr, int) and z:
+                anstoss.setdefault(nr, []).append(z)
+    grenze = datetime.now(timezone.utc) - timedelta(hours=WARTEZEIT_STUNDEN)
+    fertig = 0
+    for nr in sorted(anstoss):
+        zeiten = sorted(anstoss[nr])
+        # Nachholspiele (nach Beginn des naechsten Spieltags) nicht abwarten - wie automatik.py
+        naechster = min(anstoss[nr + 1]) if nr + 1 in anstoss else None
+        regulaer = [z for z in zeiten if naechster is None or z < naechster] or zeiten
+        if regulaer[-1] <= grenze:
+            fertig = nr
+        else:
+            break
+    return out, fertig
 
 
 def liga_holen(api, wettbewerb):
-    teams = vereine(api, wettbewerb)
+    teams, _ = vereine(api, wettbewerb)
     zeilen, fehlend = {}, []
     for tid in sorted(teams, key=lambda x: int(x) if x.isdigit() else 0):
         d = api.get("/competitions/%d/teams/%s/teamprofile" % (wettbewerb, tid))
@@ -155,14 +188,55 @@ def liga_holen(api, wettbewerb):
     return teams, zeilen, fehlend
 
 
+def statistik_aktualisieren(api, wettbewerb, ordner, zeilen):
+    """Saisonstatistik je Spieler (marktwerte/<ordner>/statistik.json) nachziehen.
+    Abgefragt werden nur Spieler, deren Werte aelter sind als der letzte fertige Spieltag."""
+    _, fertig = vereine(api, wettbewerb)
+    pfad = os.path.join(ORDNER, ordner, "statistik.json")
+    daten = {"spieler": {}}
+    if os.path.exists(pfad):
+        with open(pfad, encoding="utf-8") as f:
+            daten = json.load(f)
+    spieler = daten.setdefault("spieler", {})
+    # Neue Saison (fertig kleiner als zuletzt): alles neu holen
+    if fertig < int(daten.get("spieltag") or 0):
+        spieler.clear()
+    daten["spieltag"] = fertig
+    offen = [pid for pid in sorted(zeilen, key=lambda p: -zeilen[p][5])
+             if pid not in spieler or int(spieler[pid].get("nach") or -1) < fertig]
+    geholt, fehler = 0, 0
+    for pid in offen[:STATISTIK_MAX]:
+        d = api.get("/competitions/%d/players/%s" % (wettbewerb, pid))
+        if not isinstance(d, dict) or "_fehler" in d:
+            fehler += 1
+            if fehler >= 5 and geholt == 0:
+                print("   ⚠️  Spieler-Details nicht abrufbar (%s) - Statistik uebersprungen"
+                      % (d.get("_fehler") if isinstance(d, dict) else d))
+                break
+            continue
+        zahl = lambda k: d.get(k) if isinstance(d.get(k), (int, float)) else None
+        spieler[pid] = {"tp": zahl("tp"), "ap": zahl("ap"), "e": zahl("ismc"), "s": zahl("smc"),
+                        "sp": zahl("smdc"), "nach": fertig}
+        geholt += 1
+    if geholt:
+        daten["stand"] = heute_berlin()
+        with open(pfad + ".tmp", "w", encoding="utf-8") as f:
+            json.dump(daten, f, ensure_ascii=False, separators=(",", ":"))
+        os.replace(pfad + ".tmp", pfad)
+    rest = len(offen) - geholt
+    print("   📊 Statistik nach Spieltag %d: %d Spieler aktualisiert%s"
+          % (fertig, geholt, ", %d folgen im naechsten Lauf" % rest if rest > 0 else ""))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--neu", action="store_true", help="heutigen Stand neu holen und ueberschreiben")
+    ap.add_argument("--ohne-statistik", action="store_true", help="keine Spieler-Statistik (Punkte, Einsaetze)")
     a = ap.parse_args()
 
     datum = heute_berlin()
     offen = [l for l in LIGEN if a.neu or not os.path.exists(os.path.join(ORDNER, l[1], datum + ".csv"))]
-    if not offen:
+    if not offen and a.ohne_statistik:
         print("Marktwerte vom %s sind schon fuer alle Ligen da." % datum)
         return
 
@@ -183,8 +257,22 @@ def main():
         os.replace(pfad + ".tmp", pfad)
         hinweis = " (fehlend: %s)" % ", ".join(fehlend) if fehlend else ""
         print("✅ %-18s %3d Spieler aus %d Vereinen%s" % (name, len(zeilen), len(teams) - len(fehlend), hinweis))
+
+    # Statistik auch fuer Ligen, deren Marktwerte heute schon da sind (Nachholen in Etappen)
+    if not a.ohne_statistik:
+        for wettbewerb, ordner, name in LIGEN:
+            pfad = os.path.join(ORDNER, ordner, datum + ".csv")
+            if not os.path.exists(pfad):
+                continue
+            with open(pfad, encoding="utf-8") as f:
+                zeilen = {z[0]: z[:5] + [int(z[5])] for z in list(csv.reader(f, delimiter=";"))[1:] if len(z) >= 6}
+            print("%s:" % name)
+            try:
+                statistik_aktualisieren(api, wettbewerb, ordner, zeilen)
+            except Exception as e:      # Statistik darf die Marktwerte nie aufhalten
+                print("   ⚠️  Statistik uebersprungen: %s" % e)
     print("Stand %s, %d API-Anfragen." % (datum, api.anfragen))
-    if fehler == len(offen):
+    if offen and fehler == len(offen):
         sys.exit(1)
 
 

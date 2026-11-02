@@ -182,7 +182,7 @@ a.chip{text-decoration:none;color:inherit;display:inline-block}
 @media (max-width:640px){
   .mwt .mw-pos,.mwt .mw-nr{display:none}
   .mwt td,.mwt th{padding-left:4px;padding-right:4px}
-  .mwt td.pts{font-size:15px}.mwt td.mwd{font-size:14px}.mwt td b{font-size:14px}
+  .mwt td.pts{font-size:15px}.mwt td.mwd{font-size:14px}.mwt td b{font-size:14px}.mwt td.mws{font-size:14px}
   .mwt .lang{display:none}.mwt .kurz{display:inline}
 }
 td.corr.neg{color:var(--bad)}
@@ -1379,7 +1379,8 @@ function viewInfo(){
 }
 
 /* ---------- Spieler-Marktwerte ---------- */
-// Daten: data/marktwerte/<liga>.json, je Spieler [id, Name, Verein, Vereinsname, Position, MW, Diff 1, 3, 7, 14 Tage]
+// Daten: data/marktwerte/<liga>.json, je Spieler [id, Name, Verein, Vereinsname, Position, MW, Diff 1, 3, 7, 14 Tage,
+//         Punkte, Ø Punkte, Einsätze, Startelf]
 const MW_TAGE = [1, 3, 7, 14];
 const euro = n => n == null ? '–' : `${Number(n).toLocaleString('de-DE')} €`;
 // kurz fürs Handy: 65,4 Mio. / 235 Tsd.
@@ -1417,6 +1418,8 @@ async function viewMarktwerte(){
   const top = mitDiff.length ? mitDiff.reduce((a, b) => (b[DI] > a[DI] ? b : a)) : null;
   const flop = mitDiff.length ? mitDiff.reduce((a, b) => (b[DI] < a[DI] ? b : a)) : null;
   const zeitraum = t => `${t} Tag${t === 1 ? '' : 'e'}`;
+  const mitStat = d.spieler.some(r => r[12] != null);       // Statistik erst, wenn sie gesammelt wurde
+  const statZahl = v => v == null ? '<span class="lg">–</span>' : fmt(v);
   const sortAttr = k => `class="sortable${typeof k === 'number' && k !== 1 && k !== 2 && k !== 4 || k === 'diff' ? ' r' : ''}" data-sort="${k}" aria-sort="${state.mwSort.key === k ? state.mwSort.dir : 'none'}"`;
   app.innerHTML = `
   <section class="headline">
@@ -1443,12 +1446,16 @@ async function viewMarktwerte(){
   <section class="panel">
     <div class="scroll"><table class="mwt">
       <thead><tr><th class="c mw-nr">#</th><th ${sortAttr(1)}>Spieler</th><th ${sortAttr(2)}>Verein</th><th class="sortable mw-pos" data-sort="4" aria-sort="${state.mwSort.key === 4 ? state.mwSort.dir : 'none'}">Position</th>
-        <th ${sortAttr(5)}>${zweiFormen('Marktwert', 'MW')}</th><th ${sortAttr('diff')}>${zweiFormen('Differenz ' + zeitraum(MW_TAGE[ti]), '+/−')}</th></tr></thead>
+        <th ${sortAttr(5)}>${zweiFormen('Marktwert', 'MW')}</th><th ${sortAttr('diff')}>${zweiFormen('Differenz ' + zeitraum(MW_TAGE[ti]), '+/−')}</th>
+        ${mitStat ? `<th ${sortAttr(10)} title="Gesamtpunkte der Saison">${zweiFormen('Punkte', 'Pkt.')}</th><th ${sortAttr(11)} title="Durchschnittspunkte je Einsatz">Ø</th>
+        <th ${sortAttr(12)} title="Einsätze in der Saison">${zweiFormen('Einsätze', 'Eins.')}</th><th ${sortAttr(13)} title="Davon in der Startelf">${zweiFormen('Startelf', 'S11')}</th>` : ''}</tr></thead>
       <tbody>${rows.map((r, i) => `<tr><td class="c lg mw-nr">${i + 1}</td><td><b>${esc(r[1])}</b></td><td class="lg" title="${esc(r[3])}">${esc(r[2])}</td><td class="lg mw-pos">${esc(r[4])}</td>
-        <td class="pts">${zweiFormen(euro(r[5]), kurz(r[5]))}</td><td class="mwd">${diffHTML(r[DI])}</td></tr>`).join('')}</tbody>
+        <td class="pts">${zweiFormen(euro(r[5]), kurz(r[5]))}</td><td class="mwd">${diffHTML(r[DI])}</td>
+        ${mitStat ? `<td class="md mws">${statZahl(r[10])}</td><td class="md mws">${statZahl(r[11])}</td><td class="md mws">${statZahl(r[12])}</td><td class="md mws">${statZahl(r[13])}</td>` : ''}</tr>`).join('')}</tbody>
     </table>${rows.length ? '' : '<div class="empty">Kein Spieler gefunden.</div>'}</div>
     ${vgl ? '' : `<div class="note">Für den Vergleich ${MW_TAGE[ti] === 1 ? 'mit dem Vortag' : `vor ${MW_TAGE[ti]} Tagen`} liegt noch kein Tagesstand vor – die Differenz erscheint, sobald so lange gesammelt wurde.</div>`}
-    <div class="note">Die Liste zum Herunterladen enthält alle Spieler der Liga mit Marktwert und allen vier Differenzen (für Excel: Semikolon-getrennt).</div>
+    ${mitStat ? `<div class="note">Punkte, Ø (Punkte je Einsatz), Einsätze und Startelf: Kickbase-Saisonwerte${d.statistik ? ` nach dem ${esc(d.statistik)}. Spieltag` : ''}, je Spieler einmal nach jedem Spieltag aktualisiert. „–“ = noch nicht abgeholt.</div>` : ''}
+    <div class="note">Die Liste zum Herunterladen enthält alle Spieler der Liga mit Marktwert, allen vier Differenzen${mitStat ? ' und der Saisonstatistik' : ''} (für Excel: Semikolon-getrennt).</div>
   </section>`;
   on('#mwLiga', 'change', e => { state.mwLiga = e.target.value; state.mwVerein = ''; render(); });
   on('#mwVerein', 'change', e => { state.mwVerein = e.target.value; render(); });

@@ -1,5 +1,6 @@
 # Spieler-Marktwerte: einmal am Tag fuer Bundesliga, 2. Bundesliga, La Liga und Frauen-Bundesliga
-# abholen (rund 70 Abfragen, Login wie KBL) und danach die Webseite neu bauen.
+# abholen (rund 70 Abfragen, Login wie KBL), dazu die Spieler-Statistik (je Spieler einmal pro
+# Spieltag, hoechstens 350 je Liga und Lauf) und danach die Webseite neu bauen.
 # Manuell: Reiter "Actions" -> "Spieler-Marktwerte" -> "Run workflow".
 name: Spieler-Marktwerte
 
@@ -26,7 +27,7 @@ concurrency:
 jobs:
   sammeln:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     outputs:
       geaendert: ${{ steps.speichern.outputs.geaendert }}
     steps:
