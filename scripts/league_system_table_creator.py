@@ -5,6 +5,7 @@ This script needs to be called when wanting to create new tables.
 import sys
 sys.path.append("./")
 from scripts import utils, kbl_score, table_image_creator
+from scripts.league_system_kbl_cup import liga_kurz as league_system_kbl_cup_kurz
 
 def generate_matchday_tables(system, season, matchday_kbl, league):
     filename = "league_systems/" + system + "/databases/" + system + "_database"
@@ -99,7 +100,7 @@ def generate_all_time_table(system, league):
 
                         # Get current league
                         try:
-                            currentleague = 'KBL ' + database[key]['Info']['League'][11:]
+                            currentleague = league_system_kbl_cup_kurz(system, database[key]['Info']['League'])
                         except:
                             currentleague = ' - '
 

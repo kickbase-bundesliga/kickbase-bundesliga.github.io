@@ -131,3 +131,5 @@ jobs:
     needs: ziehen
     if: needs.ziehen.outputs.geaendert == 'true'
     uses: ./.github/workflows/webseite.yml
+    with:
+      artefakt: github-pages-live   # eigener Name: in diesem Lauf wurde schon "github-pages" veroeffentlicht

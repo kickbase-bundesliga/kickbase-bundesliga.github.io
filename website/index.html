@@ -1383,6 +1383,18 @@ document.getElementById('drawBar').addEventListener('click', async e => {
   else go('auslosung');
 });
 setInterval(updateDrawBar, 1000);
+// Ankündigungen frisch nachladen (GitHub Pages lässt Browser Dateien bis zu 10 Minuten zwischenspeichern),
+// damit eine offene Seite neue Live-Auslosungen ohne Neuladen anzeigt.
+async function refreshDraws(){
+  try {
+    const r = await fetch(`data/systems.json?t=${Date.now()}`, { cache: 'no-store' });
+    if (!r.ok) return;
+    const fresh = await r.json();
+    fresh.forEach(f => { const s = state.systems.find(x => x.id === f.id); if (s) s.draw = f.draw; });
+    barKey = ''; updateDrawBar();
+  } catch (e) {}
+}
+setInterval(refreshDraws, 60000);
 document.getElementById('nav').addEventListener('click', e => {
   const a = e.target.closest('a[data-view]'); if (!a) return; e.preventDefault();
   if (a.dataset.view === 'manager') state.manager = null;
@@ -1392,7 +1404,7 @@ window.addEventListener('hashchange', () => { const v = location.hash.slice(1); 
 
 (async () => {
   try {
-    state.systems = await getJSON('data/systems.json');
+    state.systems = await (await fetch(`data/systems.json?t=${Date.now()}`, { cache: 'no-store' })).json();
     document.getElementById('sysSwitch').innerHTML = state.systems.map(s => `<button type="button" data-sys="${s.id}">${esc(s.short)}</button>`).join('');
     document.getElementById('sysSwitch').addEventListener('click', e => { const b = e.target.closest('[data-sys]'); if (b && b.dataset.sys !== state.sys) selectSystem(b.dataset.sys); });
     const v = location.hash.slice(1); if (v) state.view = v;

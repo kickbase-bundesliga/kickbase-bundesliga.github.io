@@ -126,13 +126,21 @@ def get_round_results(system, season, matchday):
         factor1 = get_cup_factor(system, league1)
         factor2 = get_cup_factor(system, league2)
 
-        row = [f"KBL {league1[11:]} ({factor1})", name1[:18], pts1, "-", pts2, name2[:18], f"KBL {league2[11:]} ({factor2})"]
+        row = [f"{liga_kurz(system, league1)} ({factor1})", name1[:18], pts1, "-", pts2, name2[:18], f"{liga_kurz(system, league2)} ({factor2})"]
         tablelist.append(row)
 
     header = ['Liga', 'Manager', 'Punkte', '', 'Punkte', 'Manager', 'Liga']
     tablename = f"{season}_KBLCup_Round{current_round}_Results"
     table_image_creator.save_cup_round_as_image(tablelist, header, tablename, f"league_systems/{system}/tables/", is_results=True)
     print("✅ Results generated and saved.")
+
+
+def liga_kurz(system, league):
+    """'KWBL - Liga 3A' -> 'KWBL 3A' (vorher fest 'KBL ' + league[11:], bei der KWBL falsch)."""
+    if not league:
+        return ""
+    rest = league.split(" - ", 1)[1] if " - " in league else league
+    return f"{system.upper()} {rest.replace('Liga ', '').strip()}"
 
 
 def get_cup_factor(system, league):
@@ -195,13 +203,13 @@ def draw_new_round(system, season):
         matchups.append([m1, m2])
         name1, league1 = get_manager_info(utils.read_json(f"league_systems/{system}/databases/{system}_database"), m1, season)
         name2, league2 = get_manager_info(utils.read_json(f"league_systems/{system}/databases/{system}_database"), m2, season)
-        tablelist.append([f'{system.upper()} ' + league1[11:], name1[:22], findKBLScore(system, m1), '-', findKBLScore(system, m2), name2[:22], f'{system.upper()} ' + league2[11:]])
+        tablelist.append([liga_kurz(system, league1), name1[:22], findKBLScore(system, m1), '-', findKBLScore(system, m2), name2[:22], liga_kurz(system, league2)])
 
     if winners:
         m1 = winners.pop()
         matchups.append([m1, "Freilos"])
         name1, league1 = get_manager_info(utils.read_json(f"league_systems/{system}/databases/{system}_database"), m1, season)
-        tablelist.append([f'{system.upper()} ' + league1[11:], name1[:22], findKBLScore(system, m1), '-', '', 'Freilos', ''])
+        tablelist.append([liga_kurz(system, league1), name1[:22], findKBLScore(system, m1), '-', '', 'Freilos', ''])
 
     database[str(next_round)] = {"Matchups": matchups, "Results": [], "Winners": []}
     utils.write_json(json_path, database, True)

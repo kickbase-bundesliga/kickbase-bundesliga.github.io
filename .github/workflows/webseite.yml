@@ -13,6 +13,11 @@ on:
       - "scripts/build_site.py"
   workflow_dispatch:
   workflow_call:
+    inputs:
+      artefakt:
+        description: "Name des Pages-Pakets. Muss je Lauf eindeutig sein, wenn ein Lauf die Webseite mehrmals veroeffentlicht (z. B. Pokal: Ankuendigung + Ziehung)."
+        type: string
+        default: github-pages
 
 permissions:
   contents: read
@@ -41,6 +46,7 @@ jobs:
       - uses: actions/upload-pages-artifact@v5
         with:
           path: docs
+          name: ${{ inputs.artefakt || 'github-pages' }}
 
   veroeffentlichen:
     needs: bauen
@@ -51,3 +57,5 @@ jobs:
     steps:
       - id: deploy
         uses: actions/deploy-pages@v5
+        with:
+          artifact_name: ${{ inputs.artefakt || 'github-pages' }}
