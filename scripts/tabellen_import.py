@@ -5,6 +5,8 @@ z. B. aus Screenshots von Facebook oder aus den alten Bildern.
 
     python scripts/tabellen_import.py                 nur pruefen und berichten (aendert nichts)
     python scripts/tabellen_import.py --schreiben     Datenbank ergaenzen (vorher automatisches Backup)
+    python scripts/tabellen_import.py --system kll    anderes Ligasystem (Quelle dann
+                                                      altdaten/kll_abschlusstabellen.csv)
 
 Quelle: altdaten/abschlusstabellen.csv  (Trennzeichen ;  -  in Excel bearbeitbar)
     Saison;Liga;Platz;Name;Punkte;ID;Quelle
@@ -46,9 +48,15 @@ def lade(pfad):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--quelle", default=os.path.join("altdaten", "abschlusstabellen.csv"))
+    ap.add_argument("--system", default="kbl")
+    ap.add_argument("--quelle", default=None)
     ap.add_argument("--schreiben", action="store_true")
     a = ap.parse_args()
+    global SYSTEM
+    SYSTEM = a.system.lower()
+    if a.quelle is None:
+        a.quelle = os.path.join("altdaten", "abschlusstabellen.csv" if SYSTEM == "kbl"
+                                else "%s_abschlusstabellen.csv" % SYSTEM)
 
     db_pfad = "league_systems/%s/databases/%s_database.json" % (SYSTEM, SYSTEM)
     if not os.path.exists(db_pfad):

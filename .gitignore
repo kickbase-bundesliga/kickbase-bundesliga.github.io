@@ -25,6 +25,7 @@ __pycache__/
 # Altdaten: nur die Abschlusstabellen-Quelle mitnehmen, der Rest bleibt lokal
 altdaten/*
 !altdaten/abschlusstabellen.csv
+!altdaten/*_abschlusstabellen.csv
 
 # Spieler-Aktionen (Kickbase-Punkteverteilung) - nur lokal, NIE hochladen
 aktionen/
