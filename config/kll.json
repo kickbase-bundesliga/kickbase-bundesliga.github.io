@@ -23,7 +23,7 @@
             "names": ["KLL - Liga 2"],
             "ids": ["9321959"],
             "level": "2",
-            "distribution": [0, 3, 0, 10, 4, 0],
+            "distribution": [0, 3, 0, 9, 4, 0],
             "kbl_score": [60, 55, 50, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28, 26, 24, 22, 20],
             "cup_factor": 0.95
         },
@@ -31,7 +31,7 @@
             "names": ["KLL - Liga 3"],
             "ids": ["9321960"],
             "level": "3",
-            "distribution": [0, 4, 0, 13, 0, 0],
+            "distribution": [0, 4, 0, 11, 0, 0],
             "kbl_score": [30, 25, 21, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5],
             "cup_factor": 0.9
         }
@@ -39,9 +39,9 @@
     "seasons": [
         {
             "name": "2026B",
-            "matchday_number": "19",
+            "matchday_number": "17",
             "first_matchday": "1",
-            "last_matchday": "19",
+            "last_matchday": "17",
             "leagues": [
                 {}
             ]
