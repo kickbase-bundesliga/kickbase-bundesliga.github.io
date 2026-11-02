@@ -261,6 +261,9 @@ def count_kbl_cup_wins(system, player_id, current_season):
     cup_wins = 0
     prefix = f"{system.upper()}Cup_Database_"   # vorher fest "KBLCup_" -> KWBL-Pokalsiege wurden nie gezaehlt
 
+    if not os.path.isdir(cup_dir):          # neues Ligasystem ohne Pokal (z. B. K2BL, KLL)
+        return ""
+
     # List all cup files
     for filename in os.listdir(cup_dir):
         if filename.startswith(prefix) and filename.endswith(".json") and "_backup_" not in filename:
