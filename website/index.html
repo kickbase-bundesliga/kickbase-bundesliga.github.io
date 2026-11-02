@@ -566,6 +566,7 @@ const fmtFactor = f => '×' + String(f).replace('.', ',');
 function matchHTML(m, leagues){
   const side = (id, pts, raw, won, decided) => {
     if (id === 'Freilos') return `<div class="side"><span class="n bye">Freilos</span></div><div class="s"></div>`;
+    if (id == null) return `<div class="side"><span class="n bye">offen</span></div><div class="s"></div>`;
     const cls = decided ? (won ? 'won' : 'lost') : '';
     const rawTxt = raw != null && raw !== pts ? `<span class="raw" title="Spieltagspunkte ohne Faktor">(${fmt(raw)})</span>` : '';
     return `<div class="side ${cls}"><span class="n">${nameBtnInline(id)}</span><span class="lg">${esc(leagues[id] || '')}</span></div><div class="s ${won ? 'won' : ''}">${pts == null ? '' : fmt(pts)}${rawTxt}</div>`;
@@ -592,7 +593,11 @@ function bracketOrder(rounds){
     prevRound.matches.forEach((pm, k) => { if (!used.has(k)) out.push(pm); });
     order[sizes[i - 1]] = out;
   }
-  return sizes.map(s => ({ size: s, matches: order[s] }));
+  const tree = sizes.map(s => ({ size: s, matches: order[s] }));
+  // Noch nicht gespielte Runden bis zum Finale als leere Felder anhängen
+  for (let s = last / 2; s >= 2; s /= 2)
+    tree.push({ size: s, matches: Array.from({ length: s / 2 }, () => ({ a: null, b: null })) });
+  return tree;
 }
 
 async function viewCup(){
@@ -633,7 +638,7 @@ async function viewCup(){
   if (!rounds.find(r => r.size === state.cupRound)) state.cupRound = rounds[rounds.length - 1].size;
   const round = rounds.find(r => r.size === state.cupRound);
   const tree = bracketOrder(rounds);
-  const showTree = tree && tree.length >= 2;
+  const showTree = !!tree;   // ab dem Achtelfinale, kommende Runden als leere Felder
 
   app.innerHTML = `
   <section class="headline">
