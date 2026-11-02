@@ -19,9 +19,11 @@ permissions:
   pages: write
   id-token: write
 
-# Gleiche Warteschlange wie die Spieltags-Updates, damit nie zwei gleichzeitig speichern
+# Eigene Warteschlange je Ablauf: GitHub laesst je Warteschlange nur EINEN wartenden Lauf zu und
+# bricht aeltere wartende ab. Mit einer gemeinsamen Warteschlange fuer alle Systeme gingen deshalb
+# Laeufe verloren. Gespeichert wird in getrennte Ordner; speichern.sh holt vorher den neuesten Stand.
 concurrency:
-  group: daten-update
+  group: daten-marktwerte
   cancel-in-progress: false
 
 jobs:
