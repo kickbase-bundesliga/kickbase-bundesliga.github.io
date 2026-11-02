@@ -21,12 +21,16 @@ Nur lesende API-Abfragen. Python 3.7, nur Standardbibliothek.
 """
 import argparse
 import csv
+import json
 import os
 import sys
+import time
+import urllib.error
+import urllib.request
 from datetime import datetime, timedelta, timezone
 
-sys.path.append("./")
-from scripts.spieltag_extras import Api  # noqa: E402
+BASIS = "https://api.kickbase.com/v4"
+PAUSE = 0.25
 
 ORDNER = "marktwerte"
 # Kickbase-Wettbewerb, Ordnername, Anzeigename
@@ -37,6 +41,65 @@ LIGEN = [
     (4, "frauen-bundesliga", "Frauen-Bundesliga"),
 ]
 KOPF = ["Spieler-ID", "Spieler", "Verein", "Vereinsname", "Position", "Marktwert"]
+
+
+def zugangsdaten():
+    """Wie scripts/utils.zugangsdaten: online aus den Secrets KBL_EMAIL/KBL_PASSWORT,
+    lokal aus config/kbl.txt (Zeile 1 E-Mail, Zeile 2 Passwort)."""
+    email = os.environ.get("KBL_EMAIL", "").strip()
+    passwort = os.environ.get("KBL_PASSWORT", "").strip()
+    if email and passwort:
+        return email, passwort
+    pfad = os.path.join("config", "kbl.txt")
+    if not os.path.exists(pfad):
+        sys.exit("Keine Zugangsdaten: Secrets KBL_EMAIL/KBL_PASSWORT oder Datei config/kbl.txt fehlen.")
+    with open(pfad, encoding="utf-8-sig") as f:
+        zeilen = [z.strip() for z in f.read().splitlines() if z.strip()]
+    return zeilen[0], zeilen[1]
+
+
+class Api:
+    """Eigenstaendig (nur Standardbibliothek), damit der Workflow keine Pakete braucht."""
+
+    def __init__(self):
+        email, passwort = zugangsdaten()
+        self.token, self.anfragen = None, 0
+        antwort = self._anfrage("POST", "/user/login", {"em": email, "pass": passwort, "loy": False, "rep": {}})
+        self.token = antwort.get("tkn") if isinstance(antwort, dict) else None
+        if not self.token:
+            fehler = antwort.get("_fehler") if isinstance(antwort, dict) else antwort
+            sys.exit("Login fehlgeschlagen (%s)" % fehler)
+
+    def _anfrage(self, methode, pfad, body=None, versuche=3):
+        daten = json.dumps(body).encode("utf-8") if body is not None else None
+        for versuch in range(versuche):
+            req = urllib.request.Request(BASIS + pfad, data=daten, method=methode)
+            req.add_header("Accept", "application/json")
+            req.add_header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+            if daten is not None:
+                req.add_header("Content-Type", "application/json")
+            if self.token:
+                req.add_header("Authorization", "Bearer " + self.token)
+            self.anfragen += 1
+            try:
+                with urllib.request.urlopen(req, timeout=30) as r:
+                    text = r.read().decode("utf-8")
+                time.sleep(PAUSE)
+                return json.loads(text) if text else {}
+            except urllib.error.HTTPError as e:
+                if e.code in (429, 500, 502, 503, 504) and versuch < versuche - 1:
+                    time.sleep(3 * (versuch + 1))
+                    continue
+                return {"_fehler": e.code}
+            except Exception as e:
+                if versuch < versuche - 1:
+                    time.sleep(3)
+                    continue
+                return {"_fehler": str(e)}
+        return {"_fehler": "unbekannt"}
+
+    def get(self, pfad):
+        return self._anfrage("GET", pfad)
 
 
 def heute_berlin():
@@ -103,7 +166,7 @@ def main():
         print("Marktwerte vom %s sind schon fuer alle Ligen da." % datum)
         return
 
-    api = Api("kbl")
+    api = Api()
     fehler = 0
     for wettbewerb, ordner, name in offen:
         teams, zeilen, fehlend = liga_holen(api, wettbewerb)
