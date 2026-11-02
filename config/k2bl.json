@@ -5,7 +5,7 @@
     "admin_id": 2155370,
     "automatik": {
         "wettbewerb": 2,
-        "wartezeit_stunden": 12
+        "abrechnung_uhr": 18, "nach_abrechnung_minuten": 60
     },
     "wettbewerb_name": "2. Bundesliga",
     "marktwerte": "2-bundesliga",

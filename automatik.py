@@ -8,8 +8,10 @@ Automatisches Update eines Ligasystems - fuer GitHub (laeuft dort taeglich), geh
 
 Woran erkennt das Skript, dass ein Spieltag fertig ist?
   - Es holt den Spielplan des Wettbewerbs bei Kickbase (Bundesliga, Frauen-Bundesliga, ...).
-  - Ein Spieltag gilt als fertig, wenn der Anstoss des letzten Spiels mindestens
-    "wartezeit_stunden" (Standard 12) her ist. So sind auch spaete Korrekturen meist schon drin.
+  - Ein Spieltag gilt als fertig, wenn die Kickbase-Abrechnung vorbei ist: am Tag nach dem
+    letzten Spiel um "abrechnung_uhr" (18) Uhr deutsche Zeit plus "nach_abrechnung_minuten" (60),
+    normal also Montag 19 Uhr. Ohne "abrechnung_uhr" gilt die alte Regel: Anstoss des letzten
+    Spiels plus "wartezeit_stunden" (Standard 12).
   - Nachholspiele (Anstoss erst nach Beginn des naechsten Spieltags) werden dabei nicht
     abgewartet, sonst wuerde alles stehen bleiben. Das Skript weist darauf hin; den Spieltag
     kann man spaeter mit --spieltag erneut einspielen.
@@ -20,7 +22,8 @@ Woran erkennt das Skript, dass ein Spieltag fertig ist?
     Fehlt die Datei, wird es aus der Datenbank abgeleitet.
 
 Einstellungen in config/<system>.json (alles optional):
-    "automatik": {"wettbewerb": 1, "wartezeit_stunden": 12, "nachkontrolle_stunden": 50}
+    "automatik": {"wettbewerb": 1, "abrechnung_uhr": 18, "nach_abrechnung_minuten": 60,
+                  "nachkontrolle_stunden": 50}
         wettbewerb = Kickbase-Wettbewerbsnummer (wird sonst aus den Ligadaten gelesen)
         nachkontrolle_stunden = wie lange nach dem Einspielen erneut geholt wird (0 = aus)
 
@@ -139,10 +142,30 @@ def spieltag_status(plan, tag, wartezeit, now):
     if not regulaer:                      # sollte nicht vorkommen - dann alles abwarten
         regulaer, nachhol = zeiten, []
     letzter = regulaer[-1]
-    bereit_ab = letzter + wartezeit
+    bereit_ab = wartezeit(letzter) if callable(wartezeit) else letzter + wartezeit
     if now >= bereit_ab:
         return True, "letztes Spiel %s, fertig seit %s" % (berlin(letzter), berlin(bereit_ab)), nachhol
     return False, "letztes Spiel %s, wird verarbeitet ab %s" % (berlin(letzter), berlin(bereit_ab)), nachhol
+
+
+def _sommerzeit(d):
+    jahr = d.year
+    def letzter_sonntag(monat):
+        t = datetime(jahr, monat, 31, 1, tzinfo=timezone.utc)
+        return t - timedelta(days=(t.weekday() + 1) % 7)
+    return letzter_sonntag(3) <= d < letzter_sonntag(10)
+
+
+def nach_abrechnung(uhr, minuten):
+    """-> Funktion: letzter Anstoss (UTC) -> Zeitpunkt Abrechnung (Folgetag <uhr> Uhr deutsche Zeit)
+    plus <minuten>, wieder in UTC. Kickbase rechnet normal Montag 18 Uhr ab."""
+    def bereit_ab(letzter):
+        lokal = letzter + timedelta(hours=2 if _sommerzeit(letzter) else 1)
+        abrechnung = (lokal + timedelta(days=1)).replace(hour=int(uhr), minute=0, second=0, microsecond=0)
+        utc = abrechnung - timedelta(hours=1)
+        utc = abrechnung - timedelta(hours=2 if _sommerzeit(utc) else 1)
+        return utc + timedelta(minutes=int(minuten))
+    return bereit_ab
 
 
 def berlin(d):
@@ -348,7 +371,10 @@ def ablauf(system, a, log):
     saison = utils.get_current_season(system)
     erster, letzter = int(saison["first_matchday"]), int(saison["last_matchday"])
     einst = config.get("automatik") or {}
-    wartezeit = timedelta(hours=float(einst.get("wartezeit_stunden", 12)))
+    if einst.get("abrechnung_uhr") is not None:
+        wartezeit = nach_abrechnung(einst["abrechnung_uhr"], einst.get("nach_abrechnung_minuten", 60))
+    else:
+        wartezeit = timedelta(hours=float(einst.get("wartezeit_stunden", 12)))
     fenster = timedelta(hours=float(einst.get("nachkontrolle_stunden", 50)))
 
     log("Saison %s, Bundesliga-Spieltage %d-%d" % (saison["name"], erster, letzter))

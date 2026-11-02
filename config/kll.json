@@ -5,7 +5,7 @@
     "admin_id": 3607833,
     "automatik": {
         "wettbewerb": 3,
-        "wartezeit_stunden": 12
+        "abrechnung_uhr": 18, "nach_abrechnung_minuten": 60
     },
     "wettbewerb_name": "La-Liga",
     "marktwerte": "la-liga",

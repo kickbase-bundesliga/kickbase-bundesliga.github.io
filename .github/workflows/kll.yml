@@ -4,6 +4,7 @@ name: KLL Spieltag
 
 on:
   schedule:
+    - cron: "33 18 * * *"    # taeglich ca. 19:33 Uhr Winterzeit / 1 h spaeter Sommerzeit: Kickbase-Abrechnung (18 Uhr) + 1 h
     - cron: "23 6 * * *"     # taeglich ca. 7:23 Uhr Winterzeit / 8:23 Uhr Sommerzeit
   workflow_dispatch:
     inputs:
