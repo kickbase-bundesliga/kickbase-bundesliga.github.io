@@ -45,6 +45,15 @@
             "leagues": [
                 {}
             ]
+        },
+        {
+            "name": "2026A",
+            "matchday_number": "19",
+            "first_matchday": "20",
+            "last_matchday": "38",
+            "leagues": [
+                {}
+            ]
         }
     ]
 }
