@@ -29,7 +29,8 @@ Einstellungen in config/<system>.json (alles optional):
         neue_saison = naechste Saison automatisch anlegen, sobald die alte fertig ist
         winterpause_nach = letzter Spieltag der Hinrunde (sonst aus dem Spielplan erkannt)
 
-Der Pokal wird NIE automatisch ausgewertet, nur von Hand:
+Pokal: Bei Systemen mit "pokal": {"automatik": true} wird die Runde automatisch ausgewertet, wenn
+ihr Spieltag laut Rundenplan eingespielt wird (scripts/pokal_auto.py). Sonst nur von Hand:
     python automatik.py kbl --spieltag 6 --pokal
 holt Spieltag 6 frisch von Kickbase (also mit endgueltigen Punkten) und wertet dann die
 aktuelle Pokalrunde aus. Erst starten, wenn Kickbase den Spieltag abgeschlossen hat
@@ -451,6 +452,15 @@ def ablauf(system, a, log):
         raise SystemExit("❌ Spielplan konnte nicht gelesen werden (Antwort in api_dump/spielplan_%s.json)."
                          % system)
 
+    # Pokal-Anmeldung: Anmeldeschluss (Anstoss 2. Spieltag) und Rundenplaene fuer die Webseite
+    try:
+        from scripts import pokal_auto
+        pokal_auto.anmeldung_schreiben(system, saison, plan, log)
+        pokal_tag = pokal_auto.auswertung_spieltag(system, saison)
+    except Exception as e:
+        log("⚠️  Pokal-Automatik: %s" % e)
+        pokal_tag = None
+
     now = jetzt()
     offen = []
     for tag in range(max(bisher + 1, erster), letzter + 1):
@@ -479,7 +489,7 @@ def ablauf(system, a, log):
         return 0
 
     for tag, nachhol in offen:
-        einspielen(system, saison, tag, False, a, log)
+        einspielen(system, saison, tag, tag == pokal_tag, a, log)
         status_schreiben(system, saison, tag, tag)
         if nachhol:
             log("ℹ️  Spieltag %d hat Nachholspiele. Falls deren Punkte noch zaehlen, spaeter "

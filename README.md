@@ -91,8 +91,23 @@ Lokal geht dasselbe mit `python pokal.py kbl neu | auslosen | ankuendigen --star
   hat) – z. B. wenn danach noch ein Spieltag der alten Saison neu eingespielt werden muss.
 - Danach bleibt Handarbeit: Teilnehmerliste und **Neuen Pokal anlegen** (Workflow **Pokal**).
 
-Bewusst **Handarbeit** bleibt alles rund um den Pokal (Ergebnisse per Pokal-Haken, Auslosung über
-den Workflow **Pokal**).
+### Pokal-Automatik (KBL, KWBL – ab Saison 2027A)
+
+- **Anmeldung** über ein festes Google-Formular je System (Kickbase-ID + Name), Links unter `"pokal"` in
+  der Config. Es zählen Antworten zwischen dem Anmeldeschluss der Vorsaison und dem Anmeldeschluss
+  dieser Saison = **Anstoß des 2. Spieltags**. Doppelte IDs → erste zählt; teilnehmen darf, wer in
+  dieser Saison in einer Liga mit Pokal-Faktor > 0 spielt (KBL 1–5, KWBL alle). Die Pokalseite zeigt
+  Formular-Button, Countdown, angemeldete Manager mit Status und den voraussichtlichen Rundenplan.
+- **Erste Runde:** Sonntag nach Anmeldeschluss, 20 Uhr live. Workflow **Pokal-Automatik** (täglich
+  ca. 14:37 und 17:07 Uhr) schreibt am Auslosungstag Teilnehmerliste + Rundenplan und startet den
+  Workflow **Pokal** (Live-Auslosung; ist der Termin verpasst: sofort ohne Show).
+- **Rundenplan:** Rundenzahl aus der Teilnehmerzahl, Finale am vorletzten Spieltag, davor möglichst
+  alle 2 Spieltage, frühestens Spieltag 3, nie in englischen Wochen (Spiele Di–Do).
+- **Ergebnisse:** wertet der Spieltags-Lauf automatisch aus, wenn der Pokalspieltag eingespielt wird
+  (nach der Abrechnung). **Folgerunden:** Mittwoch danach, 20 Uhr live.
+- Stand prüfen: Workflow **Pokal-Automatik** mit „Nur pruefen“ oder lokal
+  `python scripts/pokal_auto.py kbl status`. Pokale ohne Rundenplan (bis 2026B) bleiben Handarbeit
+  (Pokal-Haken im Spieltags-Workflow, Auslosung über **Pokal**).
 
 ---
 

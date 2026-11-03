@@ -1,0 +1,77 @@
+# Pokal-Automatik: prueft taeglich, ob heute eine Auslosung faellig ist (erste Runde am Sonntag nach
+# Anmeldeschluss, Folgerunden mittwochs nach dem Pokalspieltag, je 20 Uhr). Wenn ja: am Tag der ersten
+# Runde Teilnehmerliste + Rundenplan schreiben, dann den Workflow "Pokal" starten
+# (Live-Auslosung terminieren - oder sofort auslosen, wenn der Termin schon verpasst ist).
+# Zwei Startzeiten, weil GitHub geplante Laeufe teils stark verspaetet startet; der zweite Lauf
+# erkennt eine bereits angekuendigte Auslosung und tut dann nichts. Details: scripts/pokal_auto.py
+name: Pokal-Automatik
+
+on:
+  schedule:
+    - cron: "37 13 * * *"    # ca. 14:37 Uhr Winterzeit / 15:37 Sommerzeit
+    - cron: "7 16 * * *"     # ca. 17:07 / 18:07 Uhr (Reserve)
+  workflow_dispatch:
+    inputs:
+      nur_pruefen:
+        description: "Nur pruefen, nichts aendern"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      max-parallel: 1
+      matrix:
+        system: [kbl, kwbl]
+    concurrency:
+      group: pokal-automatik-${{ matrix.system }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: .github/requirements-ci.txt
+      - run: pip install -r .github/requirements-ci.txt
+      - name: Stand der Anmeldung
+        continue-on-error: true
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python scripts/pokal_auto.py "${{ matrix.system }}" status
+      - name: Was ist faellig?
+        id: los
+        env:
+          SYSTEM: ${{ matrix.system }}
+          NUR_PRUEFEN: ${{ inputs.nur_pruefen }}
+          PYTHONIOENCODING: utf-8
+        run: |
+          ARGS=("$SYSTEM" automatik)
+          [ "$NUR_PRUEFEN" = "true" ] && ARGS+=(--pruefen)
+          python scripts/pokal_auto.py "${ARGS[@]}"
+      - name: Teilnehmerliste speichern
+        if: inputs.nur_pruefen != true
+        env:
+          SYSTEM: ${{ matrix.system }}
+        run: |
+          bash .github/speichern.sh "${SYSTEM^^}-Pokal: Teilnehmerliste und Rundenplan"
+      - name: Workflow "Pokal" starten
+        if: steps.los.outputs.aktion != '' && inputs.nur_pruefen != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SYSTEM: ${{ matrix.system }}
+          AKTION: ${{ steps.los.outputs.aktion }}
+          START: ${{ steps.los.outputs.start }}
+        run: |
+          gh api -X POST "repos/${{ github.repository }}/actions/workflows/pokal.yml/dispatches" \
+            -f ref="${{ github.event.repository.default_branch }}" \
+            -f "inputs[system]=$SYSTEM" -f "inputs[aktion]=$AKTION" -f "inputs[start]=$START"
+          echo "▶️ Pokal: $AKTION $START" >> "$GITHUB_STEP_SUMMARY"

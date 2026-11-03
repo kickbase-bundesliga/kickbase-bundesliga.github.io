@@ -4,6 +4,9 @@
     "levels_in_database": 6,
     "admin_id": 1441550,
     "automatik": {"wettbewerb": 1, "abrechnung_uhr": 18, "nach_abrechnung_minuten": 60, "neue_saison": true},
+    "pokal": {"automatik": true,
+              "formular": "https://docs.google.com/forms/d/e/1FAIpQLSdF1famBYsLVh4Nc47lTD3xdyeargOER8suXr2i8fSVUa6fHQ/viewform",
+              "antworten_csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_xlQdRRh_nwQt-VRMssLFqwYuezFSUFtgZ7NCRDG7c4EkahX7_ZJ7M6Xz97JHj4D-0EBgIYOzlqo_/pub?gid=236768903&single=true&output=csv"},
     "wettbewerb_name": "Bundesliga",
     "marktwerte": "bundesliga",
     "cup_scores": [

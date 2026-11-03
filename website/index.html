@@ -226,6 +226,19 @@ td.trend{font:600 14px/1 var(--display);white-space:nowrap;width:48px;color:var(
 .bcol h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .bslots{display:grid;grid-template-rows:repeat(var(--n),1fr);gap:8px}
 .bslots .match{align-self:center;grid-template-columns:1fr auto;padding:8px 10px}
+/* Pokal-Anmeldung und Rundenplan */
+.reg{padding:16px;display:grid;gap:12px}
+.reg .regtop{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+.reg .big{font:800 26px/1 var(--display);font-variant-numeric:tabular-nums}
+.reg .lbl{font:700 12px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+a.cta{display:inline-block;background:var(--accent);color:var(--on-accent,#fff);text-decoration:none;border-radius:999px;padding:9px 18px;font:800 16px/1.2 var(--display);letter-spacing:.03em}
+a.cta:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.st-ok{color:var(--good)}.st-no{color:var(--bad)}.st-q{color:var(--muted)}
+.plan{display:flex;flex-wrap:wrap;gap:8px}
+.plan .pr{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:8px 10px;min-width:150px}
+.plan .pr b{display:block;font:800 15px/1.2 var(--display)}
+.plan .pr span{font-size:13px;color:var(--muted)}
+.plan .pr.done{opacity:.6}
 
 /* Ruhmeshalle */
 .halls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:24px;align-items:start}
@@ -649,6 +662,101 @@ function bracketOrder(rounds){
   return tree;
 }
 
+/* ---------- Pokal-Anmeldung ----------
+   Antworten kommen live aus der veroeffentlichten Google-Tabelle (falls der Browser sie laden darf),
+   sonst aus dem Stand beim letzten Bau der Seite. Pruefung wie scripts/pokal_auto.py. */
+function csvRows(text){
+  const rows = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { row.push(cur); cur = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cur); rows.push(row); row = []; cur = ''; }
+    else cur += c;
+  }
+  if (cur || row.length) { row.push(cur); rows.push(row); }
+  return rows.filter(r => r.some(x => x.trim()));
+}
+function berlinToMs(y, mo, d, h, mi, s){
+  // deutsche Ortszeit -> Zeitpunkt (Sommerzeit letzter Sonntag Maerz bis letzter Sonntag Oktober)
+  const lastSun = m => { const x = new Date(Date.UTC(y, m, 31)); x.setUTCDate(31 - x.getUTCDay()); return x.getUTCDate(); };
+  const local = Date.UTC(y, mo - 1, d, h, mi, s);
+  const dstStart = Date.UTC(y, 2, lastSun(2), 2), dstEnd = Date.UTC(y, 9, lastSun(9), 3);
+  return local - (local >= dstStart && local < dstEnd ? 2 : 1) * 36e5;
+}
+function stampMs(t){
+  let m = String(t || '').trim().match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
+  if (m) return berlinToMs(+m[3], +m[2], +m[1], +m[4], +m[5], +(m[6] || 0));
+  m = String(t || '').trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
+  if (m) return berlinToMs(+m[3], +m[1], +m[2], +m[4], +m[5], +(m[6] || 0));
+  return null;
+}
+async function regEntries(reg){
+  // -> [[ms, idText, name]] und Quelle ('live' | 'stand')
+  if (reg.csv) {
+    try {
+      const r = await fetch(reg.csv, { cache: 'no-store' });
+      if (r.ok) {
+        const rows = csvRows(await r.text());
+        const head = (rows[0] || []).map(x => x.toLowerCase());
+        let ci = head.findIndex(k => /(^|\s)id(\s|$)|mitglied|kickbase id/.test(k)); if (ci < 0) ci = 1;
+        let cn = head.findIndex((k, i) => k.includes('name') && i !== ci); if (cn < 0) cn = 2;
+        return { src: 'live', list: rows.slice(1).map(r => [stampMs(r[0]), (r[ci] || '').trim(), (r[cn] || '').trim()]) };
+      }
+    } catch (e) { /* Browser darf die Tabelle nicht laden -> Stand der Seite */ }
+  }
+  return { src: 'stand', list: (reg.entries || []).map(([z, i, n]) => [Date.parse(z), i, n]) };
+}
+function regCheck(reg, list){
+  const from = reg.from ? Date.parse(reg.from) : null, until = Date.parse(reg.until);
+  const seen = new Set(), out = [];
+  list.filter(e => e[0] != null && (from == null || e[0] > from) && e[0] < until).sort((a, b) => a[0] - b[0]).forEach(([ms, raw, name]) => {
+    const id = String(raw).replace(/\D/g, '');
+    if (!id) { out.push({ id: raw, n: name, l: '', st: 'no', why: 'keine gültige ID' }); return; }
+    if (seen.has(id)) return; seen.add(id);
+    const m = reg.members[id];
+    if (!m) out.push({ id, n: name, l: '', st: 'no', why: 'ID nicht gefunden' });
+    else if (!reg.leagues_known || m[2] == null) out.push({ id, n: m[0] || name, l: m[1], st: 'q', why: reg.leagues_known ? 'in dieser Saison noch keiner Liga' : 'Liga wird nach dem 1. Spieltag geprüft' });
+    else if (m[2]) out.push({ id, n: m[0], l: m[1], st: 'ok', why: '' });
+    else out.push({ id, n: m[0], l: m[1], st: 'no', why: `${m[1]} spielt nicht im Pokal` });
+  });
+  return out;
+}
+function planHTML(plan, doneSizes){
+  if (!plan || !plan.length) return '';
+  return `<div class="plan">${plan.map(r => `<div class="pr ${doneSizes && doneSizes.has(r.size) ? 'done' : ''}"><b>${esc(roundName(r.size))}</b>
+    <span>${r.md}. Spieltag · Auslosung ${esc(whenText(Date.parse(r.draw)))}</span></div>`).join('')}</div>`;
+}
+async function regHTML(idx){
+  const reg = idx.pokal_anmeldung;
+  if (!reg) return '';
+  const now = Date.now(), until = Date.parse(reg.until), open = now < until;
+  const { src, list } = await regEntries(reg);
+  const rows = regCheck(reg, list);
+  const ok = rows.filter(r => r.st !== 'no').length;
+  const size = ok > 1 ? 2 ** Math.ceil(Math.log2(ok)) : null;
+  const plan = size && reg.plans[String(size)];
+  const q = (state.regQ || '').toLowerCase();
+  const shown = rows.filter(r => !q || (r.n || '').toLowerCase().includes(q) || String(r.id).includes(q));
+  return `<section class="panel reg">
+    <div class="regtop">
+      <div><div class="lbl">Anmeldung Pokal ${esc(reg.season)}</div><div class="big">${open ? 'offen' : 'geschlossen'}</div></div>
+      <div><div class="lbl">${open ? 'Anmeldeschluss' : 'Auslosung 1. Runde'}</div><div class="big">${esc(whenText(open ? until : Date.parse(reg.draw)))}</div>
+        ${open ? `<div class="muted">noch ${esc(durText((until - now) / 1000))} · Anstoß des 2. Spieltags</div>` : ''}</div>
+      <div><div class="lbl">Angemeldet</div><div class="big">${ok}</div></div>
+      ${open && reg.form ? `<a class="cta" href="${esc(reg.form)}" target="_blank" rel="noopener">Jetzt anmelden</a>` : ''}
+    </div>
+    <p class="muted" style="margin:0">Anmelden mit deiner Kickbase-ID (App: Einstellungen → Mitgliedsnummer). Teilnehmen dürfen alle aus Ligen mit Pokal-Faktor. Erste Runde: Live-Auslosung ${esc(whenText(Date.parse(reg.draw)))}.${src === 'stand' ? ' Liste: Stand der letzten Aktualisierung der Seite.' : ''}</p>
+    ${plan ? `<div><div class="lbl">Voraussichtlicher Rundenplan bei ${ok} Teilnehmern</div>${planHTML(plan)}</div>` : ''}
+    ${rows.length ? `<div class="field"><label for="regQ">Bin ich dabei?</label><input type="search" id="regQ" placeholder="Name oder ID" value="${esc(state.regQ || '')}"></div>
+    <div class="scroll"><table><thead><tr><th class="r">#</th><th>Manager</th><th>Liga</th><th>Status</th></tr></thead><tbody>
+      ${shown.map(r => `<tr><td class="r muted">${rows.indexOf(r) + 1}</td><td>${reg.members[r.id] ? nameBtnInline(r.id) : esc(r.n || r.id)}</td><td class="lg">${esc(r.l)}</td>
+        <td class="st-${r.st}">${r.st === 'ok' ? '✓ dabei' : esc(r.why)}</td></tr>`).join('')}
+    </tbody></table></div>` : '<p class="muted" style="margin:0">Noch keine Anmeldungen.</p>'}
+  </section>`;
+}
+
 async function viewCup(){
   const idx = state.idx;
   // Neuer Pokal, dessen erste Runde live gelost wird, steht noch nicht in idx.cups
@@ -656,7 +764,20 @@ async function viewCup(){
   const cups = idx.cups.slice();
   if (sysDraw && sysDraw.first && !cups.find(c => c.season === sysDraw.season))
     cups.unshift({ season: sysDraw.season, participants: sysDraw.n, finished: false, current_round: sysDraw.round, pending: true });
-  if (!cups.length) { app.innerHTML = '<div class="empty">Für dieses Ligasystem gibt es noch keinen Pokal.</div>'; return; }
+  const regBox = await regHTML(idx);
+  const regWire = () => on('#regQ', 'input', e => { state.regQ = e.target.value; const pos = e.target.selectionStart; render().then(() => { const el = app.querySelector('#regQ'); if (el) { el.focus(); el.setSelectionRange(pos, pos); } }); });
+  const regFirst = regBox && !state.cupSeason && !(sysDraw && sysDraw.season === idx.pokal_anmeldung.season);
+  if (!cups.length || regFirst) {
+    if (regBox) {
+      app.innerHTML = `<section class="headline"><div><div class="eyebrow">${idx.short}-Pokal</div><h1>Pokal ${esc(idx.pokal_anmeldung.season)}</h1>
+        <p class="lede">Anmeldung zum neuen Pokal. Die erste Runde wird live ausgelost, danach geht es nach Rundenplan bis zum Finale am vorletzten Spieltag.</p></div></section>
+        ${regBox}${cups.length ? `<section><button type="button" class="chip" id="oldCup">Frühere Pokale ansehen</button></section>` : ''}`;
+      regWire();
+      on('#oldCup', 'click', () => { state.cupSeason = cups[0].season; render(); });
+      return;
+    }
+    app.innerHTML = '<div class="empty">Für dieses Ligasystem gibt es noch keinen Pokal.</div>'; return;
+  }
   if (!state.cupSeason || !cups.find(c => c.season === state.cupSeason)) state.cupSeason = cups[0].season;
   const meta = cups.find(c => c.season === state.cupSeason);
   const cup = meta.pending ? { rounds: [], leagues: {} } : await getJSON(`data/${state.sys}/cup_${meta.season}.json`);
@@ -696,8 +817,10 @@ async function viewCup(){
       <div class="factors" aria-label="Liga-Faktoren im Pokal"><span class="fl">Liga-Faktor</span>${idx.structure.filter(l => l.cup_factor > 0).map(l => `<span class="fchip"><b>${esc(idx.short)} ${l.level}</b> ${fmtFactor(l.cup_factor)}</span>`).join('')}</div></div>
   </section>
   ${liveNote}
+  ${cup.plan && !meta.finished ? `<section><h2>Rundenplan</h2><div style="margin-top:10px">${planHTML(cup.plan, new Set(rounds.filter(r => r.done).map(r => r.size)))}</div></section>` : ''}
   ${meta.finished ? `<section class="panel winner">${BIG_CUP}<div><div class="eyebrow">Pokalsieger</div><div class="who">${nameBtnInline(meta.winner)}</div>
      <div class="muted">Finale gegen ${nameBtnInline(meta.runner_up)}${meta.score ? ` · ${fmt(meta.score[0])} : ${fmt(meta.score[1])}` : ''}</div></div></section>` : ''}
+  ${regBox ? `<section><button type="button" class="chip" id="toReg">‹ Anmeldung Pokal ${esc(idx.pokal_anmeldung.season)}</button></section>` : ''}
   <section class="controls">
     <div class="field"><label for="cupSel">Saison</label>
       <select id="cupSel">${cups.map(c => `<option value="${c.season}" ${c.season === meta.season ? 'selected' : ''}>${c.season}${c.finished ? '' : ' (läuft)'}</option>`).join('')}</select></div>
@@ -713,6 +836,7 @@ async function viewCup(){
     </div></section>` : ''}`;
   on('#cupSel', 'change', e => { state.cupSeason = e.target.value; state.cupRound = null; render(); });
   on('#roundSel', 'change', e => { state.cupRound = +e.target.value; render(); });
+  on('#toReg', 'click', () => { state.cupSeason = null; render(); });
   on('#toDraw', 'click', () => { state.drawShift = 0; go('auslosung'); });
 }
 

@@ -103,6 +103,60 @@ def cup_score(cup_round, config):
 
 
 # ---------------------------------------------------------------------------
+# Pokal-Anmeldung und Rundenplan (scripts/pokal_auto.py)
+# ---------------------------------------------------------------------------
+
+def _pokal_datei(system, art, saison):
+    p = f"league_systems/{system}/cup/{system.upper()}Cup_{art}_{saison}.json"
+    if not os.path.exists(p):
+        return None
+    with open(p, encoding="utf8") as fp:
+        return json.load(fp)
+
+
+def pokal_plan(system, saison):
+    plan = _pokal_datei(system, "Plan", saison)
+    if not plan:
+        return None
+    return [{"size": r["groesse"], "md": r["spieltag"], "kmd": r["kbl_spieltag"], "draw": r["auslosung"]}
+            for r in plan.get("runden", [])]
+
+
+def pokal_anmeldung(system, config, saison, cups, managers, league_cfg):
+    """Fuer die laufende Saison, solange es noch keinen Pokal gibt: Anmeldeschluss, Formular und die
+    Anmeldungen (die Seite liest die Antworten zusaetzlich live aus der Google-Tabelle)."""
+    an = _pokal_datei(system, "Anmeldung", saison)
+    if not an or saison in cups:
+        return None
+    from scripts.pokal_auto import liga_kurz
+    faktor = {n: (lc.get("cup_factor") or 0) for n, lc in league_cfg.items()}
+    mitglieder, liga_bekannt = {}, False
+    for mid, m in managers.items():
+        d = m.get(saison) if isinstance(m.get(saison), dict) else {}
+        liga = d.get("League")
+        if liga:
+            liga_bekannt = True
+            mitglieder[mid] = [m.get("Username") or "", liga_kurz(system, liga), 1 if faktor.get(liga) else 0]
+        elif (m.get("Info") or {}).get("League"):
+            mitglieder[mid] = [m.get("Username") or "", "", None]
+    angemeldet = None
+    if an.get("csv"):
+        try:
+            from scripts import pokal_auto
+            antworten = pokal_auto.antworten_lesen(pokal_auto.antworten_laden(an["csv"]))
+            ab, bis = pokal_auto.iso_lesen(an.get("ab")), pokal_auto.iso_lesen(an["schluss"])
+            angemeldet = [[pokal_auto.iso(z), i, n] for z, i, n in antworten
+                          if z and (not ab or z > ab) and z < bis]
+        except Exception as e:
+            print(f"   ⚠️  Pokal-Anmeldungen nicht lesbar: {e}")
+    plaene = {k: [{"size": r["groesse"], "md": r["spieltag"], "kmd": r["kbl_spieltag"], "draw": r["auslosung"]}
+                  for r in v] for k, v in (an.get("plaene") or {}).items()}
+    return {"season": saison, "from": an.get("ab"), "until": an["schluss"], "draw": an["auslosung"],
+            "form": an.get("formular"), "csv": an.get("csv"), "members": mitglieder,
+            "leagues_known": liga_bekannt, "entries": angemeldet, "plans": plaene}
+
+
+# ---------------------------------------------------------------------------
 # Export
 # ---------------------------------------------------------------------------
 
@@ -301,8 +355,9 @@ def build_system(system):
                     if x != "Freilos" and x not in part_league:
                         d = season_entry(managers.get(x, {}), s)
                         part_league[x] = short_league(d["League"]) if d else None
+        cup_plan = pokal_plan(system, s)
         with open(os.path.join(out_dir, f"cup_{s}.json"), "w", encoding="utf8") as fp:
-            json.dump({"season": s, "rounds": rounds, "leagues": part_league}, fp,
+            json.dump({"season": s, "rounds": rounds, "leagues": part_league, "plan": cup_plan}, fp,
                       ensure_ascii=False, separators=(",", ":"))
         cup_meta.append({
             "season": s,
@@ -423,6 +478,7 @@ def build_system(system):
         "wettbewerb": config.get("wettbewerb_name") or "Bundesliga",   # fuer "...-Spieltag 5"
         "marktwerte": config.get("marktwerte") or "bundesliga",        # Liga der Marktwert-Uebersicht
         "gaps": [{"s": s, "levels": lv} for s, lv in sorted(gaps.items())],
+        "pokal_anmeldung": pokal_anmeldung(system, config, current, cups, managers, league_cfg),
     }
     with open(os.path.join(out_dir, "index.json"), "w", encoding="utf8") as fp:
         json.dump(index, fp, ensure_ascii=False, separators=(",", ":"))

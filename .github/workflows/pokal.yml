@@ -1,5 +1,7 @@
-# Pokal auslosen und anlegen - immer nur per Knopf (Reiter "Actions" -> "Pokal" -> "Run workflow").
-# Ergebnisse einer Pokalrunde auswerten: im Workflow "KBL Spieltag" Spieltagsnummer + Pokal-Haken.
+# Pokal auslosen und anlegen - per Knopf (Reiter "Actions" -> "Pokal" -> "Run workflow") oder
+# automatisch vom Workflow "Pokal-Automatik" (Pokale mit Rundenplan, siehe scripts/pokal_auto.py).
+# Ergebnisse: automatisch beim Pokalspieltag laut Rundenplan, sonst im Workflow "KBL Spieltag"
+# Spieltagsnummer + Pokal-Haken.
 name: Pokal
 
 on:
