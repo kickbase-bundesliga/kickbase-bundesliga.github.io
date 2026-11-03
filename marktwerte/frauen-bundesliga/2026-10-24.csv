@@ -1,0 +1,365 @@
+Spieler-ID;Spieler;Verein;Vereinsname;Position;Marktwert
+6420;Bühl;FCB;Bayern;3;57876201
+6437;Harder;FCB;Bayern;4;52113655
+10082;Tanikawa;FCB;Bayern;3;47450685
+6645;Freigang;SGE;Frankfurt;3;45218319
+6477;Memeti;SGE;Frankfurt;3;43695907
+6419;Gwinn;FCB;Bayern;2;42780705
+6573;Minge;WOB;Wolfsburg;3;42189119
+6440;Viggósdóttir;FCB;Bayern;2;38839234
+6417;Dallmann;FCB;Bayern;3;37750963
+6661;Küver;WOB;Wolfsburg;2;37471093
+8336;Mühlhaus;SGE;Frankfurt;4;37346603
+6374;Lührßen;SGE;Frankfurt;2;37193563
+6552;Huth;WOB;Wolfsburg;3;36281322
+10023;Peddemors;WOB;Wolfsburg;3;35946992
+8325;Kramer;B04;Leverkusen;4;32890389
+6616;Mahmutovic;FCB;Bayern;1;32869131
+6575;Zicai;WOB;Wolfsburg;3;32546999
+6564;Blomqvist;SGE;Frankfurt;4;30152808
+11727;Ilestedt;SGE;Frankfurt;2;29266497
+6434;Rall;VFB;Stuttgart;2;28990890
+6580;Steuerwald;FCU;Union Berlin;2;28681491
+8318;El Sherif;SVW;Bremen;1;28573553
+6625;Johannes;WOB;Wolfsburg;1;28563649
+6439;Kett;FCB;Bayern;2;28091374
+7203;Bender;B04;Leverkusen;3;27975803
+12331;Amani;FCB;Bayern;3;27535808
+7248;Alara;FCB;Bayern;3;26928773
+6468;Linder;WOB;Wolfsburg;2;26454464
+6362;Ulbrich;SVW;Bremen;2;26451468
+6481;Billa;VFB;Stuttgart;4;26304431
+6574;Karl;SCF;Freiburg;2;26155389
+6559;Oberdorf;FCB;Bayern;3;26033474
+6360;Hausicke;FCU;Union Berlin;3;25563215
+8323;Ojukwu;SCF;Freiburg;3;25555534
+6454;Ostermeier;B04;Leverkusen;2;25523400
+6438;Eriksson;FCB;Bayern;2;25424024
+6474;Dick;HOF;Hoffenheim;1;25231583
+6629;Prasnikar;WOB;Wolfsburg;4;24761906
+6416;Simon;B04;Leverkusen;2;24744675
+6571;Borggräfe;B04;Leverkusen;1;24541419
+15073;Vanzeir;SVW;Bremen;3;24414652
+6467;Naschenweng;FCB;Bayern;2;24196030
+7287;Janssens;FCU;Union Berlin;2;23623725
+8306;Altenburg;SGE;Frankfurt;1;23421151
+7494;Steiner;HOF;Hoffenheim;4;23393912
+11218;Gilles;FCB;Bayern;2;23242775
+6637;Kleinherne;WOB;Wolfsburg;2;23036261
+7201;Boboy;RBL;Leipzig;4;22774102
+12318;Kamber;FCU;Union Berlin;3;22670757
+7433;Campbell;FCU;Union Berlin;4;22528743
+6455;Zdebel;B04;Leverkusen;3;22380543
+6486;Kaut;HOF;Hoffenheim;2;22149152
+11535;Østenstad;SGE;Frankfurt;2;22128851
+8113;Birkholz;SCF;Freiburg;4;22010910
+6325;Sterner;KOE;Köln;2;21773304
+11089;Stoldt;HSV;Hamburg;2;21686334
+6530;Achcinska;VFB;Stuttgart;3;21635625
+6523;Vogt;KOE;Köln;3;21580472
+6576;Schasching;RBL;Leipzig;3;21555184
+15253;Proost;FCB;Bayern;3;21433814
+6734;Fudalla;B04;Leverkusen;4;21339246
+6648;Bremer;KOE;Köln;4;21250207
+12291;Imade;FCB;Bayern;4;21249072
+15118;Giuliani;VFB;Stuttgart;1;21229890
+11217;Ballisager;FCB;Bayern;2;21224199
+6488;Diehm;HOF;Hoffenheim;2;21219233
+12377;Linberg;HSV;Hamburg;3;21149592
+6352;Weiss;SVW;Bremen;2;21051235
+7207;Merino Gonzales;B04;Leverkusen;2;20988867
+6595;Fölmli;HOF;Hoffenheim;4;20908124
+6553;Lattwein;WOB;Wolfsburg;3;20870838
+6450;Wirtz;SVW;Bremen;3;20814461
+13489;Reimann;SCF;Freiburg;1;20716398
+15268;Tomasiak;B04;Leverkusen;4;20333798
+15190;Shimada;SVW;Bremen;4;20264582
+6482;Krumbiegel;SGE;Frankfurt;2;20064638
+15151;van de Velde;HOF;Hoffenheim;2;19788275
+7206;Bartz;HSV;Hamburg;3;19618671
+15364;Dhont;SVW;Bremen;4;19611332
+6358;Sternad;B04;Leverkusen;3;19442992
+7208;Doorn;HOF;Hoffenheim;2;19325736
+6651;Feiersinger;KOE;Köln;3;19157153
+6556;Hegering;KOE;Köln;2;19144714
+6583;Axtmann;SCF;Freiburg;2;19111666
+6732;Herzog;RBL;Leipzig;1;19046681
+6413;Damnjanovic;FCB;Bayern;4;18934712
+7191;Schmitz;KOE;Köln;1;18797772
+10029;Ásgeirsdóttir;RBL;Leipzig;3;18536338
+6627;Doorsoun;SGE;Frankfurt;2;18506004
+6371;Hahn;HOF;Hoffenheim;3;18458466
+6443;Turányi;B04;Leverkusen;2;18135265
+15145;Martret;HOF;Hoffenheim;4;17842058
+16393;Szemik;HSV;Hamburg;1;17752934
+6500;Jaron;SVW;Bremen;4;17709290
+6581;Stegemann;VFB;Stuttgart;2;17683708
+15088;Mattner;FCB;Bayern;4;17570961
+11048;Kerim-Lindland;WOB;Wolfsburg;4;17456572
+6640;Gräwe;FCU;Union Berlin;3;17396947
+7306;Karczewska;HSV;Hamburg;4;17384947
+11551;Bjelde;WOB;Wolfsburg;3;17306089
+15055;Tuin;RBL;Leipzig;2;17239613
+6331;Piljić;WOB;Wolfsburg;3;17192049
+11553;Bussy;WOB;Wolfsburg;4;17102744
+11548;Böhi;FCU;Union Berlin;1;17073275
+6704;Lein;NUR;Nürnberg;3;16703392
+6426;Zadrazil;FCB;Bayern;3;16561558
+12342;Tysiak;FCU;Union Berlin;2;16533286
+13727;Redzepi;VFB;Stuttgart;3;16508716
+9736;Zähringer;VFB;Stuttgart;2;16378018
+6628;Açıkgöz;SCF;Freiburg;3;16320021
+15208;Bennison;SGE;Frankfurt;3;16209338
+13461;Varley;NUR;Nürnberg;2;15763959
+11081;Böhler;HSV;Hamburg;2;15636060
+15043;Mathys;RBL;Leipzig;2;15378068
+6719;Müller;B04;Leverkusen;3;15187204
+6497;Andrade;KOE;Köln;4;15081389
+15049;Pusztai;RBL;Leipzig;3;15040079
+9080;Pápai;NUR;Nürnberg;4;15003381
+6635;Açıkgöz;SGE;Frankfurt;2;14808770
+11522;Romero;NUR;Nürnberg;1;14768122
+6539;Degen;KOE;Köln;2;14767165
+11086;Wrede;HSV;Hamburg;2;14723293
+6557;Wolter;SGE;Frankfurt;2;14702887
+6473;Hagel;VFB;Stuttgart;3;14578635
+11561;Grimm;HOF;Hoffenheim;3;14561668
+15079;Memminger;SCF;Freiburg;2;14537457
+6425;Gloning;HOF;Hoffenheim;3;14309229
+6579;Kolb;SCF;Freiburg;4;13959660
+15136;Tolhoek;SGE;Frankfurt;4;13876831
+11937;Raso;SGE;Frankfurt;4;13816641
+9739;Schneider;FCU;Union Berlin;2;13730880
+11051;Meroni;NUR;Nürnberg;3;13184508
+7540;Arouna;VFB;Stuttgart;4;13085825
+11528;Norheim;RBL;Leipzig;2;13020410
+11527;Hougaard Dudek;RBL;Leipzig;2;12792765
+15427;Mertens;RBL;Leipzig;2;12754122
+15085;Brunold;SCF;Freiburg;4;12683789
+11251;Pujols;FCU;Union Berlin;2;12636185
+7181;Magerl;SVW;Bremen;2;12621908
+6483;Alber;WOB;Wolfsburg;4;12426473
+15649;Bleil;NUR;Nürnberg;2;12208800
+9735;Elsen;KOE;Köln;4;12148238
+6394;Gerhardt;KOE;Köln;2;12065060
+11517;Wenger;B04;Leverkusen;2;11941572
+9743;Doucouré;HSV;Hamburg;2;11783643
+14902;Fløe Nielsen;WOB;Wolfsburg;4;11751810
+6572;Vojteková;SCF;Freiburg;2;11749344
+8331;Platner;B04;Leverkusen;3;11719477
+7576;Schneider;SCF;Freiburg;3;11334772
+6542;Schimmer;RBL;Leipzig;4;11328248
+6396;Weidauer;FCU;Union Berlin;4;11317527
+9079;Bohnen;KOE;Köln;2;11187165
+8320;Ziemer;KOE;Köln;4;11103863
+11055;Reissner;FCU;Union Berlin;3;11006641
+12330;Proniez;NUR;Nürnberg;2;10861830
+6710;Bauereisen;FCU;Union Berlin;3;10724401
+6742;Nachtigall;KOE;Köln;3;10713197
+6642;Hechler;VFB;Stuttgart;2;10585668
+8322;Stierli;SCF;Freiburg;2;10527011
+6562;Wedemeyer;WOB;Wolfsburg;2;10416243
+11095;Morich;HSV;Hamburg;3;10410325
+13704;Imai;M05;Mainz;3;10337000
+6476;Leimenstoll;KOE;Köln;3;10293140
+15292;Carleer;WOB;Wolfsburg;2;10165859
+6516;Bathmann;M05;Mainz;2;10092602
+15058;Hulst;RBL;Leipzig;3;10046010
+15052;Simonsson;RBL;Leipzig;4;9815101
+9718;Berg;M05;Mainz;4;9808453
+15289;Lobanova;NUR;Nürnberg;2;9721961
+11554;Vallotto;WOB;Wolfsburg;3;9713692
+6611;Vobian;SCF;Freiburg;3;9482327
+7202;Voll;B04;Leverkusen;1;9473779
+6646;Dunst;FCB;Bayern;3;9424398
+11257;Alguacil;SGE;Frankfurt;3;9351028
+15037;Bednorz;NUR;Nürnberg;2;9350827
+6633;Brengel;NUR;Nürnberg;3;9326905
+13718;Schön;M05;Mainz;1;9310987
+11082;Machtens;HSV;Hamburg;3;9214155
+11523;Miller;NUR;Nürnberg;3;9140854
+13736;Hirano;VFB;Stuttgart;3;9139751
+6321;Winkler;SGE;Frankfurt;1;9088965
+11088;Eggert;HSV;Hamburg;2;9088920
+15034;Lapassouse;NUR;Nürnberg;4;9078707
+11976;Jessen;KOE;Köln;4;9030107
+11062;Orschmann;FCU;Union Berlin;3;9007905
+6743;Veit;FCU;Union Berlin;2;9006831
+6652;Pollak;NUR;Nürnberg;2;8841937
+6428;Landenberger;WOB;Wolfsburg;2;8800641
+6568;Hendrich;KOE;Köln;2;8643201
+6522;Bienz;SCF;Freiburg;3;8630333
+6361;Mahmoud;SVW;Bremen;3;8593428
+7210;D'Angelo;SVW;Bremen;2;8549300
+15265;Misini;B04;Leverkusen;3;8511861
+15250;Zieniewicz;SVW;Bremen;2;8447223
+6436;Ernst;SVW;Bremen;3;8392385
+11073;Dönges;HSV;Hamburg;2;8381636
+8116;Sträßer;SVW;Bremen;2;8379273
+6363;Matheis;M05;Mainz;3;8366704
+7538;Mickenhagen;VFB;Stuttgart;2;8305488
+15367;Seghir;SCF;Freiburg;3;8272094
+6441;Fröhlich;NUR;Nürnberg;2;8239442
+7182;Zeller;KOE;Köln;3;8210379
+15154;Peneau;HSV;Hamburg;3;8159033
+6590;Baum;HSV;Hamburg;1;8083368
+11828;Sælen;WOB;Wolfsburg;4;8082451
+15106;Stöhr;M05;Mainz;4;8072702
+11559;Homann;NUR;Nürnberg;3;8070892
+13741;Müller;VFB;Stuttgart;2;8068378
+6464;Arfaoui;SCF;Freiburg;3;7946228
+13713;Kats;M05;Mainz;4;7874641
+11094;Wrede;HSV;Hamburg;3;7845151
+11219;Ivelj;SGE;Frankfurt;3;7743212
+11060;Heikkinen;FCU;Union Berlin;3;7742975
+12195;Gmeineder;SVW;Bremen;3;7675912
+6656;Starke;RBL;Leipzig;3;7649434
+6356;Licina;NUR;Nürnberg;3;7646157
+13712;Matsumoto;M05;Mainz;1;7643335
+6721;Hipp;SVW;Bremen;3;7585254
+10140;Röder;HOF;Hoffenheim;3;7532607
+7435;Egli;FCU;Union Berlin;4;7445764
+15160;Obispo;HSV;Hamburg;2;7412582
+16537;Vincze;SCF;Freiburg;4;7386901
+15133;Brandau;B04;Leverkusen;2;7376859
+17143;Lia;SGE;Frankfurt;4;7369583
+15331;Strickler;M05;Mainz;4;7104358
+7173;Purtscheller;SVW;Bremen;3;7079471
+13742;Schäfer;VFB;Stuttgart;2;7067863
+13463;Gutmann;SVW;Bremen;2;7009124
+6691;Mai;NUR;Nürnberg;3;6975366
+15091;van Eijk;FCB;Bayern;1;6924112
+14884;Hauk;M05;Mainz;2;6918670
+13738;Dürr;VFB;Stuttgart;3;6884774
+6524;Zawistowska;KOE;Köln;3;6837798
+6391;Fischer;SVW;Bremen;1;6772052
+17191;Martens;HSV;Hamburg;2;6725485
+6589;Steinert;FCU;Union Berlin;2;6668613
+15247;Coutel;NUR;Nürnberg;3;6569274
+15157;Svíbková;HSV;Hamburg;4;6434005
+15109;Jackson;M05;Mainz;3;6397939
+7501;Potsi;FCB;Bayern;4;6359666
+11543;Brunnthaler;HSV;Hamburg;4;6208378
+6328;Elmazi;KOE;Köln;3;6118557
+13464;van Dijk;RBL;Leipzig;4;6055913
+6718;Desic;SVW;Bremen;4;6053664
+15082;Hebben;SCF;Freiburg;3;6032918
+15130;Loonen;B04;Leverkusen;4;5987940
+9841;Schiffarth;KOE;Köln;3;5983171
+8335;Joly;RBL;Leipzig;3;5886783
+7186;Imping;KOE;Köln;2;5765068
+6354;Wichmann;VFB;Stuttgart;3;5714881
+11538;Natter;HOF;Hoffenheim;4;5667651
+16618;Lundgaard;SGE;Frankfurt;3;5660505
+6446;Friedrich;B04;Leverkusen;2;5592419
+7468;Sigurdardóttir;SCF;Freiburg;2;5467851
+6644;Bösl;FCU;Union Berlin;1;5445998
+6459;Wieder;VFB;Stuttgart;3;5443347
+9429;Rankin;SGE;Frankfurt;2;5397412
+12174;Georgieva;M05;Mainz;2;5289291
+6323;Räcke;HSV;Hamburg;2;5284555
+6521;Beuschlein;VFB;Stuttgart;4;5266009
+6390;Schwalm;HSV;Hamburg;4;5255529
+15112;Takizawa;M05;Mainz;3;5097018
+11922;Ampoorter;HOF;Hoffenheim;3;5001317
+15046;Pfister;RBL;Leipzig;4;4976806
+6554;Blumenberg;SCF;Freiburg;3;4941887
+15430;Bogaert;WOB;Wolfsburg;2;4935000
+9679;Simmen;SCF;Freiburg;3;4933071
+6485;Dongus;VFB;Stuttgart;3;4932383
+7192;Szenk;SCF;Freiburg;2;4925236
+11533;Maas;SCF;Freiburg;2;4766665
+11216;Petermann;SVW;Bremen;4;4728507
+11827;Arasniewicz;WOB;Wolfsburg;3;4672100
+11536;Douma;HOF;Hoffenheim;2;4620324
+9678;Scherer;SCF;Freiburg;4;4553506
+12169;Schick;SCF;Freiburg;2;4530829
+15142;Fenger;HOF;Hoffenheim;4;4526064
+13743;Dongus;VFB;Stuttgart;2;4522263
+15097;Fetaj;M05;Mainz;3;4509424
+9977;Penner;SVW;Bremen;2;4502061
+11066;Heiseler;FCU;Union Berlin;3;4481071
+15094;Martin;M05;Mainz;3;4475582
+13717;Junold;M05;Mainz;3;4438094
+6578;Bouziane;M05;Mainz;3;4399180
+15361;Heidarsdóttir;KOE;Köln;2;4347069
+8324;Kehrer;B04;Leverkusen;4;4325425
+13729;Glaser;VFB;Stuttgart;4;4325091
+11052;Baumgärtel;NUR;Nürnberg;4;4267637
+6620;Flach;M05;Mainz;2;4190314
+11079;Krüger;HSV;Hamburg;3;4162887
+13731;Osawa;VFB;Stuttgart;4;4101149
+8321;Stolze;KOE;Köln;3;4067340
+11056;Weiß;FCU;Union Berlin;2;4048075
+6540;Donhauser;KOE;Köln;3;3988420
+6343;Kowalski;B04;Leverkusen;3;3988153
+11078;Schulz;HSV;Hamburg;3;3982421
+11592;Teulings;SGE;Frankfurt;3;3981303
+6489;Harsch;HOF;Hoffenheim;3;3921185
+6463;Siems;SVW;Bremen;2;3919160
+6475;von Schrader;SCF;Freiburg;1;3899598
+11540;Hillebrand;HSV;Hamburg;3;3824896
+11516;Mädl;B04;Leverkusen;4;3801459
+12378;Mirzaliyeva;HSV;Hamburg;2;3750817
+6461;Matysik;HSV;Hamburg;2;3701770
+6584;Hoffmann;WOB;Wolfsburg;4;3638716
+11096;Schuldt;KOE;Köln;1;3592541
+11663;Seguin;NUR;Nürnberg;3;3455346
+6424;Benkarth;SCF;Freiburg;1;3384494
+10141;Bitzer;HOF;Hoffenheim;2;3377631
+11574;Remien;B04;Leverkusen;1;3341125
+11046;Deuber;NUR;Nürnberg;3;3319312
+6593;Adamczyk;NUR;Nürnberg;1;3288483
+12035;Vöhringer;HOF;Hoffenheim;2;3038675
+13703;Pageler;M05;Mainz;3;2913542
+13721;Kurishima;M05;Mainz;3;2833583
+15652;Veefkind;RBL;Leipzig;2;2796594
+11977;Fuchs;KOE;Köln;1;2685064
+15127;Wallrabenstein;B04;Leverkusen;2;2605219
+6639;Pawollek;FCU;Union Berlin;3;2590952
+15067;Stenevik;KOE;Köln;2;2583241
+6634;Aehling;FCU;Union Berlin;2;2580727
+13722;Hashitani;M05;Mainz;2;2532734
+6697;Mühlemann;SVW;Bremen;3;2516959
+15115;Norman;VFB;Stuttgart;2;2458169
+7532;Németh;RBL;Leipzig;2;2441991
+13740;Rückert;VFB;Stuttgart;4;2430736
+13732;Schetter;VFB;Stuttgart;3;2428790
+13716;Kilian;M05;Mainz;3;2348595
+13710;Donner;M05;Mainz;2;2343302
+8326;Delacauw;HOF;Hoffenheim;3;2243640
+6442;Marti;RBL;Leipzig;2;2192779
+17654;Ferreira Barbóz;NUR;Nürnberg;3;2188339
+6716;Böettcher;VFB;Stuttgart;1;2185697
+15139;Kemper;HOF;Hoffenheim;3;2173670
+6725;Janež;FCU;Union Berlin;3;2171282
+11220;Krumme;SGE;Frankfurt;1;2141606
+13723;Voth;M05;Mainz;3;2059877
+6700;Thöle;NUR;Nürnberg;2;2053219
+6570;Beck;VFB;Stuttgart;1;2001779
+11546;Szaraz;KOE;Köln;3;1983159
+7177;Lindner;NUR;Nürnberg;2;1982299
+6470;Hofmann;VFB;Stuttgart;2;1932956
+7184;Hoppe;KOE;Köln;1;1931738
+6484;Tufekovic;WOB;Wolfsburg;1;1889435
+13709;Anstatt;M05;Mainz;3;1888443
+15064;Kerschbaumer;KOE;Köln;3;1888022
+11537;Luyet;HOF;Hoffenheim;4;1745243
+15076;Barth;SCF;Freiburg;1;1622288
+10893;Bräutigam;HOF;Hoffenheim;1;1563147
+6508;Farwick;SVW;Bremen;1;1549153
+6591;Felde;SCF;Freiburg;3;1548540
+15100;Slipcevic;M05;Mainz;3;1542432
+11532;Hokamp;KOE;Köln;2;1491213
+15103;Pawlowski;M05;Mainz;1;1490905
+11555;Schönwetter;WOB;Wolfsburg;1;1391484
+6709;Tölzel;NUR;Nürnberg;1;1388095
+13458;Grzywinska;NUR;Nürnberg;4;1176337
+11549;Eurlings;FCU;Union Berlin;3;1123815
+8342;Smolarczyk;FCU;Union Berlin;1;1093099
+15040;Waldbillig;RBL;Leipzig;1;1083408
+6498;Sieger;HSV;Hamburg;1;1036274
+15148;Lichtfus;HOF;Hoffenheim;1;852341
+11542;Haidner;HSV;Hamburg;1;778703
+12002;Eisenbeiß;WOB;Wolfsburg;1;737160
+6447;Klink;FCB;Bayern;1;717387
