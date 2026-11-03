@@ -1,0 +1,530 @@
+Spieler-ID;Spieler;Verein;Vereinsname;Position;Marktwert
+6072;Lamine Yamal;FCB;FC Barcelona;4;54524126
+7708;Mbappé;RMA;Real Madrid;4;54168552
+4034;Pedri;FCB;FC Barcelona;3;52769645
+4261;Raphinha;FCB;FC Barcelona;4;52682937
+3753;Vinicius Jr.;RMA;Real Madrid;4;48656686
+7267;Cubarsí;FCB;FC Barcelona;2;47908296
+8018;Rodri;FCB;FC Barcelona;3;47054144
+2845;Bellingham;RMA;Real Madrid;3;46395502
+3738;Valverde;RMA;Real Madrid;3;39401025
+6310;Güler;RMA;Real Madrid;3;36873239
+10055;Antony;BET;Real Betis;4;36605705
+6173;Grimaldo;ATM;Atlético Madrid;2;34472432
+7956;Gordon;FCB;FC Barcelona;4;32358605
+6762;Fermín López;FCB;FC Barcelona;3;31013009
+7423;Martín;FCB;FC Barcelona;2;29191988
+10771;Diomande;RMA;Real Madrid;4;28468240
+9506;Álvarez;ATM;Atlético Madrid;4;27720750
+8016;Cucurella;RMA;Real Madrid;2;27385605
+3861;Llorente;ATM;Atlético Madrid;3;26518027
+4135;Joan García;FCB;FC Barcelona;1;26444455
+4628;Cancelo;FCB;FC Barcelona;2;26294261
+10597;Huijsen;RMA;Real Madrid;2;26058522
+2776;Olmo;FCB;FC Barcelona;3;25464799
+2056;Konaté;RMA;Real Madrid;2;25407293
+3482;Adeyemi;FCB;FC Barcelona;4;25383207
+6744;Simeone;ATM;Atlético Madrid;3;25270747
+7528;Fornals;BET;Real Betis;3;25002265
+4035;Eric García;FCB;FC Barcelona;2;24647021
+3983;Álex Baena;ATM;Atlético Madrid;3;24617226
+7782;Hancko;ATM;Atlético Madrid;2;24387808
+3939;Oyarzabal;RSO;Real Sociedad;4;23937646
+3752;Tchouaméni;RMA;Real Madrid;3;23070318
+3744;Courtois;RMA;Real Madrid;1;22900840
+3717;Nico Williams;ATH;Athletic Club;4;21945132
+3586;Koundé;FCB;FC Barcelona;2;20472217
+3906;Kang-In;ATM;Atlético Madrid;3;20119800
+2189;Lookman;ATM;Atlético Madrid;4;19889836
+14485;Jonathan David;ATM;Atlético Madrid;4;19198706
+3843;Oblak;ATM;Atlético Madrid;1;19065089
+7726;Dumfries;RMA;Real Madrid;2;18993797
+9529;Natan;BET;Real Betis;2;18668277
+4443;Marcos Alonso;CEL;RC Celta;2;18485570
+4643;Renato Veiga;VIL;Villarreal CF;2;18422278
+3831;Pubill;ATM;Atlético Madrid;2;17879602
+3668;Budimir;OSA;CA Osasuna;4;17796073
+4045;Ez Abde;BET;Real Betis;4;17333946
+6272;Valles;BET;Real Betis;1;16861904
+23;Rüdiger;RMA;Real Madrid;2;16803537
+3716;Unai Simón;ATH;Athletic Club;1;16469223
+9424;Pépé;VIL;Villarreal CF;4;16254589
+4638;Gueye;VIL;Villarreal CF;3;15830037
+3685;Fran García;BET;Real Betis;2;15698346
+7824;Bernardo Silva;RMA;Real Madrid;3;15591743
+8003;Mikautadze;VIL;Villarreal CF;4;15396326
+8017;Laporte;ATH;Athletic Club;2;15288435
+3721;Yuri Berchiche;ATH;Athletic Club;2;14652837
+14233;Romero;ATM;Atlético Madrid;2;14399846
+6243;Moleiro;VIL;Villarreal CF;3;14322331
+4360;Edu Expósito;ESP;RCD Espanyol;3;14289319
+4120;Soler;RSO;Real Sociedad;3;14224831
+12041;Xavi Espart;FCB;FC Barcelona;2;14071115
+4477;Barrios;ATM;Atlético Madrid;3;13882028
+7940;Alexander-Arnold;RMA;Real Madrid;2;13611401
+4359;Isco;BET;Real Betis;3;13477645
+3776;Lejeune;RAY;Rayo Vallecano;2;13468768
+9381;Bernal;FCB;FC Barcelona;3;13322386
+17351;Gabriel Jesus;FCB;FC Barcelona;4;13262291
+7456;Agoumé;SEV;Sevilla FC;3;13107684
+10027;Roberto Fernández;ESP;RCD Espanyol;4;12742922
+3727;Iñaki Williams;ATH;Athletic Club;4;12474130
+14815;Vicente;RAC;Real Racing Club;4;12170207
+4306;De la Fuente;LEV;Levante UD;2;12141870
+7713;Fofana;SEV;Sevilla FC;3;12026836
+3796;Sivera;ALA;Deportivo Alavés;1;11955165
+3620;David Soria;GET;Getafe CF;1;11832239
+2910;Marc Roca;BET;Real Betis;3;11807399
+3840;Soriano;DEP;RC Deportivo;3;11769093
+3981;Foyth;VIL;Villarreal CF;2;11590012
+3951;Álex Remiro ;RSO;Real Sociedad;1;11266599
+2205;Sergio Gómez;RSO;Real Sociedad;2;11232305
+3839;Camello;RAY;Rayo Vallecano;4;11205439
+4279;Kike Salas;SEV;Sevilla FC;2;11135163
+7695;Sucic;RSO;Real Sociedad;3;10618135
+11213;Radu;CEL;RC Celta;1;10554175
+4057;Gavi;FCB;FC Barcelona;3;10479948
+1904;Bartra;BET;Real Betis;2;10448727
+3788;Tenaglia;ALA;Deportivo Alavés;2;10416216
+11518;Suazo;SEV;Sevilla FC;2;10402901
+4370;Paredes;ATH;Athletic Club;2;10395509
+3710;Unai López;RAY;Rayo Vallecano;3;10381550
+4438;Bellerín;BET;Real Betis;2;10254150
+3834;Brugué;LEV;Levante UD;4;10227734
+3933;Ryan;LEV;Levante UD;1;10117926
+3880;Boyé;ALA;Deportivo Alavés;4;10088212
+4139;Cabrera;ESP;RCD Espanyol;2;10066399
+3599;Iglesias;SEV;Sevilla FC;2;9976978
+4058;de Jong;FCB;FC Barcelona;3;9967225
+3712;Agirrezabala;RAC;Real Racing Club;1;9888635
+3931;Navarro;ATH;Athletic Club;3;9744555
+746;Vlachodimos;SEV;Sevilla FC;1;9595868
+3701;Catena;OSA;CA Osasuna;2;9585402
+16615;Zabiri;RAC;Real Racing Club;4;9521330
+7160;Martín;RSO;Real Sociedad;2;9518259
+12391;Freeman;VIL;Villarreal CF;2;9392358
+3677;Ibáñez;ALA;Deportivo Alavés;3;9342494
+3926;Valera;ELC;Elche CF;3;9197819
+705;Aubameyang;DEP;RC Deportivo;4;9113859
+7587;Yoel Lago;CEL;RC Celta;2;9077697
+3973;Gerard Moreno;VIL;Villarreal CF;4;8897650
+3762;Camavinga;RMA;Real Madrid;3;8729431
+10128;Cucho;BET;Real Betis;4;8722745
+1896;Gulácsi;VIL;Villarreal CF;1;8538189
+13435;Koski;ALA;Deportivo Alavés;2;8514363
+3863;Koke;ATM;Atlético Madrid;3;8480083
+7295;Carreras;RMA;Real Madrid;2;8410014
+12388;Pérez;ALA;Deportivo Alavés;2;8296048
+3729;Berenguer;ATH;Athletic Club;3;8109098
+4195;Terrats;GET;Getafe CF;3;8027833
+3140;Moriba;CEL;RC Celta;3;7972961
+11655;Valentín Gómez;BET;Real Betis;2;7900484
+17125;Parrott;BET;Real Betis;4;7806415
+7876;Hjulmand;ATM;Atlético Madrid;3;7791770
+4009;Chust;ELC;Elche CF;2;7780489
+4052;Balde;FCB;FC Barcelona;2;7776431
+4071;Canales;RAC;Real Racing Club;3;7747251
+17345;Revivo;ELC;Elche CF;2;7655534
+3690;Dimitrievski;VAL;Valencia CF;1;7547507
+4146;Pedrosa;RAY;Rayo Vallecano;2;7314966
+4109;Javi Guerra;VAL;Valencia CF;3;7291176
+3850;Giménez;DEP;RC Deportivo;2;7286714
+3750;Militão;RMA;Real Madrid;2;7266515
+6248;Cardona;VIL;Villarreal CF;2;7237093
+3974;Fer Niño;ELC;Elche CF;4;7099482
+4102;Guedes;RSO;Real Sociedad;4;6924664
+4070;Guido Rodríguez;VAL;Valencia CF;3;6847758
+8181;Hernández;ESP;RCD Espanyol;3;6835830
+11137;Dituro;ELC;Elche CF;1;6646830
+14824;Salinas;RAC;Real Racing Club;2;6568582
+4642;Ayoze Pérez;VIL;Villarreal CF;4;6553095
+9971;Castrín;SEV;Sevilla FC;2;6549024
+14740;Rafita Garrido;MAL;Málaga CF;2;6481826
+17327;Félix Correia;SEV;Sevilla FC;3;6371443
+4386;El Hilali;ESP;RCD Espanyol;2;6206215
+7265;Ratiu;RAY;Rayo Vallecano;2;6155269
+3868;Lemar;ELC;Elche CF;3;6122313
+3742;Blanco;ALA;Deportivo Alavés;3;6090316
+3929;Olasagasti;LEV;Levante UD;3;6067262
+4578;Villar;ELC;Elche CF;3;5978296
+3693;Álvaro García;RAY;Rayo Vallecano;4;5955056
+12344;Satriano;GET;Getafe CF;4;5935801
+17366;Audero;RAY;Rayo Vallecano;1;5884083
+3576;Romero;LEV;Levante UD;4;5876043
+4098;Gayà;VAL;Valencia CF;2;5865612
+1732;Christensen;FCB;FC Barcelona;2;5686822
+3867;Manu Sánchez;LEV;Levante UD;2;5657609
+3905;Ruiz de Galarreta;ATH;Athletic Club;3;5653407
+7429;Johnny Cardoso;ATM;Atlético Madrid;3;5588274
+3728;Sancet;ATH;Athletic Club;3;5485289
+4211;Iván Martín;RAC;Real Racing Club;3;5381391
+3641;Zaragoza;ESP;RCD Espanyol;3;5336985
+3864;Riquelme;BET;Real Betis;3;5332121
+593;Carvajal;GET;Getafe CF;2;5270306
+3735;Yeray;ATH;Athletic Club;2;5229479
+15028;de Haas;VAL;Valencia CF;2;5226579
+3810;Pepelu;VAL;Valencia CF;3;5178457
+11115;Espí;RMA;Real Madrid;4;5126449
+8379;Endrick;RMA;Real Madrid;4;5088568
+3670;Rubén García;OSA;CA Osasuna;3;5079917
+3756;Rodrygo;RMA;Real Madrid;4;5070299
+14668;Quagliata;DEP;RC Deportivo;2;4999391
+14845;Mantilla;RAC;Real Racing Club;2;4906322
+14785;Herrero;MAL;Málaga CF;1;4869722
+8353;Llorente;BET;Real Betis;2;4789307
+11240;Jonny Otto;ALA;Deportivo Alavés;2;4786614
+3574;Gudelj;GET;Getafe CF;3;4751919
+3681;Ciss;RAY;Rayo Vallecano;3;4747656
+14791;Larrubia;MAL;Málaga CF;3;4745385
+3930;Le Normand;ATM;Atlético Madrid;2;4732523
+3901;Román;DEP;RC Deportivo;1;4715246
+14734;Yeremay;DEP;RC Deportivo;4;4629524
+3650;Aitor Fernández;OSA;CA Osasuna;1;4602379
+4041;Akhomach;VIL;Villarreal CF;3;4588751
+3922;Barrenetxea;RSO;Real Sociedad;3;4580964
+14677;Nsongo;DEP;RC Deportivo;4;4553665
+14170;Cáceres;CEL;RC Celta;2;4489738
+8239;Ramón;RAC;Real Racing Club;2;4453024
+13839;Sarr;RSO;Real Sociedad;2;4407689
+3886;Mojica;GET;Getafe CF;2;4403476
+4096;González;CEL;RC Celta;3;4331732
+11750;Deossa;BET;Real Betis;3;4318387
+7365;Javi Rodríguez;CEL;RC Celta;2;4274278
+3584;Dmitrovic;ESP;RCD Espanyol;1;4239127
+7329;Niño;MAL;Málaga CF;4;4231873
+14767;Recio;MAL;Málaga CF;2;4195692
+6103;Fort;RSO;Real Sociedad;2;4163623
+4384;Fortuño;ESP;RCD Espanyol;1;4041090
+7364;Aramburu;RSO;Real Sociedad;2;4029949
+3763;Mariano;ALA;Deportivo Alavés;4;3978173
+3775;Ximo Navarro;DEP;RC Deportivo;2;3971539
+9511;Canales;ATH;Athletic Club;3;3918497
+3663;Areso;ATH;Athletic Club;2;3885716
+3679;Moncayola;OSA;CA Osasuna;3;3864302
+8215;Bretones;OSA;CA Osasuna;2;3842204
+2905;Sørloth;ATM;Atlético Madrid;4;3833031
+3984;Mandi;LEV;Levante UD;2;3693077
+6226;Brahim;RMA;Real Madrid;4;3666076
+12351;Romero;GET;Getafe CF;2;3662563
+11139;Febas;CEL;RC Celta;3;3617105
+13496;Mayol;VAL;Valencia CF;3;3616018
+2235;Maffeo;VAL;Valencia CF;2;3613252
+15259;Amatucci;DEP;RC Deportivo;3;3557339
+4275;Luismi Cruz;DEP;RC Deportivo;4;3532766
+10109;Buchanan;VIL;Villarreal CF;3;3517476
+9866;Román;CEL;RC Celta;3;3514687
+3739;Kubo;RSO;Real Sociedad;3;3502854
+11176;Jutglà;CEL;RC Celta;4;3364237
+4537;Romero;VIL;Villarreal CF;2;3340872
+3836;Pablo Martínez;MAL;Málaga CF;3;3324258
+11144;Álvaro Nuñez;CEL;RC Celta;2;3247244
+7588;Rueda;CEL;RC Celta;3;3224353
+3700;Santi Comesaña;VIL;Villarreal CF;3;3223973
+17161;Ndukwe;LEV;Levante UD;2;3158302
+3233;Riedel;ESP;RCD Espanyol;2;3119455
+14764;Lorenzo;MAL;Málaga CF;3;3101709
+3982;Moi Gómez;OSA;CA Osasuna;3;3045807
+12352;Ochieng;RSO;Real Sociedad;4;3021345
+8225;Belocian;RAC;Real Racing Club;2;2990550
+8169;Boyomo;OSA;CA Osasuna;2;2989183
+9648;Óskarsson;RSO;Real Sociedad;4;2986387
+9614;Martínez;ALA;Deportivo Alavés;4;2977183
+3967;Iago Aspas;CEL;RC Celta;4;2955454
+3828;De Frutos;RAY;Rayo Vallecano;4;2871189
+3608;Djené;GET;Getafe CF;2;2821013
+13125;Saliba;VIL;Villarreal CF;3;2762506
+6285;Rebbach;ALA;Deportivo Alavés;3;2748042
+17227;Prati;RAC;Real Racing Club;3;2735745
+13453;Sangaré;ELC;Elche CF;2;2638627
+11902;Sierra;SEV;Sevilla FC;3;2619781
+4480;Dotor;MAL;Málaga CF;3;2597198
+4094;Tárrega;VAL;Valencia CF;2;2592360
+14728;Noubi;DEP;RC Deportivo;2;2587388
+7361;Rincón;ATH;Athletic Club;2;2579665
+3723;Vivian;ATH;Athletic Club;2;2547999
+8315;Rosier;OSA;CA Osasuna;2;2409551
+6313;Mouriño;VIL;Villarreal CF;2;2382506
+12383;Cepeda;ELC;Elche CF;3;2366270
+3956;Javi Galán;CEL;RC Celta;2;2362734
+15358;García;GET;Getafe CF;2;2333059
+17339;Sadick;RAY;Rayo Vallecano;2;2286367
+156;Toljan;LEV;Levante UD;2;2271497
+13622;Morcillo;ELC;Elche CF;3;2269961
+4493;Hugo Álvarez;CEL;RC Celta;4;2262870
+12315;Fernández;LEV;Levante UD;3;2237095
+16579;Ure;SEV;Sevilla FC;4;2236722
+3960;Carreira;CEL;RC Celta;2;2216376
+11545;Gorrotxategi;RSO;Real Sociedad;3;2167104
+8081;Drkusic;ESP;RCD Espanyol;2;2124677
+4650;Iker Muñoz;OSA;CA Osasuna;3;2123626
+9509;Gerenabarrena;ATH;Athletic Club;3;2092788
+3610;Enes Ünal;GET;Getafe CF;4;2088619
+4401;Lo Celso;BET;Real Betis;3;2027488
+11879;Redondo;ELC;Elche CF;3;1967749
+3746;Mendy;RMA;Real Madrid;2;1959682
+17330;Stassin;SEV;Sevilla FC;4;1946592
+2664;Vargas;SEV;Sevilla FC;4;1898714
+7440;Aznou;MAL;Málaga CF;2;1823157
+3765;Ceballos;BET;Real Betis;3;1815018
+3730;Unai Núñez;ESP;RCD Espanyol;2;1803071
+2868;Novoa;ALA;Deportivo Alavés;3;1798955
+12233;Macià;VIL;Villarreal CF;3;1738983
+9425;Pedro Díaz;RAY;Rayo Vallecano;3;1721838
+9553;Navarro;VIL;Villarreal CF;2;1720258
+3949;Turrientes;RSO;Real Sociedad;3;1691606
+7164;Requena;LEV;Levante UD;3;1664842
+9883;Ortiz;BET;Real Betis;2;1644538
+17236;Adama Traoré;DEP;RC Deportivo;4;1637531
+14797;Galilea;MAL;Málaga CF;2;1606726
+15235;Hartman;ESP;RCD Espanyol;2;1577602
+16489;Valentini;ALA;Deportivo Alavés;2;1577213
+9575;Costa;VIL;Villarreal CF;2;1557916
+3969;Swedberg;CEL;RC Celta;3;1556066
+6681;Isaac Romero;SEV;Sevilla FC;4;1510482
+3740;Lunin;RMA;Real Madrid;1;1504331
+3688;Andrés Martín;RAC;Real Racing Club;4;1484264
+15217;Bernal;BET;Real Betis;3;1464509
+3814;Kochorashvili;SEV;Sevilla FC;3;1461693
+13858;Hamza Abdelkarim;FCB;FC Barcelona;4;1453670
+3779;Rioja;VAL;Valencia CF;3;1423240
+7689;Livakovic;FCB;FC Barcelona;1;1376573
+11898;Nacho Pérez;LEV;Levante UD;2;1349277
+14776;Puga;MAL;Málaga CF;2;1336793
+3795;Abqar;GET;Getafe CF;2;1314549
+4341;Herrera;RSO;Real Sociedad;3;1282162
+3978;Danjuma;VAL;Valencia CF;4;1264327
+7545;Arguibide;OSA;CA Osasuna;2;1245293
+3686;Isi Palazón;RAY;Rayo Vallecano;3;1226696
+14743;Enríquez;MAL;Málaga CF;3;1211169
+7261;Dani Martinez;ATM;Atlético Madrid;2;1210606
+4350;Etta Eyong;LEV;Levante UD;4;1208813
+15646;Fariñas;FCB;FC Barcelona;3;1208704
+14722;Loureiro;DEP;RC Deportivo;2;1201367
+3565;Ejuke;SEV;Sevilla FC;3;1179055
+11249;Davinchi;GET;Getafe CF;2;1179004
+8394;García;RAC;Real Racing Club;4;1163523
+9861;Valou;GET;Getafe CF;2;1155183
+11650;Dolan;ESP;RCD Espanyol;4;1130373
+3672;Sergio Herrera;OSA;CA Osasuna;1;1094314
+3617;Aleñá;ALA;Deportivo Alavés;3;1088333
+4540;Manu Bueno;SEV;Sevilla FC;3;1080494
+6228;Salinas;MAL;Málaga CF;2;1075817
+7406;Jauregizar;ATH;Athletic Club;3;1064337
+16957;Serrano;GET;Getafe CF;3;1059033
+12226;Mañas;ALA;Deportivo Alavés;4;1058846
+8196;Dubasin;OSA;CA Osasuna;3;1010792
+11744;Johaneko;ATH;Athletic Club;2;1000083
+11715;Neto;ELC;Elche CF;3;998925
+4182;Víctor Gárcia;LEV;Levante UD;3;990929
+7657;Ratkov;LEV;Levante UD;4;964984
+3702;Balliu;RAY;Rayo Vallecano;2;952392
+14719;Villares;DEP;RC Deportivo;3;940508
+4133;Rubén Sánchez;ELC;Elche CF;2;936382
+4103;Hugo Duro;VAL;Valencia CF;4;924695
+4128;Calero;MAL;Málaga CF;2;897193
+12156;Antañón;CEL;RC Celta;3;890965
+3924;Zubeldia;RSO;Real Sociedad;2;883230
+2322;Aarón Martín;RAC;Real Racing Club;2;837288
+4532;Calatrava ;ESP;RCD Espanyol;3;836771
+17354;Elliott;VAL;Valencia CF;3;811444
+4142;Lozano;ESP;RCD Espanyol;3;807027
+8163;Raba;VAL;Valencia CF;4;795619
+4463;Durán;CEL;RC Celta;4;783162
+4326;Kiko Femenía;GET;Getafe CF;2;781409
+7399;Otorbi;VAL;Valencia CF;3;772217
+7220;Starfelt;CEL;RC Celta;2;769339
+17333;Azón;GET;Getafe CF;4;759420
+12334;Osorio;ELC;Elche CF;4;737120
+16408;Bouare ;RAY;Rayo Vallecano;3;737045
+2049;Mangala;GET;Getafe CF;3;733879
+3934;González de Zárate;ESP;RCD Espanyol;3;709079
+11113;Rey;LEV;Levante UD;3;708565
+6760;Altimira;DEP;RC Deportivo;3;673470
+15244;Moscardo;ESP;RCD Espanyol;3;663790
+11904;Echegoyen;OSA;CA Osasuna;3;662016
+14863;Manu Hernando;RAC;Real Racing Club;2;656428
+3954;Denis Suárez;ALA;Deportivo Alavés;3;655880
+9978;Enríquez;ALA;Deportivo Alavés;2;650010
+12153;Burcio;CEL;RC Celta;3;633541
+11565;Firpo;BET;Real Betis;2;626389
+4337;Herrando;OSA;CA Osasuna;2;625498
+4574;Martín;GET;Getafe CF;3;617037
+8356;Peque Fernández;SEV;Sevilla FC;3;585267
+9784;Guliashvili;RAC;Real Racing Club;4;582859
+9400;Asencio;RMA;Real Madrid;2;581622
+4410;André Almeida;RAC;Real Racing Club;3;575440
+4510;Fernández;ESP;RCD Espanyol;4;564410
+16375;Bisiwu;FCB;FC Barcelona;3;559457
+14752;Chupete;MAL;Málaga CF;4;539006
+4116;Jesús Vázquez;VAL;Valencia CF;2;536205
+9949;Diatta;VIL;Villarreal CF;3;535275
+14758;Merino;MAL;Málaga CF;3;529015
+11181;Tape;LEV;Levante UD;2;524898
+10524;Hinojo;ESP;RCD Espanyol;2;520189
+16492;Buonanotte;ELC;Elche CF;3;512145
+3871;Tete Morente;ELC;Elche CF;3;511565
+7552;Belaid;RAY;Rayo Vallecano;4;509836
+12552;Vargas;ATM;Atlético Madrid;3;505887
+16324;Ciria;RMA;Real Madrid;3;505572
+3938;Marrero;RSO;Real Sociedad;1;503947
+3566;Marcāo;SEV;Sevilla FC;2;500000
+3792;Guridi;SEV;Sevilla FC;3;500000
+4273;Carmona;SEV;Sevilla FC;2;500000
+6096;González;SEV;Sevilla FC;1;500000
+6232;Alfon;SEV;Sevilla FC;4;500000
+7398;Romero;SEV;Sevilla FC;1;500000
+11970;Cardoso;SEV;Sevilla FC;2;500000
+12303;Julio Díaz;SEV;Sevilla FC;3;500000
+13680;Guillén;SEV;Sevilla FC;3;500000
+15007;Sangante;SEV;Sevilla FC;2;500000
+1922;Mayoral;GET;Getafe CF;4;500000
+4083;Juanmi;GET;Getafe CF;4;500000
+8237;Uche;GET;Getafe CF;4;500000
+8362;Letácek;GET;Getafe CF;1;500000
+12350;Boselli;GET;Getafe CF;2;500000
+16390;Sazonov;GET;Getafe CF;2;500000
+2280;Torró;OSA;CA Osasuna;3;500000
+3653;Kike Barja ;OSA;CA Osasuna;4;500000
+3945;Diego Rico;OSA;CA Osasuna;2;500000
+4338;Aimar Oroz;OSA;CA Osasuna;3;500000
+6238;Raúl García;OSA;CA Osasuna;4;500000
+7554;Osambela;OSA;CA Osasuna;2;500000
+8170;Moro;OSA;CA Osasuna;4;500000
+12255;Unai Santos;OSA;CA Osasuna;2;500000
+16588;Yeboah;OSA;CA Osasuna;2;500000
+17336;Del Castillo;OSA;CA Osasuna;3;500000
+3695;Óscar Valentín;RAY;Rayo Vallecano;3;500000
+3699;Nteka;RAY;Rayo Vallecano;4;500000
+3821;Cárdenas;RAY;Rayo Vallecano;1;500000
+4089;Luiz Felipe ;RAY;Rayo Vallecano;2;500000
+4157;Raúl de Tomás;RAY;Rayo Vallecano;4;500000
+4263;Fran Pérez;RAY;Rayo Vallecano;3;500000
+7432;Batalla;RAY;Rayo Vallecano;1;500000
+7991;Kumbulla;RAY;Rayo Vallecano;2;500000
+7996;Tsitaishvili;RAY;Rayo Vallecano;3;500000
+8204;Alemão;RAY;Rayo Vallecano;4;500000
+8304;Pelayo Fernández;RAY;Rayo Vallecano;2;500000
+11869;Vertrouwd;RAY;Rayo Vallecano;2;500000
+3713;Guruzeta;ATH;Athletic Club;4;500000
+4289;Serrano;ATH;Athletic Club;4;500000
+4373;Padilla;ATH;Athletic Club;1;500000
+6223;Prados;ATH;Athletic Club;3;500000
+8238;Djaló;ATH;Athletic Club;4;500000
+10104;Sannadi;ATH;Athletic Club;4;500000
+10910;Rego;ATH;Athletic Club;3;500000
+11871;Pitarch;RMA;Real Madrid;3;500000
+12239;Cestero;RMA;Real Madrid;3;500000
+3787;Rodríguez;ALA;Deportivo Alavés;1;500000
+3944;Guevara;ALA;Deportivo Alavés;3;500000
+4383;Miguel Rodríguez;ALA;Deportivo Alavés;3;500000
+6283;Benavídez;ALA;Deportivo Alavés;2;500000
+7237;Diallo Diallo;ALA;Deportivo Alavés;3;500000
+9943;Rodriguez;ALA;Deportivo Alavés;3;500000
+10062;Swiderski;ALA;Deportivo Alavés;1;500000
+12225;Oláiz;ALA;Deportivo Alavés;2;500000
+3808;Campos;LEV;Levante UD;1;500000
+3819;Primo;LEV;Levante UD;1;500000
+4652;Sotelo;LEV;Levante UD;3;500000
+11116;Cabello;LEV;Levante UD;2;500000
+11895;Cortés;LEV;Levante UD;4;500000
+15025;Bardeli;LEV;Levante UD;3;500000
+16372;Musuayi;LEV;Levante UD;4;500000
+16921;Santos ;LEV;Levante UD;;500000
+4496;Mendoza;ATM;Atlético Madrid;3;500000
+8266;Ortiz;ATM;Atlético Madrid;4;500000
+9599;Musso;ATM;Atlético Madrid;1;500000
+11121;Esquivel;ATM;Atlético Madrid;1;500000
+12027;Castillo;ATM;Atlético Madrid;3;500000
+16558;Domínguez;ATM;Atlético Madrid;2;500000
+3875;Bigas;ELC;Elche CF;2;500000
+3881;Ponce;ELC;Elche CF;4;500000
+3882;Josan;ELC;Elche CF;3;500000
+4449;Iturbe;ELC;Elche CF;1;500000
+11125;Diaby;ELC;Elche CF;2;500000
+11126;Houary;ELC;Elche CF;4;500000
+11127;Santiago;ELC;Elche CF;3;500000
+11140;Boayar;ELC;Elche CF;4;500000
+11146;Aguado;ELC;Elche CF;3;500000
+11211;Barzic;ELC;Elche CF;2;500000
+11952;Diangana;ELC;Elche CF;3;500000
+17342;Lomónaco;ELC;Elche CF;2;500000
+2775;Odriozola;RSO;Real Sociedad;2;500000
+3932;Pacheco;RSO;Real Sociedad;2;500000
+3943;Aihen Muñoz;RSO;Real Sociedad;2;500000
+4466;Marín;RSO;Real Sociedad;3;500000
+7250;Fraga;RSO;Real Sociedad;1;500000
+7253;Zakharyan;RSO;Real Sociedad;3;500000
+9944;Beitia;RSO;Real Sociedad;2;500000
+3958;Villar;CEL;RC Celta;1;500000
+4084;Iglesias;CEL;RC Celta;4;500000
+7843;Bayindir;CEL;RC Celta;1;500000
+9524;Vidal;CEL;RC Celta;1;500000
+10019;El-Abdellaoui;CEL;RC Celta;4;500000
+11163;Faye;CEL;RC Celta;2;500000
+17224;Driouech;CEL;RC Celta;3;500000
+9560;Luiz Júnior;VIL;Villarreal CF;1;500000
+9852;Gómez;VIL;Villarreal CF;1;500000
+11935;Oluwaseyi;VIL;Villarreal CF;4;500000
+7899;Szczesny;FCB;FC Barcelona;1;500000
+11652;Bardghji;FCB;FC Barcelona;4;500000
+3600;Conde;BET;Real Betis;1;500000
+4079;Ruibal;BET;Real Betis;3;500000
+8317;Losada;BET;Real Betis;3;500000
+13456;Fidalgo;BET;Real Betis;3;500000
+4097;Diego López;VAL;Valencia CF;3;500000
+4114;Rivero;VAL;Valencia CF;1;500000
+4124;Diakhaby;VAL;Valencia CF;2;500000
+4127;Foulquier;VAL;Valencia CF;2;500000
+4198;Arnau Martínez;VAL;Valencia CF;2;500000
+4249;Sadiq;VAL;Valencia CF;4;500000
+4291;Copete;VAL;Valencia CF;2;500000
+7255;Canós;VAL;Valencia CF;3;500000
+7678;Ugrinic;VAL;Valencia CF;3;500000
+8405;Córdoba;VAL;Valencia CF;2;500000
+11893;Blázquez;VAL;Valencia CF;4;500000
+15232;Sato;VAL;Valencia CF;3;500000
+15241;Dieng;VAL;Valencia CF;3;500000
+17209;van Oevelen;VAL;Valencia CF;;500000
+3657;Kike García;ESP;RCD Espanyol;4;500000
+3872;Pere Milla;ESP;RCD Espanyol;4;500000
+3940;Gorosabel;ESP;RCD Espanyol;2;500000
+4134;Jofre Carreras;ESP;RCD Espanyol;3;500000
+4158;Puado;ESP;RCD Espanyol;3;500000
+8185;Serred;ESP;RCD Espanyol;1;500000
+8188;Bauza;ESP;RCD Espanyol;3;500000
+18236;Santiago ;ESP;RCD Espanyol;;500000
+2779;Angeliño;DEP;RC Deportivo;2;500000
+4032;Casadó;DEP;RC Deportivo;3;500000
+4426;Álvaro Fernández;DEP;RC Deportivo;1;500000
+7574;Asp Jensen;DEP;RC Deportivo;3;500000
+14665;Barcia;DEP;RC Deportivo;2;500000
+14671;Comas;DEP;RC Deportivo;2;500000
+14686;Mella;DEP;RC Deportivo;3;500000
+14689;Parreño;DEP;RC Deportivo;1;500000
+14710;Rodríguez;DEP;RC Deportivo;3;500000
+14713;Eddahchouri;DEP;RC Deportivo;4;500000
+14716;Carrillo ;DEP;RC Deportivo;3;500000
+15229;Ede;DEP;RC Deportivo;2;500000
+3937;Lobete;MAL;Málaga CF;4;500000
+4464;Cruz;MAL;Málaga CF;3;500000
+9556;Berrocal;MAL;Málaga CF;2;500000
+14746;Muñoz;MAL;Málaga CF;4;500000
+14749;López;MAL;Málaga CF;1;500000
+14755;Murillo;MAL;Málaga CF;2;500000
+14761;Ochoa;MAL;Málaga CF;3;500000
+14770;Céspedes;MAL;Málaga CF;1;500000
+14782;Jauregi;MAL;Málaga CF;4;500000
+14794;Abaida;MAL;Málaga CF;3;500000
+14803;Rodríguez;MAL;Málaga CF;3;500000
+14806;Pastor;MAL;Málaga CF;2;500000
+17348;Cajuste;MAL;Málaga CF;3;500000
+3733;Villalibre;RAC;Real Racing Club;4;500000
+4262;González;RAC;Real Racing Club;2;500000
+12304;Luque ;RAC;Real Racing Club;3;500000
+14821;Eriksson;RAC;Real Racing Club;1;500000
+14827;Arana Gómez;RAC;Real Racing Club;4;500000
+14854;Sainz-Maza;RAC;Real Racing Club;3;500000
+14857;Gueye;RAC;Real Racing Club;3;500000
+14860;Vallecillo;RAC;Real Racing Club;3;500000
+14869;Gómez;RAC;Real Racing Club;1;500000
+16414;Pedro Felipe;RAC;Real Racing Club;2;500000
