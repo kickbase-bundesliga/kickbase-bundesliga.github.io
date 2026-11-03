@@ -1,0 +1,93 @@
+# Neue Saison von Hand anlegen, pruefen oder zuruecknehmen.
+# Normalerweise nicht noetig: Bei Systemen mit "neue_saison": true (KBL, KWBL) legt der taegliche
+# Spieltags-Lauf die naechste Saison selbst an, sobald die alte fertig ist (letzter Spieltag
+# eingespielt, Nachkontrolle vorbei, Pokal fertig). Details: scripts/neue_saison.py
+# Manuell: Reiter "Actions" -> "Neue Saison" -> "Run workflow".
+name: Neue Saison
+
+on:
+  workflow_dispatch:
+    inputs:
+      system:
+        description: "Ligasystem"
+        type: choice
+        options: [kbl, kwbl, k2bl, kll]
+        default: kbl
+      aktion:
+        description: "Was soll passieren?"
+        type: choice
+        options:
+          - Nur pruefen
+          - Anlegen
+          - Anlegen ohne Pruefungen
+          - Zuruecknehmen
+        default: Nur pruefen
+      letzter_spieltag:
+        description: "Letzter Spieltag der neuen Saison (leer = aus dem Spielplan)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Gleiche Warteschlange wie der Spieltags-Lauf des Systems -> nie gleichzeitig
+concurrency:
+  group: daten-${{ inputs.system }}
+  cancel-in-progress: false
+
+jobs:
+  saison:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      geaendert: ${{ steps.speichern.outputs.geaendert }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: .github/requirements-ci.txt
+
+      - name: Pakete installieren
+        run: pip install -r .github/requirements-ci.txt
+
+      - name: Neue Saison
+        env:
+          SYSTEM: ${{ inputs.system }}
+          AKTION: ${{ inputs.aktion }}
+          LETZTER: ${{ inputs.letzter_spieltag }}
+          EMAIL: ${{ inputs.system == 'kbl' && secrets.KBL_EMAIL || inputs.system == 'kwbl' && secrets.KWBL_EMAIL || inputs.system == 'k2bl' && secrets.K2BL_EMAIL || secrets.KLL_EMAIL }}
+          PASSWORT: ${{ inputs.system == 'kbl' && secrets.KBL_PASSWORT || inputs.system == 'kwbl' && secrets.KWBL_PASSWORT || inputs.system == 'k2bl' && secrets.K2BL_PASSWORT || secrets.KLL_PASSWORT }}
+          PYTHONUNBUFFERED: "1"
+          PYTHONIOENCODING: utf-8
+        run: |
+          PREFIX=$(echo "$SYSTEM" | tr '[:lower:]' '[:upper:]')
+          export "${PREFIX}_EMAIL=$EMAIL" "${PREFIX}_PASSWORT=$PASSWORT"
+          ARGS=("$SYSTEM" --ohne-webseite)
+          case "$AKTION" in
+            "Nur pruefen")             ARGS+=(--pruefen) ;;
+            "Anlegen ohne Pruefungen") ARGS+=(--erzwingen) ;;
+            "Zuruecknehmen")           ARGS+=(--zuruecknehmen) ;;
+          esac
+          [ -n "$LETZTER" ] && ARGS+=(--letzter "$LETZTER")
+          python scripts/neue_saison.py "${ARGS[@]}"
+
+      - name: Speichern
+        id: speichern
+        if: inputs.aktion != 'Nur pruefen'
+        env:
+          SYSTEM: ${{ inputs.system }}
+          AKTION: ${{ inputs.aktion }}
+        run: |
+          bash .github/speichern.sh "${SYSTEM^^}: Neue Saison ($AKTION)"
+
+  webseite:
+    needs: saison
+    if: needs.saison.outputs.geaendert == 'true'
+    uses: ./.github/workflows/webseite.yml

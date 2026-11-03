@@ -3,7 +3,7 @@
     "league_system_shortcut": "KWBL",
     "levels_in_database": 4,
     "admin_id": 2453055,
-    "automatik": {"wettbewerb": 4, "abrechnung_uhr": 18, "nach_abrechnung_minuten": 60},
+    "automatik": {"wettbewerb": 4, "abrechnung_uhr": 18, "nach_abrechnung_minuten": 60, "neue_saison": true},
     "wettbewerb_name": "Frauen-Bundesliga",
     "marktwerte": "frauen-bundesliga",
     "cup_scores": [40, 25, 15, 10, 5, 0],

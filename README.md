@@ -70,8 +70,29 @@ Lokal geht dasselbe mit `python pokal.py kbl neu | auslosen | ankuendigen --star
 - Der zuletzt eingespielte Spieltag steht in `league_systems/<system>/automatik_status.json`.
 - Nach dem letzten Spieltag einer Saison passiert nichts mehr, bis die neue Saison angelegt ist.
 
-Bewusst **Handarbeit** bleiben: neue Saison anlegen (`python scripts/run_me.py`) und alles rund um den
-Pokal (Ergebnisse per Pokal-Haken, Auslosung über den Workflow **Pokal**).
+### Neue Saison
+
+- **KBL und KWBL automatisch** (`"neue_saison": true` unter `"automatik"` in der Config): Sobald der
+  letzte Spieltag eingespielt, seine Nachkontrolle vorbei (ca. 2 Tage) und der Pokal der Saison bis
+  zum Finale ausgewertet ist, legt der tägliche Lauf die nächste Saison selbst an. Bis dahin steht
+  in der Zusammenfassung, worauf noch gewartet wird.
+- Name und Spieltage kommen aus dem Kickbase-Spielplan: nach der Hinrunde `2026B` folgt `2027A`
+  (letzter Spieltag + 1 bis Saisonende), nach der Rückrunde `2027A` folgt `2027B` (Spieltag 1 bis
+  zur Winterpause = größte Lücke Nov–Jan). Die Hinrunde wird erst angelegt, wenn Kickbase den neuen
+  Spielplan zeigt. Winterpause fest vorgeben: `"winterpause_nach": 14` unter `"automatik"`.
+- Beim Anlegen bekommen alle Manager, die gerade in den Ligen sind, den neuen Saison-Eintrag. Die
+  Manager können danach in Ruhe in ihre neuen Ligen wechseln: Die Liga wird erst am ersten Spieltag
+  zugeordnet, Neue werden dann automatisch ergänzt. Wer am ersten Spieltag noch in zwei Ligen ist,
+  steht als Warnung im Log.
+- **Von Hand** (auch K2BL/KLL): Workflow **Neue Saison** → System + Aktion `Nur pruefen` /
+  `Anlegen` / `Anlegen ohne Pruefungen` / `Zuruecknehmen`, optional letzter Spieltag. Lokal:
+  `python scripts/neue_saison.py kbl [--pruefen | --erzwingen | --letzter 14 | --zuruecknehmen]`.
+- `Zuruecknehmen` entfernt die zuletzt angelegte Saison wieder (nur solange sie noch keine Punkte
+  hat) – z. B. wenn danach noch ein Spieltag der alten Saison neu eingespielt werden muss.
+- Danach bleibt Handarbeit: Teilnehmerliste und **Neuen Pokal anlegen** (Workflow **Pokal**).
+
+Bewusst **Handarbeit** bleibt alles rund um den Pokal (Ergebnisse per Pokal-Haken, Auslosung über
+den Workflow **Pokal**).
 
 ---
 

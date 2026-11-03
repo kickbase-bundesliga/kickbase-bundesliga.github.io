@@ -16,11 +16,16 @@ def fill_database(system, matchday_real, season):
     database = utils.read_json(filename)
 
     # Loop over all leagues and managers
+    gesehen = {}
     for league in leagues:
         if league.name in valid_league_names:
             managers = kickbase.league_users(league)
             for manager in managers:
                 manager_id = manager.i
+                if manager_id != adm_id and manager_id in gesehen:
+                    # z. B. Umzug zum Saisonstart noch nicht fertig: es zaehlt die zuletzt gelesene Liga
+                    print(f"⚠️  {manager.n} ({manager_id}) ist in mehreren Ligen: {gesehen[manager_id]} und {league.name}.")
+                gesehen[manager_id] = league.name
 
                 # If it's not the admin, extract data from API
                 if manager_id != adm_id:

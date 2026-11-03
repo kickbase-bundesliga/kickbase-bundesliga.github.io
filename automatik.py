@@ -23,9 +23,11 @@ Woran erkennt das Skript, dass ein Spieltag fertig ist?
 
 Einstellungen in config/<system>.json (alles optional):
     "automatik": {"wettbewerb": 1, "abrechnung_uhr": 18, "nach_abrechnung_minuten": 60,
-                  "nachkontrolle_stunden": 50}
+                  "nachkontrolle_stunden": 50, "neue_saison": true, "winterpause_nach": 14}
         wettbewerb = Kickbase-Wettbewerbsnummer (wird sonst aus den Ligadaten gelesen)
         nachkontrolle_stunden = wie lange nach dem Einspielen erneut geholt wird (0 = aus)
+        neue_saison = naechste Saison automatisch anlegen, sobald die alte fertig ist
+        winterpause_nach = letzter Spieltag der Hinrunde (sonst aus dem Spielplan erkannt)
 
 Der Pokal wird NIE automatisch ausgewertet, nur von Hand:
     python automatik.py kbl --spieltag 6 --pokal
@@ -33,7 +35,10 @@ holt Spieltag 6 frisch von Kickbase (also mit endgueltigen Punkten) und wertet d
 aktuelle Pokalrunde aus. Erst starten, wenn Kickbase den Spieltag abgeschlossen hat
 (meist am Tag nach dem letzten Spiel gegen 18 Uhr).
 
-Neue Saison anlegen und Pokal auslosen bleiben bewusst Handarbeit (run_me.py).
+Neue Saison: Ist die Saison komplett (letzter Spieltag eingespielt, Nachkontrolle vorbei, Pokal
+fertig), legt der Lauf die naechste Saison selbst an - nur mit "neue_saison": true unter "automatik"
+in der Config, sonst wird nur angezeigt, ob es ginge. Details: scripts/neue_saison.py.
+Pokal anlegen und auslosen bleibt Handarbeit (Workflow "Pokal").
 """
 import argparse
 import json
@@ -428,9 +433,8 @@ def ablauf(system, a, log):
             log("✔️  Spieltag %d: keine Aenderungen." % tag)
 
     if bisher >= letzter:
-        log("✅ Saison %s ist komplett eingespielt. Naechster Schritt: neue Saison anlegen (run_me.py)."
-            % saison["name"])
-        if geaendert:
+        log("✅ Saison %s ist komplett eingespielt." % saison["name"])
+        if neue_saison(system, einst, a, log) or geaendert:
             webseite(a, log)
         return 0
 
@@ -482,6 +486,26 @@ def ablauf(system, a, log):
                 "erneut einspielen (Spieltag %d manuell)." % (tag, tag))
     webseite(a, log)
     return 0
+
+
+def neue_saison(system, einst, a, log):
+    """Alte Saison komplett: neue Saison anlegen (nur mit "neue_saison": true in der Config),
+    sonst nur anzeigen, ob es ginge. Fehler hier duerfen den taeglichen Lauf nie abbrechen.
+    -> True, wenn eine Saison angelegt wurde."""
+    from scripts import neue_saison as ns
+    automatisch = bool(einst.get("neue_saison"))
+    try:
+        neu = ns.anlegen(system, log, nur_pruefen=a.pruefen or not automatisch)
+    except SystemExit as e:
+        log("⚠️  Neue Saison: %s" % e)
+        return False
+    except Exception as e:
+        log("⚠️  Neue Saison konnte nicht geprueft werden: %s" % e)
+        return False
+    if not automatisch:
+        log("   Neue Saison hier nur von Hand: Workflow \"Neue Saison\" (automatisch mit "
+            "\"neue_saison\": true in config/%s.json)." % system)
+    return neu
 
 
 def einspielen(system, saison, tag, pokal, a, log):
