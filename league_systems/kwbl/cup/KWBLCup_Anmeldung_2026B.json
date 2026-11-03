@@ -1,0 +1,242 @@
+{
+  "saison": "2026B",
+  "ab": null,
+  "schluss": "2026-08-28T16:30:00Z",
+  "auslosung": "2026-08-30T18:00:00Z",
+  "formular": "https://docs.google.com/forms/d/e/1FAIpQLSdvkQDa113SvxbjWsHw86SaxGXYejOBnDpJHK9WFjXHbj_1uw/viewform",
+  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTb9iTBHqrv6QrFjUaE-OblcNxW0Puqkk7-JLEToZdEP0M9wWH5Zlm4wms_J5bMd7_f9DAdCrQeE-qO/pub?gid=398097075&single=true&output=csv",
+  "plaene": {
+    "2": [
+      {
+        "groesse": 2,
+        "spieltag": 12,
+        "kbl_spieltag": 12,
+        "auslosung": "2026-08-30T18:00:00Z"
+      }
+    ],
+    "4": [
+      {
+        "groesse": 4,
+        "spieltag": 10,
+        "kbl_spieltag": 10,
+        "auslosung": "2026-08-30T18:00:00Z"
+      },
+      {
+        "groesse": 2,
+        "spieltag": 12,
+        "kbl_spieltag": 12,
+        "auslosung": "2026-11-18T19:00:00Z"
+      }
+    ],
+    "8": [
+      {
+        "groesse": 8,
+        "spieltag": 8,
+        "kbl_spieltag": 8,
+        "auslosung": "2026-08-30T18:00:00Z"
+      },
+      {
+        "groesse": 4,
+        "spieltag": 10,
+        "kbl_spieltag": 10,
+        "auslosung": "2026-10-28T19:00:00Z"
+      },
+      {
+        "groesse": 2,
+        "spieltag": 12,
+        "kbl_spieltag": 12,
+        "auslosung": "2026-11-18T19:00:00Z"
+      }
+    ],
+    "16": [
+      {
+        "groesse": 16,
+        "spieltag": 6,
+        "kbl_spieltag": 6,
+        "auslosung": "2026-08-30T18:00:00Z"
+      },
+      {
+        "groesse": 8,
+        "spieltag": 8,
+        "kbl_spieltag": 8,
+        "auslosung": "2026-10-07T18:00:00Z"
+      },
+      {
+        "groesse": 4,
+        "spieltag": 10,
+        "kbl_spieltag": 10,
+        "auslosung": "2026-10-28T19:00:00Z"
+      },
+      {
+        "groesse": 2,
+        "spieltag": 12,
+        "kbl_spieltag": 12,
+        "auslosung": "2026-11-18T19:00:00Z"
+      }
+    ],
+    "32": [
+      {
+        "groesse": 32,
+        "spieltag": 4,
+        "kbl_spieltag": 4,
+        "auslosung": "2026-08-30T18:00:00Z"
+      },
+      {
+        "groesse": 16,
+        "spieltag": 6,
+        "kbl_spieltag": 6,
+        "auslosung": "2026-09-16T18:00:00Z"
+      },
+      {
+        "groesse": 8,
+        "spieltag": 8,
+        "kbl_spieltag": 8,
+        "auslosung": "2026-10-07T18:00:00Z"
+      },
+      {
+        "groesse": 4,
+        "spieltag": 10,
+        "kbl_spieltag": 10,
+        "auslosung": "2026-10-28T19:00:00Z"
+      },
+      {
+        "groesse": 2,
+        "spieltag": 12,
+        "kbl_spieltag": 12,
+        "auslosung": "2026-11-18T19:00:00Z"
+      }
+    ],
+    "64": [
+      {
+        "groesse": 64,
+        "spieltag": 3,
+        "kbl_spieltag": 3,
+        "auslosung": "2026-08-30T18:00:00Z"
+      },
+      {
+        "groesse": 32,
+        "spieltag": 4,
+        "kbl_spieltag": 4,
+        "auslosung": "2026-09-09T18:00:00Z"
+      },
+      {
+        "groesse": 16,
+        "spieltag": 6,
+        "kbl_spieltag": 6,
+        "auslosung": "2026-09-16T18:00:00Z"
+      },
+      {
+        "groesse": 8,
+        "spieltag": 8,
+        "kbl_spieltag": 8,
+        "auslosung": "2026-10-07T18:00:00Z"
+      },
+      {
+        "groesse": 4,
+        "spieltag": 10,
+        "kbl_spieltag": 10,
+        "auslosung": "2026-10-28T19:00:00Z"
+      },
+      {
+        "groesse": 2,
+        "spieltag": 12,
+        "kbl_spieltag": 12,
+        "auslosung": "2026-11-18T19:00:00Z"
+      }
+    ],
+    "128": [
+      {
+        "groesse": 128,
+        "spieltag": 3,
+        "kbl_spieltag": 3,
+        "auslosung": "2026-08-30T18:00:00Z"
+      },
+      {
+        "groesse": 64,
+        "spieltag": 4,
+        "kbl_spieltag": 4,
+        "auslosung": "2026-09-09T18:00:00Z"
+      },
+      {
+        "groesse": 32,
+        "spieltag": 5,
+        "kbl_spieltag": 5,
+        "auslosung": "2026-09-16T18:00:00Z"
+      },
+      {
+        "groesse": 16,
+        "spieltag": 6,
+        "kbl_spieltag": 6,
+        "auslosung": "2026-09-23T18:00:00Z"
+      },
+      {
+        "groesse": 8,
+        "spieltag": 8,
+        "kbl_spieltag": 8,
+        "auslosung": "2026-10-07T18:00:00Z"
+      },
+      {
+        "groesse": 4,
+        "spieltag": 10,
+        "kbl_spieltag": 10,
+        "auslosung": "2026-10-28T19:00:00Z"
+      },
+      {
+        "groesse": 2,
+        "spieltag": 12,
+        "kbl_spieltag": 12,
+        "auslosung": "2026-11-18T19:00:00Z"
+      }
+    ],
+    "256": [
+      {
+        "groesse": 256,
+        "spieltag": 3,
+        "kbl_spieltag": 3,
+        "auslosung": "2026-08-30T18:00:00Z"
+      },
+      {
+        "groesse": 128,
+        "spieltag": 4,
+        "kbl_spieltag": 4,
+        "auslosung": "2026-09-09T18:00:00Z"
+      },
+      {
+        "groesse": 64,
+        "spieltag": 5,
+        "kbl_spieltag": 5,
+        "auslosung": "2026-09-16T18:00:00Z"
+      },
+      {
+        "groesse": 32,
+        "spieltag": 6,
+        "kbl_spieltag": 6,
+        "auslosung": "2026-09-23T18:00:00Z"
+      },
+      {
+        "groesse": 16,
+        "spieltag": 7,
+        "kbl_spieltag": 7,
+        "auslosung": "2026-10-07T18:00:00Z"
+      },
+      {
+        "groesse": 8,
+        "spieltag": 8,
+        "kbl_spieltag": 8,
+        "auslosung": "2026-10-21T18:00:00Z"
+      },
+      {
+        "groesse": 4,
+        "spieltag": 10,
+        "kbl_spieltag": 10,
+        "auslosung": "2026-10-28T19:00:00Z"
+      },
+      {
+        "groesse": 2,
+        "spieltag": 12,
+        "kbl_spieltag": 12,
+        "auslosung": "2026-11-18T19:00:00Z"
+      }
+    ]
+  }
+}
