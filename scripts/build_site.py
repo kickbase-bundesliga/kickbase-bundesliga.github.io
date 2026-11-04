@@ -453,6 +453,8 @@ def build_system(system):
 
     # ---------------- Spieltag-Extras (Kaderwerte, Aufstellungen, Elfen) ----------------
     extras_seasons = export_extras(system, out_dir)
+    from scripts import statistik
+    statistik.build(system, seasons_cfg, quali, managers, league_level, short_league, out_dir)
 
     index = {
         "system": system,

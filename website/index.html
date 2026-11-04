@@ -203,6 +203,40 @@ td.trend{font:600 14px/1 var(--display);white-space:nowrap;width:48px;color:var(
 .note{font-size:13px;color:var(--muted);padding:10px 12px;border-top:1px solid var(--line)}
 .lg{font:600 13px/1 var(--display);letter-spacing:.04em;color:var(--muted);white-space:nowrap}
 
+
+/* Statistik */
+.viz{--series-1:#2a78d6;--series-2:#eb6834;--series-3:#1baf7a;--series-4:#eda100;--series-5:#e87ba4;--series-6:#008300;--grid:var(--line)}
+@media (prefers-color-scheme: dark){:root:where(:not([data-theme="light"])) .viz{--series-1:#3987e5;--series-2:#d95926;--series-3:#199e70;--series-4:#c98500;--series-5:#d55181;--series-6:#008300}}
+:root[data-theme="dark"] .viz{--series-1:#3987e5;--series-2:#d95926;--series-3:#199e70;--series-4:#c98500;--series-5:#d55181;--series-6:#008300}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:10px}
+.kpi{padding:12px 14px}
+.kpi span{display:block;font:700 12px/1.2 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kpi b{display:block;font:800 28px/1.1 var(--display);font-variant-numeric:tabular-nums;margin-top:4px}
+.kpi small{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.stgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;align-items:start}
+.stbox h2{font-size:21px;padding:12px 12px 0}
+.stbox .note{border-top:0;padding-top:4px}
+.chart{position:relative;padding:8px 12px 12px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .axis text{fill:var(--muted);font:600 17px var(--body)}
+.chart .gl{stroke:var(--grid);stroke-width:1}
+.chart .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .dt{stroke:var(--surface);stroke-width:2}
+.chart .bar{fill:var(--series-1)}
+.chart .bar.z{fill:var(--muted)}
+.chart .lbl{font:700 17px var(--display);fill:var(--ink)}
+.chart .hit{fill:transparent;cursor:crosshair}
+.chart .xh{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+.legend-row{display:flex;flex-wrap:wrap;gap:6px 14px;padding:0 12px 4px;font-size:13px;color:var(--muted)}
+.legend-row i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:4px}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--surface);border-radius:6px;padding:7px 9px;font-size:13px;line-height:1.35;white-space:nowrap;z-index:3;transform:translate(-50%,-100%);margin-top:-8px}
+.tip b{font-family:var(--display);font-size:14px}
+.tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+td.lg.l{font-size:13px}
+.stnum{font:700 16px/1 var(--display);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.stnum.neg{color:var(--bad)}
+.subtabs{display:flex;flex-wrap:wrap;gap:6px}
+
 /* Pokal */
 .winner{display:flex;gap:16px;align-items:center;padding:16px;flex-wrap:wrap}
 .winner svg{width:44px;height:44px;color:var(--gold);flex:none}
@@ -453,6 +487,7 @@ footer{max-width:1080px;margin:0 auto;padding:0 16px 32px;color:var(--muted);fon
     <a href="#ruhmeshalle" data-view="ruhmeshalle">Hall of Fame</a>
     <a href="#score" data-view="score">KBL-Score</a>
     <a href="#ewig" data-view="ewig">Ewige Tabelle</a>
+    <a href="#statistik" data-view="statistik">Statistik</a>
     <a href="#manager" data-view="manager">Manager</a>
     <a href="#marktwerte" data-view="marktwerte">Spieler-Marktwerte</a>
     <a href="#info" data-view="info">Info</a>
@@ -472,7 +507,7 @@ const store = { get(k){ try { return localStorage.getItem(k) } catch(e){ return 
 const cache = {};
 async function getJSON(path){ if(!cache[path]) cache[path] = fetch(path).then(r => { if(!r.ok) throw new Error(path); return r.json() }); return cache[path]; }
 
-const state = { systems: [], sys: null, idx: null, view: 'tabellen', season: null, league: null, md: null,
+const state = { systems: [], sys: null, idx: null, view: 'tabellen', season: null, league: null, md: null, stTab: 'ueberblick', stSeason: 'all', stLevel: 'all', stMd: null, stDaySeason: null, stX: 10,
   cupSeason: null, cupRound: null, manager: null, scoreFilter: '', ewigLevel: 1, query: '', hofSeason: null,
   xSeason: null, xMd: null, mgrXSeason: null, mgrMd: null,
   mwLiga: null, mwTage: 1, mwPos: '', mwVerein: '', mwQ: '', mwSort: { key: 5, dir: 'descending' } };
@@ -1216,6 +1251,228 @@ function viewEwig(){
   app.querySelectorAll('[data-level]').forEach(b => b.addEventListener('click', () => { state.ewigLevel = +b.dataset.level; render(); }));
 }
 
+
+/* ---------- Statistik ----------
+   Kennzahlen aus scripts/statistik.py (data/<system>/stats.json). Top/Flop je Spieltag aus season_<S>.json. */
+const ST_TABS = [['ueberblick', 'Überblick'], ['spieltage', 'Spieltage'], ['rekorde', 'Rekorde'], ['manager', 'Manager'], ['aufab', 'Auf & Ab']];
+const f1 = v => v == null ? '–' : Number(v).toLocaleString('de-DE', { maximumFractionDigits: 0 });
+const pct = v => v == null ? '–' : Number(v).toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' %';
+const sNum = v => `<td class="stnum ${v < 0 ? 'neg' : ''}">${fmt(v)}</td>`;
+const lvName = lv => `${state.idx.short} ${lv}`;
+function stTable(head, rows, empty){
+  if (!rows.length) return `<div class="empty">${empty || 'Noch keine Daten.'}</div>`;
+  return `<div class="scroll"><table><thead><tr>${head.map(h => `<th class="${h[1] || ''}">${h[0]}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
+}
+function stBox(title, body, note){ return `<section class="panel stbox"><h2>${title}</h2>${body}${note ? `<div class="note">${note}</div>` : ''}</section>`; }
+function rankRow(i, cells){ return `<tr><td class="pl">${i + 1}</td>${cells}</tr>`; }
+function mdLabel(s, k, stats){
+  const se = stats.seasons.find(x => x.s === s);
+  return `<span title="${se ? esc((state.idx.wettbewerb || 'Bundesliga') + '-Spieltag ' + (se.first + k - 1)) : ''}">${esc(s)} · ${k}. ST</span>`;
+}
+
+// Liniendiagramm: Schnitt je Ebene ueber die Saisons
+function trendChart(stats){
+  const seasons = stats.seasons.filter(s => !s.quali).map(s => s.s).reverse();
+  const lvs = Object.keys(stats.trend).map(Number).sort((a, b) => a - b);
+  if (seasons.length < 2 || !lvs.length) return '<div class="empty">Zu wenige Saisons für einen Verlauf.</div>';
+  const W = 720, H = 300, L = 54, R = 16, T = 12, B = 34;
+  const vals = lvs.flatMap(l => Object.values(stats.trend[l]));
+  let lo = Math.floor(Math.min(...vals) / 50) * 50, hi = Math.ceil(Math.max(...vals) / 50) * 50;
+  if (hi - lo < 100) hi = lo + 100;
+  const x = i => L + (W - L - R) * (seasons.length === 1 ? 0.5 : i / (seasons.length - 1));
+  const y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+  const ticks = []; for (let v = lo; v <= hi; v += (hi - lo) > 300 ? 100 : 50) ticks.push(v);
+  const color = i => `var(--series-${i + 1})`;
+  let svg = `<g class="axis">${ticks.map(v => `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 8}" y="${y(v) + 6}" text-anchor="end">${fmt(v)}</text>`).join('')}
+    ${seasons.map((s, i) => (seasons.length <= 6 || i % Math.ceil(seasons.length / 6) === 0) ? `<text x="${x(i)}" y="${H - 6}" text-anchor="middle">${s}</text>` : '').join('')}</g>`;
+  lvs.forEach((l, li) => {
+    const pts = seasons.map((s, i) => stats.trend[l][s] != null ? [x(i), y(stats.trend[l][s])] : null);
+    const segs = []; let cur = [];
+    pts.forEach(p => { if (p) cur.push(p); else if (cur.length) { segs.push(cur); cur = []; } }); if (cur.length) segs.push(cur);
+    segs.forEach(sg => { svg += `<path class="ln" style="stroke:${color(li)}" d="M${sg.map(p => p.map(n => n.toFixed(1)).join(',')).join('L')}"/>`; });
+    pts.forEach(p => { if (p) svg += `<circle class="dt" cx="${p[0]}" cy="${p[1]}" r="4" style="fill:${color(li)}"/>`; });
+  });
+  svg += `<line class="xh" id="trendXh" y1="${T}" y2="${H - B}" style="display:none"/>`;
+  svg += seasons.map((s, i) => { const w = (W - L - R) / Math.max(1, seasons.length - 1); return `<rect class="hit" data-ti="${i}" x="${x(i) - w / 2}" y="${T}" width="${w}" height="${H - T - B}"/>`; }).join('');
+  const legend = `<div class="legend-row">${lvs.map((l, i) => `<span><i style="background:${color(i)}"></i>${esc(lvName(l))}</span>`).join('')}</div>`;
+  return `<div class="viz">${legend}<div class="chart" id="trendChart" data-seasons='${esc(JSON.stringify(seasons))}'><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Durchschnittliche Spieltagspunkte je Ligaebene und Saison">${svg}</svg><div class="tip" hidden></div></div></div>`;
+}
+function wireTrend(stats){
+  const box = document.getElementById('trendChart'); if (!box) return;
+  const seasons = JSON.parse(box.dataset.seasons), tip = box.querySelector('.tip'), xh = document.getElementById('trendXh');
+  const lvs = Object.keys(stats.trend).map(Number).sort((a, b) => a - b);
+  box.querySelectorAll('.hit').forEach(r => {
+    const show = () => {
+      const i = +r.dataset.ti, s = seasons[i], svg = box.querySelector('svg');
+      const cx = +r.getAttribute('x') + +r.getAttribute('width') / 2;
+      xh.setAttribute('x1', cx); xh.setAttribute('x2', cx); xh.style.display = '';
+      const rows = lvs.filter(l => stats.trend[l][s] != null).map(l => [l, stats.trend[l][s]]).sort((a, b) => b[1] - a[1]);
+      tip.innerHTML = `<b>${esc(s)}</b><br>${rows.map(([l, v]) => `<i style="background:var(--series-${lvs.indexOf(l) + 1})"></i>${esc(lvName(l))}: ${f1(v)}`).join('<br>')}`;
+      const k = svg.getBoundingClientRect().width / 720;
+      tip.hidden = false; tip.style.left = Math.min(Math.max(cx * k + 12, 80), box.clientWidth - 80) + 'px'; tip.style.top = '40px';
+    };
+    r.addEventListener('mouseenter', show); r.addEventListener('click', show);
+  });
+  box.addEventListener('mouseleave', () => { tip.hidden = true; xh.style.display = 'none'; });
+}
+
+// Balkendiagramm: Verteilung der Spieltagspunkte (kurze Achsenbeschriftung, voller Name im Tooltip)
+const DIST_KURZ = ['leer', '< 0', '1–299', '300+', '600+', '900+', '1.200+', '1.500+'];
+function distChart(stats){
+  const d = stats.dist.data[state.stSeason === 'all' ? 'all' : state.stSeason] || {};
+  const lvs = state.stLevel === 'all' ? Object.keys(d) : [String(state.stLevel)].filter(l => d[l]);
+  if (!lvs.length) return '<div class="empty">Keine Spieltagspunkte für diese Auswahl.</div>';
+  const c = stats.dist.labels.map((_, i) => lvs.reduce((a, l) => a + d[l].c[i], 0)), z = lvs.reduce((a, l) => a + d[l].z, 0);
+  const labels = ['nicht aufgestellt', ...stats.dist.labels], vals = [z, ...c], tot = vals.reduce((a, b) => a + b, 0) || 1;
+  const W = 720, H = 260, L = 10, R = 10, T = 26, B = 40, bw = (W - L - R) / labels.length, max = Math.max(...vals) || 1;
+  const svg = labels.map((lab, i) => {
+    const h = (H - T - B) * vals[i] / max, xx = L + i * bw + 3, yy = H - B - h;
+    return `<rect class="bar ${i === 0 ? 'z' : ''}" x="${xx}" y="${yy}" width="${bw - 6}" height="${Math.max(h, 1)}" rx="4"><title>${lab}: ${fmt(vals[i])} (${pct(100 * vals[i] / tot)})</title></rect>
+      <text class="lbl" x="${xx + (bw - 6) / 2}" y="${yy - 7}" text-anchor="middle">${Math.round(100 * vals[i] / tot)} %</text>
+      <g class="axis"><text x="${xx + (bw - 6) / 2}" y="${H - 14}" text-anchor="middle">${DIST_KURZ[i]}</text></g>`;
+  }).join('');
+  return `<div class="viz"><div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Verteilung der Spieltagspunkte">${svg}</svg></div></div>`;
+}
+
+function stFilters(stats, withLevel){
+  return `<section class="controls">
+    <div class="field"><label for="stSeason">Saison</label><select id="stSeason"><option value="all">Alle Saisons</option>${stats.seasons.map(s => `<option value="${s.s}" ${s.s === state.stSeason ? 'selected' : ''}>${s.s}${s.quali ? ' (Quali)' : ''}</option>`).join('')}</select></div>
+    ${withLevel ? `<div class="field"><label for="stLevel">Ebene</label><select id="stLevel"><option value="all">Alle Ebenen</option>${stats.levels.map(l => `<option value="${l}" ${String(l) === String(state.stLevel) ? 'selected' : ''}>${esc(lvName(l))}</option>`).join('')}</select></div>` : ''}
+  </section>`;
+}
+
+function stOverview(stats){
+  const sel = state.stSeason === 'all' ? null : stats.seasons.find(s => s.s === state.stSeason);
+  const base = sel ? sel : stats.total, lv = base.levels || {};
+  const k = state.stLevel === 'all' ? base.all : lv[state.stLevel];
+  const rec = stats.records.high[0];
+  const kp = `<section class="kpis">
+    <div class="panel kpi"><span>Ø je Spieltag</span><b>${f1(k && k.mean)}</b><small>${k ? fmt(k.n) + ' Spieltagswerte' : '–'}</small></div>
+    <div class="panel kpi"><span>Median</span><b>${f1(k && k.median)}</b><small>die Hälfte liegt darüber</small></div>
+    <div class="panel kpi"><span>Anteil 1.000+</span><b>${pct(k && k.p1000)}</b><small>Spieltage mit 1.000 Punkten oder mehr</small></div>
+    <div class="panel kpi"><span>Höchstwert${sel ? ' der Saison' : ' aller Zeiten'}</span><b>${fmt(k && k.max)}</b><small>${!sel && rec && state.stLevel === 'all' ? esc(mgr(rec[1]).n) + ' · ' + esc(rec[2]) : 'Tiefstwert ' + fmt(k && k.min)}</small></div>
+  </section>`;
+  const lvRows = stats.levels.filter(l => lv[l]).map(l => { const x = lv[l]; return `<tr><td class="lg">${esc(lvName(l))}</td>${sel ? `<td class="md">${f1(x.season_mean)}</td><td class="md">${f1(x.season_median)}</td>` : ''}<td class="md">${f1(x.mean)}</td><td class="md">${f1(x.median)}</td><td class="md">${pct(x.p1000)}</td>${sNum(x.max)}${sNum(x.min)}<td class="md">${fmt(x.n)}</td></tr>`; });
+  const lvHead = [['Ebene'], ...(sel ? [['Ø Saison', 'r'], ['Median Saison', 'r']] : []), ['Ø ST', 'r'], ['Median ST', 'r'], ['1.000+', 'r'], ['Max', 'r'], ['Min', 'r'], ['Werte', 'r']];
+  let ligen = '';
+  if (sel) {
+    const lr = sel.leagues.filter(x => state.stLevel === 'all' || String(x.level) === String(state.stLevel)).slice().sort((a, b) => b.mean - a.mean)
+      .map((x, i) => rankRow(i, `<td class="lg">${esc(x.name)}</td><td class="md">${f1(x.mean)}</td><td class="md">${f1(x.median)}</td><td class="md">${pct(x.p1000)}</td>${sNum(x.max)}${sNum(x.min)}`));
+    ligen = stBox(`Ligen ${esc(sel.s)} nach Schnitt`, stTable([['#', 'c'], ['Liga'], ['Ø ST', 'r'], ['Median', 'r'], ['1.000+', 'r'], ['Max', 'r'], ['Min', 'r']], lr),
+      `Spieltagspunkte lagen für ${fmt(sel.mgr_md)} von ${fmt(sel.mgr)} Managern vor${sel.md < sel.md_soll ? ` (${sel.md} von ${sel.md_soll} Spieltagen gespielt)` : ''}.`);
+  }
+  return `${kp}
+  <div class="stgrid">
+    ${stBox(sel ? `Ebenen ${esc(sel.s)}` : 'Ebenen über alle Saisons', stTable(lvHead, lvRows), sel ? 'Ø/Median Saison = Saisonpunkte der Manager mit Spieltagsdaten. Ø/Median ST = je Spieltag.' : 'Alle Spieltagswerte ohne Quali-Saison.')}
+    ${stBox('Ø je Spieltag im Zeitverlauf', trendChart(stats), 'Schnitt der Spieltagspunkte je Ligaebene und Saison. Die laufende Saison zählt bis zum letzten gespielten Spieltag.')}
+    ${ligen}
+    ${stBox(`Verteilung der Spieltagspunkte${sel ? ' ' + esc(sel.s) : ''}`, distChart(stats), 'Wie oft wurden wie viele Punkte geholt. „Nicht aufgestellt“ = 0 Punkte oder komplett leere Aufstellung (−1.100); diese Spieltage zählen bei Schnitt, Median und Tiefstwerten nicht mit.')}
+  </div>`;
+}
+
+async function stDays(stats){
+  const seasons = stats.seasons;
+  if (!seasons.find(s => s.s === state.stDaySeason)) state.stDaySeason = seasons[0].s;
+  const se = seasons.find(s => s.s === state.stDaySeason);
+  const data = await getJSON(`data/${state.sys}/season_${se.s}.json`);
+  const ks = se.matchdays.map(m => m.k);
+  if (!ks.includes(state.stMd)) state.stMd = ks[ks.length - 1];
+  const x = state.stX || 10;
+  const rows = [];
+  data.leagues.forEach(l => { if (state.stLevel !== 'all' && String(l.level) !== String(state.stLevel)) return; l.rows.forEach(r => { const p = (r.md || [])[state.stMd]; if (p && p !== -1100) rows.push({ id: r.id, p, l: l.short }); }); });
+  rows.sort((a, b) => b.p - a.p);
+  const list = (arr, offset) => stTable([['#', 'c'], ['Manager'], ['Liga'], ['Punkte', 'r']], arr.map((r, i) => rankRow(offset(i), `<td><div class="mgr">${nameBtn(r.id)}</div></td><td class="lg">${esc(r.l)}</td>${sNum(r.p)}`)));
+  const top = rows.slice(0, x), flop = rows.slice(-x).reverse();
+  const md = se.matchdays.map(m => { const lv = state.stLevel === 'all' ? [m.mean, m.median] : (m.lv[state.stLevel] || [null, null]);
+    return `<tr${m.k === state.stMd ? ' style="background:var(--surface-2)"' : ''}><td class="md"><button type="button" class="chip" data-stmd="${m.k}">${m.k}</button></td><td class="md">${se.first + m.k - 1}</td><td class="md">${f1(lv[0])}</td><td class="md">${f1(lv[1])}</td>${state.stLevel === 'all' ? `${sNum(m.max)}${sNum(m.min)}<td class="md">${fmt(m.n)}</td>` : ''}</tr>`; });
+  return `<section class="controls">
+    <div class="field"><label for="stDaySeason">Saison</label><select id="stDaySeason">${seasons.map(s => `<option value="${s.s}" ${s.s === se.s ? 'selected' : ''}>${s.s}</option>`).join('')}</select></div>
+    <div class="field"><label for="stMd">Spieltag</label><select id="stMd">${ks.map(k => `<option value="${k}" ${k === state.stMd ? 'selected' : ''}>${k}. Spieltag (${state.idx.wettbewerb} ${se.first + k - 1})</option>`).join('')}</select></div>
+    <div class="field"><label for="stLevel">Ebene</label><select id="stLevel"><option value="all">Alle Ebenen</option>${stats.levels.map(l => `<option value="${l}" ${String(l) === String(state.stLevel) ? 'selected' : ''}>${esc(lvName(l))}</option>`).join('')}</select></div>
+    <div class="field"><label for="stX">Anzahl</label><select id="stX">${[5, 10, 20, 50].map(n => `<option ${n === x ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+  </section>
+  <div class="stgrid">
+    ${stBox(`Top ${x} · ${state.stMd}. Spieltag`, list(top, i => i))}
+    ${stBox(`Flop ${x} · ${state.stMd}. Spieltag`, list(flop, i => rows.length - 1 - i), `${fmt(rows.length)} Manager mit Aufstellung${state.stLevel === 'all' ? '' : ' in ' + esc(lvName(state.stLevel))}. Ohne nicht aufgestellte Manager.`)}
+    ${stBox(`Alle Spieltage ${esc(se.s)}`, stTable([['ST', 'r'], [state.idx.wettbewerb, 'r'], ['Ø', 'r'], ['Median', 'r'], ...(state.stLevel === 'all' ? [['Max', 'r'], ['Min', 'r'], ['Werte', 'r']] : [])], md), 'Spieltag antippen, um Top und Flop zu sehen.')}
+  </div>`;
+}
+
+function stRecords(stats){
+  const r = stats.records;
+  const mdList = arr => stTable([['#', 'c'], ['Punkte', 'r'], ['Manager'], ['Saison · Spieltag'], ['Liga']], arr.map((e, i) => rankRow(i, `${sNum(e[0])}<td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg l">${mdLabel(e[2], e[3], stats)}</td><td class="lg">${esc(e[4])}</td>`)));
+  const seasonList = arr => stTable([['#', 'c'], ['Ø je ST', 'r'], ['Manager'], ['Saison'], ['Liga'], ['ST', 'r'], ['Platz', 'r']], arr.map((e, i) => rankRow(i, `<td class="stnum">${f1(e[0])}</td><td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg">${esc(e[2])}</td><td class="lg">${esc(e[3])}</td><td class="md">${e[4]}</td><td class="md">${e[5] || '–'}</td>`)));
+  return `<div class="stgrid">
+    ${stBox('Höchste Spieltagspunkte', mdList(r.high))}
+    ${stBox('Niedrigste Spieltagspunkte', mdList(r.low), 'Ohne nicht aufgestellte Spieltage (0 bzw. −1.100).')}
+    ${stBox('Beste Saisons (Ø je Spieltag)', seasonList(r.season_best), 'Mindestens 10 Spieltage und 70 % der Saison dabei.')}
+    ${stBox('Schwächste Saisons (Ø je Spieltag)', seasonList(r.season_worst), 'Mindestens 10 Spieltage und 70 % der Saison dabei.')}
+    ${stBox('Meiste Saisonpunkte', stTable([['#', 'c'], ['Punkte', 'r'], ['Manager'], ['Saison'], ['Liga'], ['ST', 'r']], r.season_points.map((e, i) => rankRow(i, `${sNum(e[0])}<td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg">${esc(e[2])}</td><td class="lg">${esc(e[3])}</td><td class="md">${e[4]}</td>`))), 'Abgeschlossene Saisons. Achtung: Die Saisons sind unterschiedlich lang (Spalte ST).')}
+  </div>`;
+}
+
+function stManagers(stats){
+  const m = stats.managers, r = stats.records;
+  const mrow = (cells) => cells;
+  return `<div class="stgrid">
+    ${stBox('Die Konstantesten', stTable([['#', 'c'], ['Manager'], ['Ø', 'r'], ['Schwankung', 'r'], ['ST', 'r']], m.steady.map((e, i) => rankRow(i, `<td><div class="mgr">${nameBtn(e[0])}</div></td><td class="md">${fmt(e[2])}</td><td class="stnum">± ${fmt(e[3])}</td><td class="md">${e[1]}</td>`))), `Kleinste Standardabweichung der Spieltagspunkte, mindestens ${stats.min_md} Spieltage.`)}
+    ${stBox('Die Wundertüten', stTable([['#', 'c'], ['Manager'], ['Ø', 'r'], ['Schwankung', 'r'], ['Max', 'r'], ['Min', 'r']], m.wild.map((e, i) => rankRow(i, `<td><div class="mgr">${nameBtn(e[0])}</div></td><td class="md">${fmt(e[2])}</td><td class="stnum">± ${fmt(e[3])}</td>${sNum(e[4])}${sNum(e[5])}`))), 'Größte Standardabweichung: mal top, mal flop.')}
+    ${stBox('Meiste Spieltagssiege', stTable([['#', 'c'], ['Manager'], ['Siege', 'r'], ['Letzter', 'r'], ['ST', 'r'], ['Quote', 'r']], m.wins.map((e, i) => rankRow(i, `<td><div class="mgr">${nameBtn(e[0])}</div></td><td class="stnum">${e[2]}</td><td class="md">${e[3]}</td><td class="md">${e[1]}</td><td class="md">${pct(100 * e[2] / e[1])}</td>`))), 'Spieltagssieg = meiste Punkte der eigenen Liga an diesem Spieltag.')}
+    ${stBox('Beste Siegquote', stTable([['#', 'c'], ['Manager'], ['Quote', 'r'], ['Siege', 'r'], ['ST', 'r']], m.win_rate.map((e, i) => rankRow(i, `<td><div class="mgr">${nameBtn(e[0])}</div></td><td class="stnum">${pct(100 * e[2] / e[1])}</td><td class="md">${e[2]}</td><td class="md">${e[1]}</td>`))), `Mindestens ${stats.min_md} Spieltage.`)}
+    ${stBox('Am häufigsten Spieltagsletzter', stTable([['#', 'c'], ['Manager'], ['Letzter', 'r'], ['Siege', 'r'], ['ST', 'r']], m.lasts.map((e, i) => rankRow(i, `<td><div class="mgr">${nameBtn(e[0])}</div></td><td class="stnum">${e[3]}</td><td class="md">${e[2]}</td><td class="md">${e[1]}</td>`))), 'Nur Spieltage mit Aufstellung.')}
+    ${stBox('Längste Serien', stTable([['Serie'], ['Länge', 'r'], ['Manager'], ['Saison']], [
+        ...m.streak_win.slice(0, 5).map(e => `<tr><td class="lg">Spieltagssiege am Stück</td><td class="stnum">${e[0]}</td><td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg">${esc(e[2])}</td></tr>`),
+        ...m.streak_1000.slice(0, 5).map(e => `<tr><td class="lg">1.000+ am Stück</td><td class="stnum">${e[0]}</td><td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg">${esc(e[2])}</td></tr>`),
+        ...m.streak_above.slice(0, 5).map(e => `<tr><td class="lg">über Ligaschnitt am Stück</td><td class="stnum">${e[0]}</td><td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg">${esc(e[2])}</td></tr>`)]), 'Je Serie die Top 5, jeweils innerhalb einer Saison.')}
+    ${stBox('Pech: viele Punkte, trotzdem kein Spieltagssieg', stTable([['#', 'c'], ['Punkte', 'r'], ['Manager'], ['Sieger', 'r']], r.bad_luck.map((e, i) => rankRow(i, `${sNum(e[0])}<td><div class="mgr">${nameBtn(e[1])}</div><div class="lg l">${esc(e[4])} · ${mdLabel(e[2], e[3], stats)}</div></td><td class="stnum">${fmt(e[5])}<div class="lg l">${esc(mgr(e[6]).n)}</div></td>`))), 'Zweiter mit den meisten Punkten am Spieltag der eigenen Liga.')}
+    ${stBox('Glück: Spieltagssieg mit wenig Punkten', stTable([['#', 'c'], ['Punkte', 'r'], ['Manager'], ['Liga-Ø', 'r']], r.lucky.map((e, i) => rankRow(i, `${sNum(e[0])}<td><div class="mgr">${nameBtn(e[1])}</div><div class="lg l">${esc(e[4])} · ${mdLabel(e[2], e[3], stats)}</div></td><td class="md">${fmt(e[5])}</td>`))))}
+    ${stBox('Starke Saison ohne Spieltagssieg', stTable([['#', 'c'], ['Ø je ST', 'r'], ['Manager'], ['Saison'], ['Liga'], ['Platz', 'r']], r.no_win.map((e, i) => rankRow(i, `<td class="stnum">${f1(e[0])}</td><td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg">${esc(e[2])}</td><td class="lg">${esc(e[3])}</td><td class="md">${e[5] || '–'}</td>`))))}
+  </div>`;
+}
+
+function stMoves(stats){
+  const mv = stats.moves, lvs = stats.levels.filter(l => mv.by_level[l]);
+  const cell = (g, lv) => g && g.n ? `<td class="md">${g.n}</td><td class="stnum">${f1(g.mean)}</td><td class="md">${pct(g.ueber)}</td><td class="md">${g.platz != null ? String(g.platz).replace('.', ',') : '–'}</td>` : '<td class="md">–</td><td class="md"></td><td class="md"></td><td class="md"></td>';
+  const tab = art => stTable([['Ebene'], ['Anz.', 'r'], ['Ø ST', 'r'], ['über Ø', 'r'], ['Ø Pl.', 'r'], ...(art === 'bleib' ? [] : [[art === 'auf' ? 'wieder ab' : 'wieder auf', 'r']]), ['Ebene-Ø', 'r']],
+    lvs.filter(l => (mv.by_level[l][art] || {}).n).map(l => { const g = mv.by_level[l][art]; return `<tr><td class="lg">${esc(lvName(l))}</td>${cell(g, l)}${art === 'bleib' ? '' : `<td class="md">${pct(g.wieder)}</td>`}<td class="md">${f1(mv.level_mean[l])}</td></tr>`; }));
+  const seasonMove = (arr, title, note) => stBox(title, stTable([['#', 'c'], ['zum Liga-Ø', 'r'], ['Manager'], ['Saison'], ['Wechsel'], ['Pl.', 'r']], arr.map((e, i) => rankRow(i, `<td class="stnum ${e[6] < 0 ? 'neg' : ''}">${e[6] > 0 ? '+' : ''}${fmt(e[6])}</td><td><div class="mgr">${nameBtn(e[1])}</div><div class="lg l">Ø ${f1(e[0])}</div></td><td class="lg">${esc(e[2])}</td><td class="lg">${e[3]} → ${e[4]}</td><td class="md">${e[5] || '–'}</td>`))), note);
+  return `<div class="stgrid">
+    ${stBox('Aufsteiger in der ersten Saison', tab('auf'), 'Wie schlagen sich Aufsteiger in ihrer ersten Saison auf der neuen Ebene? „Über Ø“ = Anteil mit mehr Punkten je Spieltag als der Schnitt aller in dieser Ebene und Saison. „Wieder ab“ = nach einer Saison wieder abgestiegen. Nur Wechsel um eine Ebene.')}
+    ${stBox('Absteiger in der ersten Saison', tab('ab'))}
+    ${stBox('Zum Vergleich: in der Ebene geblieben', tab('bleib'))}
+    ${seasonMove(mv.down_high, 'Abstieg trotz starkem Schnitt', 'Abstieg um eine Ebene, gemessen am Schnitt der eigenen Liga in der Abstiegssaison (Punkte je Spieltag darüber).')}
+    ${seasonMove(mv.up_low, 'Aufstieg mit schwachem Schnitt', 'Aufstieg um eine Ebene, gemessen am Schnitt der eigenen Liga in der Aufstiegssaison.')}
+  </div>`;
+}
+
+async function viewStats(){
+  const idx = state.idx;
+  let stats;
+  try { stats = await getJSON(`data/${state.sys}/stats.json`); } catch (e) { stats = null; }
+  if (!stats || !stats.seasons.length) { app.innerHTML = `<section><div class="eyebrow">${esc(idx.name)}</div><h1>Statistik</h1></section><div class="panel empty">Für dieses Ligasystem gibt es noch keine Spieltagsdaten.</div>`; return; }
+  if (!ST_TABS.find(t => t[0] === state.stTab)) state.stTab = 'ueberblick';
+  if (state.stSeason !== 'all' && !stats.seasons.find(s => s.s === state.stSeason)) state.stSeason = 'all';
+  if (state.stLevel !== 'all' && !stats.levels.includes(+state.stLevel)) state.stLevel = 'all';
+  let body = '';
+  if (state.stTab === 'ueberblick') body = stFilters(stats, true) + stOverview(stats);
+  else if (state.stTab === 'spieltage') body = await stDays(stats);
+  else if (state.stTab === 'rekorde') body = stRecords(stats);
+  else if (state.stTab === 'manager') body = stManagers(stats);
+  else body = stMoves(stats);
+  app.innerHTML = `<section class="headline"><div><div class="eyebrow">Zahlen aus allen Spieltagen</div><h1>Statistik</h1>
+    <p class="lede">Schnitte, Rekorde und Kurioses aus allen Spieltagspunkten seit ${esc(stats.seasons[stats.seasons.length - 1].s)}. Ältere Saisons haben nicht für jede Liga Spieltagspunkte – gezählt wird, was vorliegt.</p></div></section>
+  <section class="subtabs">${ST_TABS.map(t => `<button type="button" class="chip" data-sttab="${t[0]}" aria-pressed="${t[0] === state.stTab}">${t[1]}</button>`).join('')}</section>
+  ${body}`;
+  app.querySelectorAll('[data-sttab]').forEach(b => b.addEventListener('click', () => { state.stTab = b.dataset.sttab; render(); }));
+  on('#stSeason', 'change', e => { state.stSeason = e.target.value; render(); });
+  on('#stLevel', 'change', e => { state.stLevel = e.target.value; render(); });
+  on('#stDaySeason', 'change', e => { state.stDaySeason = e.target.value; state.stMd = null; render(); });
+  on('#stMd', 'change', e => { state.stMd = +e.target.value; render(); });
+  on('#stX', 'change', e => { state.stX = +e.target.value; render(); });
+  app.querySelectorAll('[data-stmd]').forEach(b => b.addEventListener('click', () => { state.stMd = +b.dataset.stmd; render(); window.scrollTo(0, 0); }));
+  if (state.stTab === 'ueberblick') wireTrend(stats);
+}
+
 /* ---------- Manager ---------- */
 function careerCurve(real, gaps){
   // Saisons ohne Tabelle (gaps) erscheinen als gestrichelter, leerer Punkt
@@ -1618,7 +1875,7 @@ async function render(){
   document.querySelectorAll('#nav a').forEach(a => a.setAttribute('aria-current', a.dataset.view === state.view ? 'page' : 'false'));
   if (state.view !== 'auslosung' && drawLoop) { clearInterval(drawLoop); drawLoop = null; }
   updateDrawBar();
-  const views = { auslosung: viewDraw, tabellen: viewTables, spieltag: viewMatchday, pokal: viewCup, ruhmeshalle: viewHall, score: viewScore, ewig: viewEwig, manager: viewManager, marktwerte: viewMarktwerte, info: viewInfo };
+  const views = { auslosung: viewDraw, tabellen: viewTables, spieltag: viewMatchday, pokal: viewCup, ruhmeshalle: viewHall, score: viewScore, ewig: viewEwig, statistik: viewStats, manager: viewManager, marktwerte: viewMarktwerte, info: viewInfo };
   try { await (views[state.view] || viewTables)(); }
   catch (e) { console.error(e); app.innerHTML = `<div class="empty">Diese Ansicht konnte nicht geladen werden (${esc(e.message)}). Lade die Seite neu.</div>`; }
 }
@@ -1627,7 +1884,7 @@ async function selectSystem(id){
   state.sys = id; store.set('kbl.sys', id);
   state.idx = await getJSON(`data/${id}/index.json`);
   Object.assign(state, { season: null, league: null, md: null, cupSeason: null, cupRound: null, manager: null, scoreFilter: '', query: '',
-    xSeason: null, xMd: null, mgrXSeason: null, mgrMd: null, hofSeason: null });
+    xSeason: null, xMd: null, mgrXSeason: null, mgrMd: null, hofSeason: null, stSeason: 'all', stLevel: 'all', stMd: null, stDaySeason: null });
   const s = state.systems.find(x => x.id === id);
   document.documentElement.dataset.sys = id;
   document.getElementById('brand').innerHTML = `${s.icon ? `<img src="data/${esc(id)}/logo_icon.png" alt="">` : ''}${esc(s.short)} <small>${esc(s.name)}</small>`;

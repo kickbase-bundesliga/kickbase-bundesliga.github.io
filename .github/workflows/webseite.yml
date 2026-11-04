@@ -12,6 +12,7 @@ on:
       - "config/**"
       - "website/**"
       - "scripts/build_site.py"
+      - "scripts/statistik.py"
   workflow_dispatch:
   workflow_call:
     inputs:

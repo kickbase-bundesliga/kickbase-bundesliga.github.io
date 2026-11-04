@@ -207,3 +207,11 @@ die Spieltagspunkte (mal Liga-Faktor).
 - `website/` – Vorlage der Webseite; `docs/` – fertige Webseite (nur lokal, wird online neu gebaut)
 - `scripts/` – alle Werkzeuge; `automatik.py`, `update.py`, `pokal.py` – Einstiegspunkte
 - `.github/workflows/` – die Abläufe auf GitHub
+
+### Statistik-Reiter
+
+`scripts/statistik.py` (läuft beim Seitenbau mit) rechnet aus allen Spieltagspunkten `docs/data/<system>/stats.json`:
+Schnitt/Median je Spieltag, Saison, Ebene und Liga, Verlauf je Ebene, Verteilung, Rekorde, Konstanz, Spieltagssiege,
+Serien, Pech & Glück sowie Auf- und Abstiege. 0 Punkte und genau −1.100 (komplett leere Aufstellung) gelten als
+„nicht aufgestellt“ und zählen bei Schnitten und Tiefstwerten nicht mit. Top/Flop je Spieltag rechnet die Seite
+direkt aus `season_<Saison>.json`.
