@@ -90,6 +90,13 @@ def league_score(place, league, config):
         if league in lc["names"]:
             scores = lc.get("kbl_score", [])
             return scores[place - 1] if 1 <= place <= len(scores) else 0
+    # Ligen frueherer Saisons (config "alte_ligen": Name -> Ebene) zaehlen wie ihre Ebene
+    alt = (config.get("alte_ligen") or {}).get(league)
+    if alt is not None:
+        for lc in config["leagues"]:
+            if int(lc["level"]) == int(alt):
+                scores = lc.get("kbl_score", [])
+                return scores[place - 1] if 1 <= place <= len(scores) else 0
     return 0
 
 
@@ -190,6 +197,12 @@ def build_system(system):
             league_cfg[n] = lc
 
     managers = {mid: m for mid, m in database.items() if str(mid) != admin}
+
+    # Ligen frueherer Saisons mit fester Ebene (config "alte_ligen"), ohne Farbzonen
+    for n, lv in (config.get("alte_ligen") or {}).items():
+        league_level[n] = int(lv)
+        base = next((lc for lc in config["leagues"] if int(lc["level"]) == int(lv)), {})
+        league_cfg[n] = {"distribution": [], "kbl_score": base.get("kbl_score", []), "cup_factor": base.get("cup_factor")}
 
     # Ligen, die es frueher gab, aber nicht mehr in der Config stehen (z.B. "KWBL - Liga 4D"):
     # Level aus dem Namen ableiten und Zonen der gleichen Ebene verwenden.

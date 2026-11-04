@@ -94,6 +94,13 @@ def calculate_score(place, league, config):
                 return scores[place - 1]
             else:
                 return 0  # Invalid place
+    # Ligen frueherer Saisons (config "alte_ligen": Name -> Ebene) zaehlen wie ihre Ebene
+    alt = (config.get("alte_ligen") or {}).get(league)
+    if alt is not None:
+        for league_config in config.get("leagues", []):
+            if int(league_config["level"]) == int(alt):
+                scores = league_config.get("kbl_score", [])
+                return scores[place - 1] if 1 <= place <= len(scores) else 0
     return 0  # League not found
 
 
