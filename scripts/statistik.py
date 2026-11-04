@@ -4,8 +4,9 @@ Statistik-Reiter: Kennzahlen aus allen Spieltagspunkten eines Ligasystems (docs/
 
 Datenbasis: MdPoints je Manager und Saison aus der Datenbank. Aeltere Saisons haben nicht fuer alle
 Ligen Spieltagspunkte (nur Abschlusstabellen) - die zaehlen dann nur bei den Saisonpunkten mit.
-Ein Spieltag mit 0 Punkten oder genau -1.100 (Kickbase-Strafe fuer eine komplett leere Aufstellung,
-11 x -100) gilt als "nicht aufgestellt" (bzw. noch nicht dabei) und zaehlt bei
+Ein Spieltag mit 0 oder Minuspunkten gilt als "nicht oder unvollstaendig aufgestellt" (Kickbase zieht
+je fehlendem Spieler 100 Punkte ab, leer = -1.100; mit 11 Spielern ins Minus ist praktisch ausgeschlossen)
+bzw. noch nicht dabei und zaehlt bei
 Schnitt, Median, Tiefstwerten und Spieltagsplaetzen nicht mit, nur in der Verteilung als eigene Gruppe.
 
 Wird von build_site.py aufgerufen (build_system).
@@ -19,8 +20,7 @@ TOP = 25                 # Laenge der Bestenlisten
 MIN_MD_KONSTANZ = 30     # mindestens so viele Spieltage fuer Konstanz-Listen
 MIN_ANTEIL_SAISON = 0.7  # Saison-Bestwerte: mindestens 70 % der gespielten Spieltage dabei
 MIN_MD_SAISON = 10       # ... und mindestens 10 Spieltage (laufende Saison erst ab dem 10.)
-LEER = -1100             # komplett leere Aufstellung
-BUCKETS = [(-10 ** 9, 0, "unter 0"), (1, 299, "1–299"), (300, 599, "300–599"), (600, 899, "600–899"),
+BUCKETS = [(1, 299, "1–299"), (300, 599, "300–599"), (600, 899, "600–899"),
            (900, 1199, "900–1.199"), (1200, 1499, "1.200–1.499"), (1500, 10 ** 9, "ab 1.500")]
 
 
@@ -58,7 +58,7 @@ def build(system, seasons_cfg, quali, managers, league_level, short_league, out_
             d = m.get(s)
             if not isinstance(d, dict) or not d.get("League") or d["League"] not in league_level:
                 continue
-            md = [0 if p == LEER else (p or 0) for p in (d.get("MdPoints") or [])[1:]]
+            md = [p if (p or 0) > 0 else 0 for p in (d.get("MdPoints") or [])[1:]]
             rs.append((mid, d["League"], league_level[d["League"]], md, d.get("Points"), d.get("Place")))
         rows[s] = rs
         last_md[s] = max([i + 1 for r in rs for i, p in enumerate(r[3]) if p] or [0])

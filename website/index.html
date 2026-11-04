@@ -1317,13 +1317,13 @@ function wireTrend(stats){
 }
 
 // Balkendiagramm: Verteilung der Spieltagspunkte (kurze Achsenbeschriftung, voller Name im Tooltip)
-const DIST_KURZ = ['leer', '< 0', '1–299', '300+', '600+', '900+', '1.200+', '1.500+'];
+const DIST_KURZ = ['≤ 0', '1–299', '300+', '600+', '900+', '1.200+', '1.500+'];
 function distChart(stats){
   const d = stats.dist.data[state.stSeason === 'all' ? 'all' : state.stSeason] || {};
   const lvs = state.stLevel === 'all' ? Object.keys(d) : [String(state.stLevel)].filter(l => d[l]);
   if (!lvs.length) return '<div class="empty">Keine Spieltagspunkte für diese Auswahl.</div>';
   const c = stats.dist.labels.map((_, i) => lvs.reduce((a, l) => a + d[l].c[i], 0)), z = lvs.reduce((a, l) => a + d[l].z, 0);
-  const labels = ['nicht aufgestellt', ...stats.dist.labels], vals = [z, ...c], tot = vals.reduce((a, b) => a + b, 0) || 1;
+  const labels = ['nicht/unvollständig aufgestellt (0 oder minus)', ...stats.dist.labels], vals = [z, ...c], tot = vals.reduce((a, b) => a + b, 0) || 1;
   const W = 720, H = 260, L = 10, R = 10, T = 26, B = 40, bw = (W - L - R) / labels.length, max = Math.max(...vals) || 1;
   const svg = labels.map((lab, i) => {
     const h = (H - T - B) * vals[i] / max, xx = L + i * bw + 3, yy = H - B - h;
@@ -1366,7 +1366,7 @@ function stOverview(stats){
     ${stBox(sel ? `Ebenen ${esc(sel.s)}` : 'Ebenen über alle Saisons', stTable(lvHead, lvRows), sel ? 'Ø/Median Saison = Saisonpunkte der Manager mit Spieltagsdaten. Ø/Median ST = je Spieltag.' : 'Alle Spieltagswerte ohne Quali-Saison.')}
     ${stBox('Ø je Spieltag im Zeitverlauf', trendChart(stats), 'Schnitt der Spieltagspunkte je Ligaebene und Saison. Die laufende Saison zählt bis zum letzten gespielten Spieltag.')}
     ${ligen}
-    ${stBox(`Verteilung der Spieltagspunkte${sel ? ' ' + esc(sel.s) : ''}`, distChart(stats), 'Wie oft wurden wie viele Punkte geholt. „Nicht aufgestellt“ = 0 Punkte oder komplett leere Aufstellung (−1.100); diese Spieltage zählen bei Schnitt, Median und Tiefstwerten nicht mit.')}
+    ${stBox(`Verteilung der Spieltagspunkte${sel ? ' ' + esc(sel.s) : ''}`, distChart(stats), 'Wie oft wurden wie viele Punkte geholt. „≤ 0“ = nicht oder unvollständig aufgestellt (0 oder Minuspunkte, Kickbase zieht je fehlendem Spieler 100 ab); diese Spieltage zählen bei Schnitt, Median, Tiefstwerten und Flops nicht mit.')}
   </div>`;
 }
 
@@ -1379,7 +1379,7 @@ async function stDays(stats){
   if (!ks.includes(state.stMd)) state.stMd = ks[ks.length - 1];
   const x = state.stX || 10;
   const rows = [];
-  data.leagues.forEach(l => { if (state.stLevel !== 'all' && String(l.level) !== String(state.stLevel)) return; l.rows.forEach(r => { const p = (r.md || [])[state.stMd]; if (p && p !== -1100) rows.push({ id: r.id, p, l: l.short }); }); });
+  data.leagues.forEach(l => { if (state.stLevel !== 'all' && String(l.level) !== String(state.stLevel)) return; l.rows.forEach(r => { const p = (r.md || [])[state.stMd]; if (p > 0) rows.push({ id: r.id, p, l: l.short }); }); });
   rows.sort((a, b) => b.p - a.p);
   const list = (arr, offset) => stTable([['#', 'c'], ['Manager'], ['Liga'], ['Punkte', 'r']], arr.map((r, i) => rankRow(offset(i), `<td><div class="mgr">${nameBtn(r.id)}</div></td><td class="lg">${esc(r.l)}</td>${sNum(r.p)}`)));
   const top = rows.slice(0, x), flop = rows.slice(-x).reverse();
@@ -1393,7 +1393,7 @@ async function stDays(stats){
   </section>
   <div class="stgrid">
     ${stBox(`Top ${x} · ${state.stMd}. Spieltag`, list(top, i => i))}
-    ${stBox(`Flop ${x} · ${state.stMd}. Spieltag`, list(flop, i => rows.length - 1 - i), `${fmt(rows.length)} Manager mit Aufstellung${state.stLevel === 'all' ? '' : ' in ' + esc(lvName(state.stLevel))}. Ohne nicht aufgestellte Manager.`)}
+    ${stBox(`Flop ${x} · ${state.stMd}. Spieltag`, list(flop, i => rows.length - 1 - i), `${fmt(rows.length)} Manager mit Aufstellung${state.stLevel === 'all' ? '' : ' in ' + esc(lvName(state.stLevel))}. Ohne Spieltage mit 0 oder Minuspunkten (nicht oder unvollständig aufgestellt).`)}
     ${stBox(`Alle Spieltage ${esc(se.s)}`, stTable([['ST', 'r'], [state.idx.wettbewerb, 'r'], ['Ø', 'r'], ['Median', 'r'], ...(state.stLevel === 'all' ? [['Max', 'r'], ['Min', 'r'], ['Werte', 'r']] : [])], md), 'Spieltag antippen, um Top und Flop zu sehen.')}
   </div>`;
 }
@@ -1404,7 +1404,7 @@ function stRecords(stats){
   const seasonList = arr => stTable([['#', 'c'], ['Ø je ST', 'r'], ['Manager'], ['Saison'], ['Liga'], ['ST', 'r'], ['Platz', 'r']], arr.map((e, i) => rankRow(i, `<td class="stnum">${f1(e[0])}</td><td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg">${esc(e[2])}</td><td class="lg">${esc(e[3])}</td><td class="md">${e[4]}</td><td class="md">${e[5] || '–'}</td>`)));
   return `<div class="stgrid">
     ${stBox('Höchste Spieltagspunkte', mdList(r.high))}
-    ${stBox('Niedrigste Spieltagspunkte', mdList(r.low), 'Ohne nicht aufgestellte Spieltage (0 bzw. −1.100).')}
+    ${stBox('Niedrigste Spieltagspunkte', mdList(r.low), 'Ohne Spieltage mit 0 oder Minuspunkten (nicht oder unvollständig aufgestellt).')}
     ${stBox('Beste Saisons (Ø je Spieltag)', seasonList(r.season_best), 'Mindestens 10 Spieltage und 70 % der Saison dabei.')}
     ${stBox('Schwächste Saisons (Ø je Spieltag)', seasonList(r.season_worst), 'Mindestens 10 Spieltage und 70 % der Saison dabei.')}
     ${stBox('Meiste Saisonpunkte', stTable([['#', 'c'], ['Punkte', 'r'], ['Manager'], ['Saison'], ['Liga'], ['ST', 'r']], r.season_points.map((e, i) => rankRow(i, `${sNum(e[0])}<td><div class="mgr">${nameBtn(e[1])}</div></td><td class="lg">${esc(e[2])}</td><td class="lg">${esc(e[3])}</td><td class="md">${e[4]}</td>`))), 'Abgeschlossene Saisons. Achtung: Die Saisons sind unterschiedlich lang (Spalte ST).')}

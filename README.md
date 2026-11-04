@@ -212,6 +212,6 @@ die Spieltagspunkte (mal Liga-Faktor).
 
 `scripts/statistik.py` (läuft beim Seitenbau mit) rechnet aus allen Spieltagspunkten `docs/data/<system>/stats.json`:
 Schnitt/Median je Spieltag, Saison, Ebene und Liga, Verlauf je Ebene, Verteilung, Rekorde, Konstanz, Spieltagssiege,
-Serien, Pech & Glück sowie Auf- und Abstiege. 0 Punkte und genau −1.100 (komplett leere Aufstellung) gelten als
-„nicht aufgestellt“ und zählen bei Schnitten und Tiefstwerten nicht mit. Top/Flop je Spieltag rechnet die Seite
+Serien, Pech & Glück sowie Auf- und Abstiege. 0 und Minuspunkte (Kickbase zieht je fehlendem Spieler 100 ab) gelten als
+„nicht oder unvollständig aufgestellt“ und zählen bei Schnitten und Tiefstwerten nicht mit. Top/Flop je Spieltag rechnet die Seite
 direkt aus `season_<Saison>.json`.
