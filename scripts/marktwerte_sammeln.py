@@ -17,7 +17,7 @@ Die Webseite (Reiter "Spieler-Marktwerte") rechnet daraus die Differenzen zu
     python scripts/marktwerte_sammeln.py --neu      heutigen Stand neu holen und ueberschreiben
 
 Zusaetzlich je Liga marktwerte/<liga>/statistik.json mit Saisonstatistik je Spieler
-(Gesamtpunkte, Durchschnitt, Einsaetze, Startelf). Die gibt es nur im Spieler-Detail
+(Gesamtpunkte, Durchschnitt, Einsaetze, Startelf) sowie Vor- und Nachname (fn/ln). Die gibt es nur im Spieler-Detail
 (/competitions/<c>/players/<id>), also eine Abfrage je Spieler. Damit das klein bleibt, wird
 jeder Spieler nur einmal je fertigem Spieltag abgefragt (nicht taeglich) und je Lauf und Liga
 hoechstens STATISTIK_MAX Spieler (die wertvollsten zuerst). Beim ersten Mal dauert es also ein
@@ -202,8 +202,9 @@ def statistik_aktualisieren(api, wettbewerb, ordner, zeilen):
     if fertig < int(daten.get("spieltag") or 0):
         spieler.clear()
     daten["spieltag"] = fertig
+    # faellig: noch nie geholt, aelter als der letzte fertige Spieltag oder noch ohne Vor-/Nachname
     offen = [pid for pid in sorted(zeilen, key=lambda p: -zeilen[p][5])
-             if pid not in spieler or int(spieler[pid].get("nach") or -1) < fertig]
+             if pid not in spieler or int(spieler[pid].get("nach") or -1) < fertig or "fn" not in spieler[pid]]
     geholt, fehler = 0, 0
     for pid in offen[:STATISTIK_MAX]:
         d = api.get("/competitions/%d/players/%s" % (wettbewerb, pid))
@@ -216,7 +217,8 @@ def statistik_aktualisieren(api, wettbewerb, ordner, zeilen):
             continue
         zahl = lambda k: d.get(k) if isinstance(d.get(k), (int, float)) else None
         spieler[pid] = {"tp": zahl("tp"), "ap": zahl("ap"), "e": zahl("ismc"), "s": zahl("smc"),
-                        "sp": zahl("smdc"), "nach": fertig}
+                        "sp": zahl("smdc"), "nach": fertig,
+                        "fn": (d.get("fn") or "").strip(), "ln": (d.get("ln") or "").strip()}
         geholt += 1
     if geholt:
         daten["stand"] = heute_berlin()

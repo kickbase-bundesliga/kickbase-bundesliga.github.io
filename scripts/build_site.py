@@ -726,8 +726,9 @@ def export_marktwerte(out_dir):
             diffs = [mw - int(vergleich[t][1][pid]["Marktwert"]) if pid in vergleich[t][1] else None for t in MW_TAGE]
             st = stat.get(pid) or {}
             # Spalten 10-13: Gesamtpunkte, Durchschnitt, Einsaetze, Startelf (None = noch nicht geholt)
+            # Spalte 14: Vorname (aus dem Spieler-Detail, "" = keiner/noch nicht geholt)
             spieler.append([pid, z["Spieler"], z["Verein"], z["Vereinsname"], MW_POS.get(z["Position"], ""), mw] + diffs
-                           + [st.get("tp"), st.get("ap"), st.get("e"), st.get("s")])
+                           + [st.get("tp"), st.get("ap"), st.get("e"), st.get("s"), st.get("fn") or ""])
         spieler.sort(key=lambda r: -r[5])
         os.makedirs(ziel, exist_ok=True)
         with open(os.path.join(ziel, ordner + ".json"), "w", encoding="utf8") as fp:
@@ -738,11 +739,11 @@ def export_marktwerte(out_dir):
         # utf-8-sig + Semikolon: oeffnet sich in Excel direkt richtig
         with open(os.path.join(ziel, ordner + ".csv"), "w", encoding="utf-8-sig", newline="") as fp:
             w = csv.writer(fp, delimiter=";")
-            w.writerow(["Spieler", "Verein", "Position", "Marktwert %s" % stand]
+            w.writerow(["Vorname", "Nachname", "Verein", "Position", "Marktwert %s" % stand]
                        + ["Differenz %d Tag%s" % (t, "" if t == 1 else "e") for t in MW_TAGE]
                        + ["Punkte", "Punkte-Schnitt", "Einsaetze", "Startelf"])
             for r in spieler:
-                w.writerow([r[1], r[3] or r[2], r[4], r[5]] + ["" if v is None else v for v in r[6:]])
+                w.writerow([r[14], r[1], r[3] or r[2], r[4], r[5]] + ["" if v is None else v for v in r[6:14]])
         index.append({"id": ordner, "name": name, "stand": stand, "spieler": len(spieler)})
     if index:
         with open(os.path.join(ziel, "index.json"), "w", encoding="utf8") as fp:

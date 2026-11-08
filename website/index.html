@@ -237,6 +237,7 @@ td.lg.l{font-size:13px}
 .stnum.neg{color:var(--bad)}
 .subtabs{display:flex;flex-wrap:wrap;gap:6px}
 
+.mw-fn{color:var(--muted)}
 /* Pokal */
 .winner{display:flex;gap:16px;align-items:center;padding:16px;flex-wrap:wrap}
 .winner svg{width:44px;height:44px;color:var(--gold);flex:none}
@@ -1788,7 +1789,7 @@ async function viewMarktwerte(){
   const vereine = [...new Map(d.spieler.map(r => [r[2], r[3] || r[2]])).entries()].sort((a, b) => a[1].localeCompare(b[1], 'de'));
   const q = state.mwQ.trim().toLowerCase();
   const rows = d.spieler.filter(r => (!state.mwPos || r[4] === state.mwPos) && (!state.mwVerein || r[2] === state.mwVerein)
-    && (!q || `${r[1]} ${r[2]} ${r[3]}`.toLowerCase().includes(q)));
+    && (!q || `${r[14] || ''} ${r[1]} ${r[2]} ${r[3]}`.toLowerCase().includes(q)));
   const key = state.mwSort.key === 'diff' ? DI : state.mwSort.key, f = state.mwSort.dir === 'ascending' ? 1 : -1;
   rows.sort((a, b) => {
     const x = a[key], y = b[key];
@@ -1830,7 +1831,7 @@ async function viewMarktwerte(){
         <th ${sortAttr(5)}>${zweiFormen('Marktwert', 'MW')}</th><th ${sortAttr('diff')}>${zweiFormen('Differenz ' + zeitraum(MW_TAGE[ti]), '+/−')}</th>
         ${mitStat ? `<th ${sortAttr(10)} title="Gesamtpunkte der Saison">${zweiFormen('Punkte', 'Pkt.')}</th><th ${sortAttr(11)} title="Durchschnittspunkte je Einsatz">Ø</th>
         <th ${sortAttr(12)} title="Einsätze in der Saison">${zweiFormen('Einsätze', 'Eins.')}</th><th ${sortAttr(13)} title="Davon in der Startelf">${zweiFormen('Startelf', 'S11')}</th>` : ''}</tr></thead>
-      <tbody>${rows.map((r, i) => `<tr><td class="c lg mw-nr">${i + 1}</td><td><b>${esc(r[1])}</b></td><td class="lg" title="${esc(r[3])}">${esc(r[2])}</td><td class="lg mw-pos">${esc(r[4])}</td>
+      <tbody>${rows.map((r, i) => `<tr><td class="c lg mw-nr">${i + 1}</td><td>${r[14] ? `<span class="mw-fn">${esc(r[14])} </span>` : ''}<b>${esc(r[1])}</b></td><td class="lg" title="${esc(r[3])}">${esc(r[2])}</td><td class="lg mw-pos">${esc(r[4])}</td>
         <td class="pts">${zweiFormen(euro(r[5]), kurz(r[5]))}</td><td class="mwd">${diffHTML(r[DI])}</td>
         ${mitStat ? `<td class="md mws">${statZahl(r[10])}</td><td class="md mws">${statZahl(r[11])}</td><td class="md mws">${statZahl(r[12])}</td><td class="md mws">${statZahl(r[13])}</td>` : ''}</tr>`).join('')}</tbody>
     </table>${rows.length ? '' : '<div class="empty">Kein Spieler gefunden.</div>'}</div>
