@@ -57838,105 +57838,6 @@
             "FinalOnly": true
         }
     },
-    "09034": {
-        "Username": "Allerechte Steffen",
-        "Info": {
-            "KBL Score": 12,
-            "League": null,
-            "Place": 0
-        },
-        "2026B": {
-            "League": null,
-            "Place": null,
-            "Points": null,
-            "MdPoints": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "MdPlace": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "2023A": {
-            "League": "K2BL - Liga 3",
-            "Place": 10,
-            "Points": 11351,
-            "MdPoints": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "MdPlace": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "FinalOnly": true
-        }
-    },
     "09035": {
         "Username": "Kevin",
         "Info": {
@@ -58987,7 +58888,7 @@
     "09040": {
         "Username": "kickbasecoach94",
         "Info": {
-            "KBL Score": 71,
+            "KBL Score": 83,
             "League": null,
             "Place": 0
         },
@@ -59178,6 +59079,52 @@
             "League": "K2BL - Liga 2",
             "Place": 16,
             "Points": 10411,
+            "MdPoints": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "MdPlace": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "FinalOnly": true
+        },
+        "2023A": {
+            "League": "K2BL - Liga 3",
+            "Place": 10,
+            "Points": 11351,
             "MdPoints": [
                 0,
                 0,
