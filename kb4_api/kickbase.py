@@ -1,4 +1,9 @@
 import requests
+
+try:
+    from scripts.kennung import USER_AGENT
+except ImportError:
+    USER_AGENT = "KBL-Ligaseite/1.0 (betrieben von Poeti, KBL-Admin; +https://kickbase-bundesliga.github.io)"
 import json
 
 from datetime import datetime, timedelta, timezone
@@ -117,7 +122,8 @@ class Kickbase:
 
         headers = {
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT
         }
         if authenticated:
             headers["Cookie"] = self._auth_cookie()
@@ -130,7 +136,8 @@ class Kickbase:
 
         headers = {
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT
         }
         if authenticated:
             headers["Cookie"] = self._auth_cookie()

@@ -35,6 +35,12 @@ import time
 import urllib.error
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+try:
+    from scripts.kennung import USER_AGENT
+except ImportError:  # direkt als scripts/<datei>.py gestartet
+    from kennung import USER_AGENT
+
 BASIS = "https://api.kickbase.com"
 PAUSE = 0.4          # Sekunden zwischen zwei Anfragen (API schonen)
 COMPETITION = 1      # 1 = Bundesliga
@@ -60,7 +66,7 @@ class Api:
         daten = json.dumps(body).encode("utf-8") if body is not None else None
         req = urllib.request.Request(BASIS + pfad, data=daten, method=methode)
         req.add_header("Accept", "application/json")
-        req.add_header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+        req.add_header("User-Agent", USER_AGENT)
         if daten is not None:
             req.add_header("Content-Type", "application/json")
         if self.token:
