@@ -53455,7 +53455,7 @@
     "09012": {
         "Username": "Rock Lee",
         "Info": {
-            "KBL Score": 349,
+            "KBL Score": 395,
             "League": null,
             "Place": 0
         },
@@ -53738,6 +53738,52 @@
             "League": "K2BL - Liga 2",
             "Place": 6,
             "Points": 13999,
+            "MdPoints": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "MdPlace": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "FinalOnly": true
+        },
+        "2025B": {
+            "League": "K2BL - Liga 1",
+            "Place": 17,
+            "Points": null,
             "MdPoints": [
                 0,
                 0,
