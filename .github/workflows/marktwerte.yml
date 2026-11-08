@@ -6,7 +6,7 @@ name: Spieler-Marktwerte
 
 on:
   schedule:
-    - cron: "41 4 * * *"     # taeglich ca. 5:41 Uhr Winterzeit / 6:41 Uhr Sommerzeit (nach dem Kickbase-Marktwert-Update in der Nacht)
+    - cron: "7 0 * * *"      # taeglich ca. 1:07 Uhr Winterzeit / 2:07 Uhr Sommerzeit (nach dem Kickbase-Marktwert-Update am Abend; GitHub startet oft etwas spaeter)
   workflow_dispatch:
     inputs:
       neu:
