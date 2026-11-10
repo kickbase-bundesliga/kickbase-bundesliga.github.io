@@ -1,6 +1,6 @@
 # Spieler-Aktionen (Punkteverteilung) fuer einzelne Spieltage holen - nur manuell.
-# Die Daten werden NICHT ins Repository geschrieben, sondern nur als Workflow-Artefakt
-# (1 Tag aufbewahrt) abgelegt; Claude laedt es fuer die Aktionsauswertung herunter und loescht es danach.
+# Die Daten werden NICHT ins Repository geschrieben, sondern nur gepackt im Log des Laufs ausgegeben;
+# Claude holt sie fuer die Aktionsauswertung ab und loescht den Lauf danach.
 name: Aktionen export
 
 on:
@@ -12,7 +12,6 @@ on:
 
 permissions:
   contents: read
-  actions: write
 
 jobs:
   holen:
@@ -34,8 +33,10 @@ jobs:
           PYTHONIOENCODING: utf-8
           PYTHONUNBUFFERED: "1"
         run: python scripts/aktionen_sammeln.py --nur "$SPIELTAGE"
-      - uses: actions/upload-artifact@v6
-        with:
-          name: aktionen
-          path: aktionen/
-          retention-days: 1
+      # Ausgabe gepackt im Log (Artefakt-Downloads sind aus Claudes Umgebung gesperrt);
+      # Claude loescht den Lauf samt Log nach dem Abholen.
+      - name: Daten ausgeben
+        run: |
+          echo "===DATEN-ANFANG==="
+          tar czf - aktionen/*/spieltag_*.json aktionen/*/kader.json | base64 -w 76
+          echo "===DATEN-ENDE==="
