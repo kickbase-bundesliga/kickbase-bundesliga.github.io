@@ -6,6 +6,8 @@ on:
   schedule:
     - cron: "13 18 * * *"    # taeglich ca. 19:13 Uhr Winterzeit / 1 h spaeter Sommerzeit: Kickbase-Abrechnung (18 Uhr) + 1 h
     - cron: "43 5 * * *"     # taeglich ca. 7:43 Uhr Sommerzeit / 6:43 Uhr Winterzeit
+    - cron: "55 20 * * 0"    # Sonntag ca. 21:55 Uhr Winterzeit: vorlaeufiger Stand des Spieltags
+    - cron: "17 22 * * 1"    # Montag ca. 23:17 Uhr Winterzeit: vorlaeufiger Stand inkl. Montagsspiel
   workflow_dispatch:
     inputs:
       spieltag:

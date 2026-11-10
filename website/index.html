@@ -238,6 +238,7 @@ td.lg.l{font-size:13px}
 .subtabs{display:flex;flex-wrap:wrap;gap:6px}
 
 .mw-fn{color:var(--muted)}
+.prov-pill{display:inline-block;margin:8px 0 0;padding:4px 10px;border-radius:999px;background:var(--surface-2);border:1px dashed var(--muted);color:var(--ink);font:600 14px/1.3 var(--body)}
 /* Pokal */
 .winner{display:flex;gap:16px;align-items:center;padding:16px;flex-wrap:wrap}
 .winner svg{width:44px;height:44px;color:var(--gold);flex:none}
@@ -610,7 +611,8 @@ async function viewTables(){
     : `<optgroup label="${idx.short} ${lv}">${byLevel[lv].map(opt).join('')}</optgroup>`).join('');
 
   const mdOpts = [];
-  for (let i = season.last_md; i >= 0; i--) mdOpts.push(`<option value="${i}" ${i === x ? 'selected' : ''}>${i === 0 ? 'Vor Saisonstart' : `Spieltag ${i}`}</option>`);
+  const prov = season.provisional && season.provisional.md === x ? season.provisional : null;
+  for (let i = season.last_md; i >= 0; i--) mdOpts.push(`<option value="${i}" ${i === x ? 'selected' : ''}>${i === 0 ? 'Vor Saisonstart' : `Spieltag ${i}`}${season.provisional && season.provisional.md === i ? ' (vorläufig)' : ''}</option>`);
   const realMd = x > 0 ? season.first_matchday + x - 1 : null;
   const leader = rows[0];
 
@@ -618,7 +620,8 @@ async function viewTables(){
   <section class="headline">
     <div><div class="eyebrow">Saison ${esc(meta.name)}${meta.current ? ' · läuft' : ''}${meta.quali ? ' · Qualifikation' : ''}</div>
       <h1>${esc(league.short)}</h1>
-      <p class="lede">${final ? 'Abschlusstabelle' : x === 0 ? 'Vor dem ersten Spieltag' : `Stand nach ${idx.short}-Spieltag ${x} (${state.idx.wettbewerb || 'Bundesliga'}-Spieltag ${realMd})`} · ${rows.length} Manager</p></div>
+      <p class="lede">${final ? 'Abschlusstabelle' : x === 0 ? 'Vor dem ersten Spieltag' : prov ? `Vorläufiger Stand ${idx.short}-Spieltag ${x} (${state.idx.wettbewerb || 'Bundesliga'}-Spieltag ${realMd})` : `Stand nach ${idx.short}-Spieltag ${x} (${state.idx.wettbewerb || 'Bundesliga'}-Spieltag ${realMd})`} · ${rows.length} Manager</p>
+      ${prov ? `<p class="prov-pill">Vorläufig · Live-Punkte${prov.at ? ` von ${esc(whenText(Date.parse(prov.at)))}` : ''} · endgültig nach der Kickbase-Abrechnung</p>` : ''}</div>
     <div class="facts">
       ${leader && x > 0 ? `<div class="fact"><b>${esc(mgr(leader.id).n)}</b><span>${meta.quali ? (final ? 'Gruppensieger' : 'Gruppenerster') : final ? 'Meister' : 'Tabellenführer'}</span></div>` : ''}
     </div>

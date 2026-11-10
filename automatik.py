@@ -49,6 +49,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.append("./")
 from scripts import utils  # noqa: E402
+from scripts import vorlaeufig  # noqa: E402
 
 MAX_SPIELTAGE_PRO_LAUF = 5
 # Kickbase-Wettbewerbe: 1 Bundesliga, 2 2. Bundesliga, 3 La Liga, 4 Frauen-Bundesliga
@@ -405,6 +406,7 @@ def ablauf(system, a, log):
         bisher, _ = letzter_verarbeiteter(system, saison)
         einspielen(system, saison, a.spieltag, pokal, a, log)
         status_schreiben(system, saison, max(bisher, a.spieltag), a.spieltag)
+        vorlaeufig.loeschen(system, log, bis_spieltag=max(bisher, a.spieltag))
         webseite(a, log)
         return 0
 
@@ -435,6 +437,8 @@ def ablauf(system, a, log):
 
     if bisher >= letzter:
         log("✅ Saison %s ist komplett eingespielt." % saison["name"])
+        if not a.pruefen and vorlaeufig.loeschen(system, log):
+            geaendert = True
         if neue_saison(system, einst, a, log) or geaendert:
             webseite(a, log)
         return 0
@@ -475,6 +479,8 @@ def ablauf(system, a, log):
 
     if not offen:
         log("Keine neuen Spieltage.")
+        if zwischenstand(system, saison, plan, bisher + 1, letzter, now, a, log):
+            geaendert = True
         if geaendert:
             webseite(a, log)
         return 0
@@ -491,11 +497,28 @@ def ablauf(system, a, log):
     for tag, nachhol in offen:
         einspielen(system, saison, tag, tag == pokal_tag, a, log)
         status_schreiben(system, saison, tag, tag)
+        vorlaeufig.loeschen(system, log, bis_spieltag=tag)
         if nachhol:
             log("ℹ️  Spieltag %d hat Nachholspiele. Falls deren Punkte noch zaehlen, spaeter "
                 "erneut einspielen (Spieltag %d manuell)." % (tag, tag))
+    zwischenstand(system, saison, plan, offen[-1][0] + 1, letzter, now, a, log)
     webseite(a, log)
     return 0
+
+
+def zwischenstand(system, saison, plan, ab_tag, letzter, now, a, log):
+    """Vorlaeufigen Stand des laufenden Spieltags holen (scripts/vorlaeufig.py). Fehler hier
+    duerfen den Lauf nie abbrechen. -> True, wenn sich etwas geaendert hat."""
+    try:
+        tag = vorlaeufig.kandidat(plan, max(ab_tag, int(saison["first_matchday"])), letzter, now)
+        if tag is None:
+            if vorlaeufig.lesen(system) and not a.pruefen:
+                return vorlaeufig.loeschen(system, log, bis_spieltag=ab_tag - 1)
+            return False
+        return vorlaeufig.holen(system, saison, tag, now, log, pruefen=a.pruefen)
+    except Exception as e:
+        log("⚠️  Vorlaeufiger Stand nicht moeglich: %s" % e)
+        return False
 
 
 def neue_saison(system, einst, a, log):

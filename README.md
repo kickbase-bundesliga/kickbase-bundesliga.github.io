@@ -215,3 +215,11 @@ Schnitt/Median je Spieltag, Saison, Ebene und Liga, Verlauf je Ebene, Verteilung
 Serien, Pech & Glück sowie Auf- und Abstiege. 0 und Minuspunkte (Kickbase zieht je fehlendem Spieler 100 ab) gelten als
 „nicht oder unvollständig aufgestellt“ und zählen bei Schnitten und Tiefstwerten nicht mit. Top/Flop je Spieltag rechnet die Seite
 direkt aus `season_<Saison>.json`.
+
+### Vorläufiger Zwischenstand
+
+Ist vom nächsten Spieltag mindestens ein Spiel beendet, holt jeder Spieltags-Lauf die Live-Spieltagspunkte
+(`scripts/vorlaeufig.py` → `league_systems/<system>/vorlaeufig.json`). Die Tabellen der Webseite zeigen den
+Spieltag dann als „vorläufig“; Datenbank, Score, Statistik, Pokal und Tabellenbilder bleiben unberührt. Nach der
+Abrechnung wird der Spieltag regulär eingespielt und die Datei gelöscht. Zusätzliche Läufe: Sonntag ca. 21:50 Uhr
+(alle), Montag ca. 23:20 Uhr (KWBL, KLL). Abschalten je System: `"automatik": {"vorlaeufig": false}`.

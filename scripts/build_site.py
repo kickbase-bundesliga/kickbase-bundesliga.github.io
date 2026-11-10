@@ -253,6 +253,26 @@ def build_system(system):
 
         if not leagues:
             continue
+        # Vorlaeufiger Stand des laufenden Spieltags (scripts/vorlaeufig.py): nur in die Tabellen
+        # der Webseite, nicht in Score, Statistik oder Hall of Fame
+        final_last_md = last_md
+        provisional = None
+        if s == current:
+            from scripts import vorlaeufig
+            v = vorlaeufig.lesen(system)
+            if v and v.get("saison") == s and int(v.get("spieltag") or 0) > last_md:
+                k = int(v["spieltag"])
+                for rows in leagues.values():
+                    for row in rows:
+                        p = v["punkte"].get(str(row["id"]))
+                        if p is None:
+                            continue
+                        if len(row["md"]) <= k:
+                            row["md"] = row["md"] + [0] * (k + 1 - len(row["md"]))
+                        row["md"][k] = p
+                if any(v["punkte"].values()):
+                    last_md = k
+                    provisional = {"md": k, "at": v.get("abgerufen")}
         # Ligen nach Level, dann Name
         league_list = []
         for name in sorted(leagues, key=lambda n: (league_level[n], n)):
@@ -272,6 +292,7 @@ def build_system(system):
             "matchdays": int(scfg["matchday_number"]),
             "last_md": last_md,
             "leagues": league_list,
+            **({"provisional": provisional} if provisional else {}),
         }
         with open(os.path.join(out_dir, f"season_{s}.json"), "w", encoding="utf8") as fp:
             json.dump(data, fp, ensure_ascii=False, separators=(",", ":"))
@@ -279,7 +300,8 @@ def build_system(system):
             "name": s,
             "current": s == current,
             "quali": s in quali,
-            "last_md": last_md,
+            "last_md": final_last_md,
+            **({"provisional": provisional} if provisional else {}),
             "matchdays": int(scfg["matchday_number"]),
             "first_matchday": int(scfg["first_matchday"]),
             "managers": sum(len(v) for v in leagues.values()),
