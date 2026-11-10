@@ -17,6 +17,7 @@ wird nur als Rohwert im Spieltag-JSON mitgespeichert.
     python scripts/aktionen_sammeln.py --neu 1-7    Spieltage 1 bis 7 komplett neu holen
     python scripts/aktionen_sammeln.py --kader      nur Kader inkl. aktueller Marktwerte holen
     python scripts/aktionen_sammeln.py --csv        nur die beiden CSV-Dateien neu schreiben
+    python scripts/aktionen_sammeln.py --nur 8-9    nur diese Spieltage holen (z. B. im Workflow "Aktionen export")
 
 Ein Spiel wird erst geholt, wenn der Spieltag abgeschlossen ist:
   - regulaere Spiele: "wartezeit" Stunden (Standard 30) nach dem Anstoss des letzten
@@ -244,6 +245,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pruefen", action="store_true")
     ap.add_argument("--neu", action="append", default=[], help="Spieltag oder Bereich, z. B. 7 oder 1-7")
+    ap.add_argument("--nur", action="append", default=[], help="nur diese Spieltage holen, z. B. 8-9")
     ap.add_argument("--wartezeit", type=float, default=30)
     ap.add_argument("--kader", action="store_true", help="nur Kader inkl. Marktwerte aktualisieren")
     ap.add_argument("--csv", action="store_true", help="nur die CSV-Dateien aus den gespeicherten Spieltagen neu schreiben")
@@ -275,11 +277,15 @@ def main():
             os.remove(tagdatei(tag))
             print("Spieltag %d wird neu geholt." % tag)
 
+    nur = []
+    for x in a.nur:
+        von, _, bis = str(x).partition("-")
+        nur += list(range(int(von), int(bis or von) + 1))
     offen = []
     for mi, m in sorted(spiele.items(), key=lambda x: (x[1]["tag"], x[1]["dt"] or "")):
         fertig = mi in ab and now >= ab[mi]
         schon = mi in lade(tagdatei(m["tag"]), {}).get("spiele", {})
-        if fertig and not schon:
+        if fertig and not schon and (not nur or m["tag"] in nur):
             offen.append(m)
     tage = sorted(set(m["tag"] for m in offen))
     print("Saison %s: %d Spiele fertig und noch nicht geholt (Spieltage %s)" % (

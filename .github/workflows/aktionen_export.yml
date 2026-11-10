@@ -1,0 +1,41 @@
+# Spieler-Aktionen (Punkteverteilung) fuer einzelne Spieltage holen - nur manuell.
+# Die Daten werden NICHT ins Repository geschrieben, sondern nur als Workflow-Artefakt
+# (1 Tag aufbewahrt) abgelegt; Claude laedt es fuer die Aktionsauswertung herunter und loescht es danach.
+name: Aktionen export
+
+on:
+  workflow_dispatch:
+    inputs:
+      spieltage:
+        description: "Spieltage, z. B. 8-9"
+        required: true
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  holen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: .github/requirements-ci.txt
+      - run: pip install -r .github/requirements-ci.txt
+      - name: Aktionen holen
+        env:
+          KBL_EMAIL: ${{ secrets.KBL_EMAIL }}
+          KBL_PASSWORT: ${{ secrets.KBL_PASSWORT }}
+          SPIELTAGE: ${{ inputs.spieltage }}
+          PYTHONIOENCODING: utf-8
+          PYTHONUNBUFFERED: "1"
+        run: python scripts/aktionen_sammeln.py --nur "$SPIELTAGE"
+      - uses: actions/upload-artifact@v6
+        with:
+          name: aktionen
+          path: aktionen/
+          retention-days: 1
