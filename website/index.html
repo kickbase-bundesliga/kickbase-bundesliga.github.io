@@ -448,11 +448,13 @@ footer{max-width:1080px;margin:0 auto;padding:0 16px 32px;color:var(--muted);fon
   .bigball.fresh{animation:rise .8s cubic-bezier(.2,.8,.3,1) both,popout .35s ease-in .95s forwards}
   .slip.fresh{animation:slipin .45s cubic-bezier(.2,.9,.3,1.2) 1s both}
   .slip.fresh.nowait{animation-delay:0s}
-  .dmatch .fresh{animation:flash 1.6s ease-out 1s both}
+  /* Name in der Paarungsliste erst zeigen, wenn die Kugel ihn auf dem Zettel aufgedeckt hat */
+  .dmatch .fresh{animation:namein .35s ease-out 1.4s both,flash 1.6s ease-out 1.4s both}
 }
 @keyframes rise{from{transform:translateY(120px) scale(.3);opacity:0}35%{opacity:1}to{transform:none;opacity:1}}
 @keyframes popout{to{transform:scale(1.25);opacity:0}}
 @keyframes slipin{from{transform:scale(.6) rotate(-3deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes namein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 @keyframes flash{from{background:var(--accent-soft)}to{background:transparent}}
 
 .count-big{font:800 clamp(44px,9vw,76px)/1 var(--display);font-variant-numeric:tabular-nums;letter-spacing:.02em}
