@@ -1,11 +1,10 @@
 {
   "saison": "2026B",
-  "runde": 16,
-  "teilnehmer": 16,
+  "runde": 8,
+  "teilnehmer": 8,
   "freilose": 0,
   "erste_runde": false,
-  "start": "2026-11-01T19:00:00Z",
+  "start": "2026-11-11T18:00:00Z",
   "sekunden": 10,
-  "status": "gezogen",
-  "gezogen": "2026-11-01T18:54:03Z"
+  "status": "angekuendigt"
 }
